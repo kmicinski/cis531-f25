@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>CIS352</title>
+  <meta name="description" content="CMSC352--Principles of Programming Languages (Spring '23) at Syracuse">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://kmicinski.com/cis352-s23/css/main.css">
+  <link rel="canonical" href="https://kmicinski.com/cis352-s23/">
+  <link rel="alternate" type="application/rss+xml" title="CIS352" href="https://kmicinski.com/cis352-s23/feed.xml">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href=https://kmicinski.com//cis352-s23/>CIS352</a>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis352-s23/#schedule>Schedule</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis352-s23/learning-objectives>Objectives</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis352-s23/syllabus>Syllabus</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://autograde.org">Autograde</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <!-- <nav class="site-nav"> -->
+    <!--   <a href="#" class="menu-icon"> -->
+    <!--     <svg viewBox="0 0 18 15"> -->
+    <!--       <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/> -->
+    <!--       <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/> -->
+    <!--       <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/> -->
+    <!--     </svg> -->
+    <!--   </a> -->
+
+    <!--   <div class="trigger"> -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--       <a class="page-link" href="https://kmicinski.com//cis352-s23/schedule/">Schedule</a> -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--       <a class="page-link" href="https://kmicinski.com//cis352-s23/syllabus/">Syllabus</a> -->
+    <!--        -->
+    <!--      -->
+    <!--   </div> -->
+    <!-- </nav> -->
+
+  </div>
+</header>
+
+
+    <div class="masthead">
+      <div class="bs-docs-masthead" >
+        <div class="bs-docs-header">
+          <div class="container">
+            <div class="wrapper">
+              <div class="introtext">
+                <h1 class="compsecurity">CIS352 &mdash; Spring 2023</h1>
+                <h2 class="compsecurity">Principles of Programming Languages</h2>
+                <!--<h2 id="practice""><span class="blackhat">Theory</span> and Practice</h2>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <div class="page-content">
+      <div class="wrapper">
+        <!-- ## Course Structure -->
+
+<!-- Please read the [Syllabus](https://kmicinski.com//cis352-s23/syllabus) for course information. -->
+
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Type</th>
+      <th scope="col">Unit</th>
+      <th scope="col">Video</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-success">
+      <th scope="row">1/17</th>
+      <td>Logistics</td>
+      <td></td>
+      <td>Course Introduction and Logistics</td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">1/17</th>
+      <td>Lecture</td>
+      <td>L0</td>
+      <td><a href="https://www.youtube.com/watch?v=zFzNhjFv22A&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=3">Introduction to Racket and Dr. Racket (video)</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/cis352-f22-l0.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">1/19</th>
+      <td>Lecture</td>
+      <td>L1</td>
+      <td><a href="https://www.youtube.com/watch?v=kMOgrVjEuk8">Forms and Callsites</a> and <a href="https://www.youtube.com/watch?v=bnzjganKVgU">Definitions and the Environment</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/cis352-f22-l1.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">1/24</th>
+      <td>Lecture</td>
+      <td>L2</td>
+      <td><a href="https://www.youtube.com/watch?v=4HPjJ4M6XVc">Textual Reduction</a> and <a href="https://www.youtube.com/watch?v=WVmomIoxBZM&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=6&amp;ab_channel=KristopherMicinski">Case Splitting and Lists Intro</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/cis352-f22-l2.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-secondary">
+      <th scope="row">1/17 &ndash; 1/24</th>
+      <td>Reading</td>
+      <td>R0</td>
+      <td><a href="http://sarabander.github.io/sicp/html/Chapter-1.xhtml#Chapter-1">SICP sections 1 through 1.1.5 (stop before 1.1.6)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">1/26</th>
+      <td>Lecture</td>
+      <td>L3</td>
+      <td>(Kris gone) -- Racket Practice Exercise</td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">1/31</th>
+      <td>Lecture</td>
+      <td>L4</td>
+      <td><a href="https://www.youtube.com/watch?v=0y325A82vMc&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=7">Recursion over Lists</a></td>
+    </tr>
+    <tr class="table-secondary">
+      <th scope="row">1/31</th>
+      <td>Reading</td>
+      <td>R1</td>
+      <td>SICP sections <a href="http://sarabander.github.io/sicp/html/1_002e1.xhtml#g_t1_002e1_002e6">1.1.6</a>  and <a href="http://sarabander.github.io/sicp/html/1_002e2.xhtml#g_t1_002e2">1.2 up to 1.2.3</a></td>
+    </tr>
+    <tr class="table-warning">
+      <th scope="row">1/31</th>
+      <td>Project</td>
+      <td>P1</td>
+      <td><a href="https://kmicinski.com/cis352-s23/projects/1">ASCII Art -- Released</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">2/2</th>
+      <td>Lecture</td>
+      <td>L5</td>
+      <td><a href="https://www.youtube.com/watch?v=OqZleNZto0A&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=9">Lambdas</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/lambdas.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">2/7</th>
+      <td>Lecture</td>
+      <td>L6</td>
+      <td>No lecture--Kris at AAAI</td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">2/9</th>
+      <td>Lecture</td>
+      <td>L7</td>
+      <td><a href="https://www.youtube.com/watch?v=7NA9HZdlR0g&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=10">Cons Diagrams and Boxes</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/cons.pdf">(Slides)</a> and <a href="https://www.youtube.com/watch?v=AGDnCUfFp84&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=11">Mapping Over Lists</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/maps-matches.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-secondary">
+      <th scope="row">Week of 2/6</th>
+      <td>Reading</td>
+      <td>R2</td>
+      <td><a href="http://sarabander.github.io/sicp/html/1_002e3.xhtml#g_t1_002e3">SICP section  1.3</a> and <a href="http://sarabander.github.io/sicp/html/2_002e1.xhtml#g_t2_002e1">2.1</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">2/14</th>
+      <td>Lecture</td>
+      <td>L8</td>
+      <td><a href="https://www.youtube.com/watch?v=RJFkmh9Wo8o&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=12">Quasiquoting and Pattern Matching</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/maps-matches.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-danger">
+      <th scope="row">2/15</th>
+      <td>Project</td>
+      <td>P1</td>
+      <td><a href="https://kmicinski.com/cis352-s23/projects/1">PROJECT 1 DEADLINE</a></td>
+    </tr>
+    <tr class="table-warning">
+      <th scope="row">2/15</th>
+      <td>Project</td>
+      <td>P2</td>
+      <td><a href="https://kmicinski.com/cis352-s23/projects/2">Transitive Closure -- Released</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">2/16</th>
+      <td>Lecture</td>
+      <td>L9</td>
+      <!-- <td><a href="https://www.youtube.com/watch?v=kAskgLplQgw">Tail Calls and Tail Recursion</a></td> -->
+      <td><a href="https://www.youtube.com/watch?v=kAskgLplQgw&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=13">Tail Calls and Tail Recursion</a>  <a href="https://kmicinski.com/cis352-s23/assets/slides/tailcalls.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-secondary">
+      <th scope="row">Week of 2/13</th>
+      <td>Reading</td>
+      <td>R3</td>
+      <td>SICP sections <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-15.html">2.2</a> and <a href="https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book-Z-H-16.html#%_sec_2.3">2.3</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">2/21</th>
+      <td>Lecture</td>
+      <td>L10</td>
+      <td><a href="https://www.youtube.com/watch?v=cFkHFoKW4e4&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=14">Practicing Tail Recursion</a> (no slides) and <a href="https://www.youtube.com/watch?v=WUAI_v110NQ&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=15">Folding over Lists</a>  <a href="https://kmicinski.com/cis352-s23/assets/slides/folds.pdf">(Slides)</a> </td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">2/23</th>
+      <td>Lecture</td>
+      <td>L11</td>
+      <td><a href="https://www.youtube.com/watch?v=vhOH2GmuYrQ&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=16">Interpreting IfArith</a>   <a href="https://gist.github.com/kmicinski/7c9bbe55363107ededa028ba917ba10b">(Code)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">2/28</th>
+      <td>Lecture</td>
+      <td>L12</td>
+      <td><a href="https://www.youtube.com/watch?v=neCrsTf8h7Y&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=17">Natural Deduction for IfArith</a>   <a href="https://kmicinski.com/cis352-s23/assets/slides/ifarith.pdf">(Slides for L11/12)</a></td>
+    </tr>
+    <tr class="table-danger">
+      <th scope="row">3/1</th>
+      <td>Project</td>
+      <td>P2</td>
+      <td><a href="https://kmicinski.com/cis352-s23/projects/2">PROJECT 2 DEADLINE</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">3/2</th>
+      <td>Lecture</td>
+      <td>L13</td>
+	  <td><a href="https://www.youtube.com/watch?v=Qq5Bzpsoi7k&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=18">Small-Step Semantics of IfArith</a>, review of topics so far.</td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">3/7</th>
+      <td>Lecture</td>
+      <td>L14</td>
+	  <td>Review for Midterm 1</td>
+    </tr>
+    <tr class="table-danger">
+      <th scope="row">3/9</th>
+      <td>Exam</td>
+      <td>M1</td>
+      <td><strong>Midterm 1 (in class, 15%)</strong></td>
+    </tr>
+    <tr class="table-info">
+      <th scope="row">3/14 &amp; 3/16</th>
+      <td></td>
+      <td></td>
+      <td><strong>Spring Break</strong></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">3/21</th>
+      <td>Lecture</td>
+      <td>L15</td>
+      <td><a href="https://www.youtube.com/watch?v=RqA-m_QMJYc&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=20">Lambda Calculus Introduction</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/lambda-intro.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">3/23</th>
+      <td>Lecture</td>
+      <td>L16</td>
+	  <td><a href="https://www.youtube.com/watch?v=Paxvaq0Q-S0&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=21">Lambda Calculus: Reductions and Substitution</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/lambda-reductions.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">3/28</th>
+      <td>Lecture</td>
+      <td>L17</td>
+      <td><a href="https://www.youtube.com/watch?v=GNkQrqAGB-o&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=22">Reduction Strategies</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/reduction-strategies.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">3/30</th>
+      <td>Lecture</td>
+      <td>L18</td>
+      <td><a href="https://www.youtube.com/watch?v=-TN--YqcJhI&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=26">Closure-Creating Interpreters</a></td>
+    </tr>
+    <!-- <tr class="table-warning"> -->
+    <!--   <th scope="row">11/1</th> -->
+    <!--   <td>Project</td> -->
+    <!--   <td>P3</td> -->
+    <!--   <td><a href="https://www.youtube.com/watch?v=-TN--YqcJhI&list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&index=26">Definitional Interpreter for Scheme (L19)</a></td> -->
+    <!-- </tr> -->
+    <tr class="table-primary">
+      <th scope="row">4/4</th>
+      <td>Lecture</td>
+      <td>L19</td>
+      <td><a href="https://www.youtube.com/watch?v=DC-9wWgXQTc&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=24">Church Numerals</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">4/6</th>
+      <td>Lecture</td>
+      <td>L20</td>
+      <td><a href="https://www.youtube.com/watch?v=izfoxmSAQ28">Church Encoding</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/p4.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">4/11</th>
+      <td>Lecture</td>
+      <td>L21</td>
+      <td><a href="https://www.youtube.com/watch?v=GJi4H2UMaRU&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=26">Fixed Points, Y/U combinators</a> and <a href="https://www.youtube.com/watch?v=K-AhJgjb-8s&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=27">Continuations</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/y-comb.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">4/13</th>
+      <td>Lecture</td>
+      <td>L22</td>
+      <td><a href="https://www.youtube.com/watch?v=K-AhJgjb-8s&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=27">Simply-Typed Lambda Calculus</a> <a href="https://kmicinski.com/cis352-s23/assets/slides/stlc.pdf">(Slides)</a></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">4/18</th>
+      <td>Lecture</td>
+      <td>L23</td>
+      <td>Review for Midterm 2</td>
+    </tr>
+    <tr class="table-danger">
+      <th scope="row">4/20</th>
+      <td>Exam</td>
+      <td>M2</td>
+      <td><strong>Midterm 2 (in class, 15%)</strong></td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">4/25</th>
+      <td>Lecture</td>
+      <td>L25</td>
+      <td>Object-Oriented Programming and Polymorphism</td>
+    </tr>
+    <tr class="table-primary">
+      <th scope="row">4/27</th>
+      <td>Lecture</td>
+      <td>L26</td>
+      <td>Fully-Verified Programming, Neurosymbolic AI, course wrapup</td>
+    </tr>
+    <!-- <tr class="table-danger"> -->
+    <!--   <th scope="row">11/16 &ndash; 11/18</th> -->
+    <!--   <td>Exam</td> -->
+    <!--   <td>M2</td> -->
+    <!--   <td><strong>Midterm 2</strong></td> -->
+    <!-- </tr> -->
+    <!-- <tr class="table-primary"> -->
+    <!--   <th scope="row">11/17</th> -->
+    <!--   <td>Lecture</td> -->
+    <!--   <td>L23</td> -->
+    <!--   <td><b>Review: Midterm 2</b></td> -->
+    <!-- </tr> -->
+    <!-- <tr class="table-primary"> -->
+    <!--   <th scope="row">11/22 &ndash; 11/24</th> -->
+    <!--   <td>Break</td> -->
+    <!--   <td></td> -->
+    <!--   <td>Thanksgiving Break (no class)</td> -->
+    <!-- </tr> -->
+    <!-- <tr class="table-primary"> -->
+    <!--   <th scope="row">11/29</th> -->
+    <!--   <td>Lecture</td> -->
+    <!--   <td>L24</td> -->
+    <!--   <td>Simply-Typed Lambda Calculus</td> -->
+    <!-- </tr> -->
+    <!-- <tr class="table-warning"> -->
+    <!--   <th scope="row">11/29</th> -->
+    <!--   <td>Project</td> -->
+    <!--   <td>P4</td> -->
+    <!--   <td><a href="https://www.youtube.com/watch?v=izfoxmSAQ28&list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&index=24">Church Encoding</a></td> -->
+    <!-- </tr> -->
+    <!-- <tr class="table-primary"> -->
+    <!--   <th scope="row">12/1</th> -->
+    <!--   <td>Lecture</td> -->
+    <!--   <td>L25</td> -->
+    <!--   <td>Ad-hoc and Generic Polymorphism</td> -->
+    <!-- </tr> -->
+    <!-- <tr class="table-primary"> -->
+    <!--   <th scope="row">12/6</th> -->
+    <!--   <td>Lecture</td> -->
+    <!--   <td>L26</td> -->
+    <!--   <td>Interactive Proof Assistants / Theorem Proving</td> -->
+    <!-- </tr> -->
+    <!-- <tr class="table-primary"> -->
+    <!--   <th scope="row">12/8</th> -->
+    <!--   <td>Lecture</td> -->
+    <!--   <td>L27</td> -->
+    <!--   <td>Macros; Discussion of Final / course wrapup</td> -->
+    <!-- </tr> -->
+    <!-- <tr class="table-danger"> -->
+    <!--   <th scope="row">12/8 &ndash; 12/12</th> -->
+    <!--   <td>Exam</td> -->
+    <!--   <td>F</td> -->
+    <!--   <td>Final -- take home (15%)</td> -->
+    <!-- </tr> -->
+  </tbody>
+</table>
+
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">CIS352</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>CIS352</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>CMSC352--Principles of Programming Languages (Spring '23) at Syracuse</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src=https://kmicinski.com//cis352-s23/bower_components/jquery/dist/jquery.min.js></script>
+<script src=https://kmicinski.com//cis352-s23/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js></script>
+
+    <script>
+      $(document).ready(function() {
+      var areadescs = [$("#secdesc"),$("#pldesc"),$("#hcidesc")];
+      var areas = $("#areadesc");
+      $("areastr").css("min-height",
+                 (Math.min.apply(null, areadescs.map(function(f) { return f.height(); }))));
+      [$("#circle1"),$("#circle2"),$("#circle3")]
+        .forEach(function(f,i) {
+            f.mouseenter(function() {
+            f.css({"fill-opacity": .7});
+            areas.css({"display": "none"});
+            areadescs[i].css({"display": "table-cell"});
+          });
+          f.mouseleave(function() {
+            areadescs[i].css({"display": "none"});
+            areas.css({"display": "table-cell"});
+            f.css({"fill-opacity": .4});
+          });
+        });
+      });
+    </script>
+
+  </body>
+
+</html>
