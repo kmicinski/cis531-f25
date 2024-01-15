@@ -26,30 +26,27 @@ list accumulation algorithms.</li>
 tree-shaped (Racket) data and (at a high level) explain its relation
 to layout in RAM / cache.</li>
 
-<li><a href="#lo5"></a>Use (and define) maps over lists
-and tree-shaped data.</li>
+<li><a href="#lo5"></a>Use (and define) maps over lists and tree-shaped data.</li>
 
-<li><a href="#lo6"></a>Use (and define) folds (such as foldl/foldr) to
-accumulate results of traversals over lists.</li>
+<li><a href="#lo6"></a>Use (and define) folds (such as foldl/foldr) to accumulate results of traversals over lists.</li>
 
 <li><a href="#lo7"></a>Perform common (beta, alpha, eta) reductions /
 conversions for the lambda calculus; evaluate lambda calculus terms
 to normal form using various reduction strategies, including
 call-by-name/value.</li>
 
-<li><a href="#lo8"></a>Perform Church encoding to translate
+<li><a href="#lo8"></a>Construct a metacircular interpreter for small, core languages (such as the lambda calculus)</li>
+
+<li><a href="#lo9"></a>Perform Church encoding to translate
 higher-level program constructs (variable-arity lambdas,
 `let`-binding, recursion) to the lambda calculus. Specifically, be
 able to use the U and Y combinators to implement recursion.</li>
 
-<li><a href="lo09"></a>Be able to understand code written with
-`call/cc` (i.e., full, undelimited continuations). Use `call/cc` to
-implement control constructs such as preemptive returns, exceptions,
-and loops.</li>
+<li><a href="lo10"></a>Explain the execution of code written with
+`call/cc` (i.e., full, undelimited continuations). Have an idea of how
+`call/cc` may be used to implement control constructs such as
+preemptive returns, exceptions, and loops.</li>
 
-<li><a href="lo10"></a>Write proof trees for correctly-typed terms in
-the simply-typed lambda calculus (and its immediate extensions), or
-explain (in English prose or using partial proof trees) when terms are
-ill-typed.</li>
+<li><a href="lo11"></a>Explain the key passes involved in a compiler from a simple high-level language to assembly.</li>
 
  </ol>
