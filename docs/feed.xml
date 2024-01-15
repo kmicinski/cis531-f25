@@ -3,10 +3,10 @@
   <channel>
     <title>CIS352</title>
     <description>CMSC352--Principles of Programming Languages (Spring '24) at Syracuse</description>
-    <link>https://kmicinski.com/cis352-f23/</link>
-    <atom:link href="https://kmicinski.com/cis352-f23/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Jan 2024 00:05:11 -0500</pubDate>
-    <lastBuildDate>Mon, 15 Jan 2024 00:05:11 -0500</lastBuildDate>
+    <link>https://kmicinski.com/cis352-s24/</link>
+    <atom:link href="https://kmicinski.com/cis352-s24/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 15 Jan 2024 00:08:13 -0500</pubDate>
+    <lastBuildDate>Mon, 15 Jan 2024 00:08:13 -0500</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -549,8 +549,8 @@ select for your project to be graded.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Sun, 02 Oct 2022 00:00:00 -0400</pubDate>
-        <link>https://kmicinski.com/cis352-f23/projects/2</link>
-        <guid isPermaLink="true">https://kmicinski.com/cis352-f23/projects/2</guid>
+        <link>https://kmicinski.com/cis352-s24/projects/2</link>
+        <guid isPermaLink="true">https://kmicinski.com/cis352-s24/projects/2</guid>
         
         
         <category>assignment</category>
@@ -888,8 +888,8 @@ the autograder) but want to work the project.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Sat, 17 Sep 2022 00:00:00 -0400</pubDate>
-        <link>https://kmicinski.com/cis352-f23/projects/1</link>
-        <guid isPermaLink="true">https://kmicinski.com/cis352-f23/projects/1</guid>
+        <link>https://kmicinski.com/cis352-s24/projects/1</link>
+        <guid isPermaLink="true">https://kmicinski.com/cis352-s24/projects/1</guid>
         
         
         <category>assignment</category>
