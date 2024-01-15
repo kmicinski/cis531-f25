@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CIS352</title>
-    <description>CMSC352--Principles of Programming Languages (Fall '23) at Syracuse</description>
+    <description>CMSC352--Principles of Programming Languages (Spring '24) at Syracuse</description>
     <link>https://kmicinski.com/cis352-f23/</link>
     <atom:link href="https://kmicinski.com/cis352-f23/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Jan 2024 23:48:51 -0500</pubDate>
-    <lastBuildDate>Sun, 14 Jan 2024 23:48:51 -0500</lastBuildDate>
+    <pubDate>Mon, 15 Jan 2024 00:05:11 -0500</pubDate>
+    <lastBuildDate>Mon, 15 Jan 2024 00:05:11 -0500</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
