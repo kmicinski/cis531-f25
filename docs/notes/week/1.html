@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Syllabus</title>
-  <meta name="description" content="CMSC352--Principles of Programming Languages (Spring '25) at Syracuse">
+  <title>Week 1: Course Introduction and Racket</title>
+  <meta name="description" content="Week 1 Lecture Notes">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://kmicinski.com/cis352-s25/css/main.css">
-  <link rel="canonical" href="https://kmicinski.com/cis352-s25/syllabus/">
+  <link rel="canonical" href="https://kmicinski.com/cis352-s25/notes/week/1">
   <link rel="alternate" type="application/rss+xml" title="CIS352" href="https://kmicinski.com/cis352-s25/feed.xml">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link
@@ -80,8 +80,6 @@
     <!--       <a class="page-link" href="https://kmicinski.com//cis352-s25/syllabus/">Syllabus</a> -->
     <!--        -->
     <!--      -->
-    <!--        -->
-    <!--      -->
     <!--   </div> -->
     <!-- </nav> -->
 
@@ -91,47 +89,69 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <p><a href="https://kmicinski.com/cis352-s25/assets/syllabus.pdf">Official CIS352 S25 course syllabus (PDF)</a> (first uploaded: Jan 7, 2025, no updates).</p>
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-<p>Below, I provide an abbreviated syllabus with the major points–this website is not the official syllabus, the official syllabus will always be available at the above PDF.</p>
+  <!-- <header class="post-header"> -->
+  <!--   <h1 class="post-title" itemprop="name headline">Week 1: Course Introduction and Racket</h1> -->
+  <!-- </header> -->
 
-<h5 id="course-title-programming-languages-theory-and-practice">Course Title: “Programming Languages: Theory and Practice”</h5>
-<p>(<em>CIS 352</em> at Syracuse U)</p>
+  <div class="post-content" itemprop="articleBody">
+    <h1 id="week-1-lecture-notes">Week 1 Lecture Notes</h1>
 
-<p>An introduction to the design and implementation of programming
-languages, focused on operational semantics and interpreters. This
-course is heavily project-focused, and a specific emphasis will be
-placed upon training in algorithmic thinking and programming strategy.</p>
-
-<p><b>Instructors:</b></p>
 <ul>
-  <li>Kris Micinski, Asst. Prof at Syracuse ECS
+  <li>
+    <p>Class this week will be led by Neda, I (Kris) am away for previously-scheduled university business. We may have a short Zoom session on Monday if people would like to join, I will try to post a link to Blackboard.</p>
+  </li>
+  <li>
+    <p>Neda’s goal is to get you used to the basic workflow of booting up Dr. Racket, writing a tiny Racket program, and then being able to run that 
+program on the command line. She will also demonstrate how this works on an Autograder project.</p>
+  </li>
+  <li>
+    <p>Even though I will not be at class, I still ask that you watch the course videos–it is not much, and they are designed to be helpful. Generally I will lead class in-person, I understand that students will treat the videos as a reference. But at least when you’re starting, I really encourage you to do it at least for this week, especially as I will be gone.</p>
+  </li>
+  <li>
+    <p>I will not have office hours this week, please email me if you would like to meet–office hours will begin next Tuesday.</p>
+  </li>
+  <li>
+    <p>For the first week of the course, you should:</p>
+
     <ul>
-      <li>Office hours 1hr before class on Tuesdays, 1hr after on Thursdays</li>
+      <li>
+        <p>If you haven’t used a command-line interface on your machine, you need to get comfortable using one. I recommend PowerShell on Windows (please read a quick tutorial to avoid wasting a lot of time) or iTerm2 (Mac OS). If you use Linux, you should use whatever terminal emulator you are most familiar with.</p>
+      </li>
+      <li>
+        <p>Make sure you have some version of Python 3 installed (type <code class="language-plaintext highlighter-rouge">python3</code> or <code class="language-plaintext highlighter-rouge">python</code> and see if anything happens).</p>
+      </li>
+      <li>
+        <p>Make sure you add the <code class="language-plaintext highlighter-rouge">racket</code> executable to your path by booting up Dr. Racket and doing Help-&gt;Configure Racket for Command line…</p>
+      </li>
+      <li>
+        <p>Next, you should make sure that <code class="language-plaintext highlighter-rouge">racket</code> is present in your path by typing <code class="language-plaintext highlighter-rouge">racket</code> and making sure you get a shell.</p>
+      </li>
     </ul>
   </li>
-  <li>Neda Abdolrahimi, teaching assistant
-    <ul>
-      <li>Office hours: TBA</li>
-    </ul>
+  <li>
+    <p>You should try practicing this workflow, writing a tiny Racket file like</p>
   </li>
 </ul>
 
-<p><strong>Workload</strong>:</p>
+<pre><code class="language-hello.rkt">(displayln "Hello, World!")
+</code></pre>
+
+<p>and then being able to do</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; racket hello.rkt
+</code></pre></div></div>
+
+<p>and see it print the corresponding string.</p>
+
 <ul>
-  <li>4 individual (no collaboration, ChatGPT, etc…) projects (40%)</li>
-  <li>4 group (up to 3, can use ChatGPT, etc…) programming exercises (10%)</li>
-  <li>Weekly (or more) attendance quizzes (5%)</li>
-  <li>Three homeworks (5%)</li>
-  <li>Exams (40%)
-    <ul>
-      <li>2 midterms and 1 final, 20% each, lowest drops</li>
-    </ul>
-  </li>
-  <li>This will be a <em>project-heavy</em> course. Approximately 3-5 hours per
-week outside of class is expected. I recommend against taking this
-course concurrent with other project-heavy courses.</li>
+  <li>Neda will cover this workflow on Tuesday.</li>
 </ul>
+
+  </div>
+
+</article>
 
       </div>
     </div>

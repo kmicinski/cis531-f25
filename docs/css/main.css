@@ -446,6 +446,124 @@ pre > code {
   font-size: 16px;
 }
 
+/*********************************************/
+/** Week Heading Styling                   **/
+/*********************************************/
+.week-header {
+  background-color: #ffffff; /* subtle background color */
+  padding: 0.8rem 1rem; /* space around heading */
+  border-bottom: 1px solid #ccc; /* small bar below */
+  margin-bottom: 1rem; /* space after the heading */
+}
+
+.week-header h2 {
+  margin: 0; /* remove default H2 margin */
+  font-size: 2rem; /* slightly smaller than default H2 */
+  color: #444; /* darker text color */
+  font-weight: 600; /* heavier weight for emphasis */
+}
+
+.week-header h2 {
+  font-size: 1.1rem;
+}
+
+/*********************************************/
+/** Weekly Schedule Layout (2 columns)     **/
+/*********************************************/
+.week-schedule ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.session-item {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Date column styling */
+.date-col {
+  font-weight: bold;
+  color: #333;
+  text-align: right;
+  padding-top: 0.25rem;
+}
+
+/* Session (title + resources) on right side */
+.session-col {
+  /* auto-fills the remaining space */
+}
+
+/* Session title styling */
+.session-title {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0.3rem;
+}
+
+/*********************************************/
+/** Resources List (Video, Slides, etc.)   **/
+/*********************************************/
+.resources-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0.2rem 0 0 0;
+}
+
+.resources-list li {
+  margin: 0.3rem 0;
+}
+
+/*********************************************/
+/** Font Awesome Icon Colors               **/
+/*********************************************/
+.lecture-icon {
+  color: #0a66c2;
+  margin-right: 6px;
+}
+
+.youtube-icon {
+  color: #ff0000;
+  margin-right: 6px;
+}
+
+.notes-icon {
+  color: #007bff;
+  margin-right: 6px;
+}
+
+.reading-icon {
+  color: #8B4513;
+  margin-right: 6px;
+}
+
+.project-icon {
+  color: #228B22;
+  margin-right: 6px;
+}
+
+.deadline-icon {
+  color: #cc0000;
+  margin-right: 6px;
+}
+
+.fa-upload {
+  color: #666;
+  margin-right: 6px;
+}
+
+/*********************************************/
+/** Deadline Example Styling               **/
+/*********************************************/
+.deadline {
+  background-color: #ffe9e9;
+  padding: 0.5rem;
+  border-left: 4px solid #ffcccc;
+  border-radius: 4px;
+}
+
 /**
  * Syntax highlighting styles
  */
@@ -823,7 +941,7 @@ ul p {
   position: relative;
   text-align: center;
   background-color: black;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.8) 100%), linear-gradient(to left, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.8) 100%), url(https://kmicinski.com//cis352-f24/assets/img/bannershort.jpeg);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.8) 100%), linear-gradient(to left, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.8) 100%), url(https://kmicinski.com//cis352-s25/assets/img/bannershort.png);
   background-size: 800px 250px;
   height: 250px;
   background-repeat: no-repeat;
