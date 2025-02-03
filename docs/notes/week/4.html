@@ -205,66 +205,67 @@ a set of unary or binary trees:</p>
     [`(unary ,v ,(? ubtree? t)) #t]
     [`(binary ,v ,(? ubtree? t0) ,(? ubtree? t1)) #t]
     [_ #f]))
-``
+</code></pre></div></div>
 
-We can read the Racket code as implementing a common English language
+<p>We can read the Racket code as implementing a common English language
 description of the corresponding inductive definition of lists (using
-structural recursion to define the shape of lists):
+structural recursion to define the shape of lists):</p>
 
-An value `t` is a `ubtree?` iff it:
-- is the specific symbol `'empty`
-- A list of length three beginning with `'unary` is a `ubtree?`,
-  assuming the third element also has to be a `ubtree?`.
-- A list of length four beginning with `'binary` is a `ubtree?`,
-  assuming its last two elements are also `ubtree?`s.
-- Last, and importantly, no other types of values are `ubtree?s`.
+<p>An value <code class="language-plaintext highlighter-rouge">t</code> is a <code class="language-plaintext highlighter-rouge">ubtree?</code> iff it:</p>
+<ul>
+  <li>is the specific symbol <code class="language-plaintext highlighter-rouge">'empty</code></li>
+  <li>A list of length three beginning with <code class="language-plaintext highlighter-rouge">'unary</code> is a <code class="language-plaintext highlighter-rouge">ubtree?</code>,
+assuming the third element also has to be a <code class="language-plaintext highlighter-rouge">ubtree?</code>.</li>
+  <li>A list of length four beginning with <code class="language-plaintext highlighter-rouge">'binary</code> is a <code class="language-plaintext highlighter-rouge">ubtree?</code>,
+assuming its last two elements are also <code class="language-plaintext highlighter-rouge">ubtree?</code>s.</li>
+  <li>Last, and importantly, no other types of values are <code class="language-plaintext highlighter-rouge">ubtree?s</code>.</li>
+</ul>
 
-We eschew type theory at the moment, and in the first parts of this
+<p>We eschew type theory at the moment, and in the first parts of this
 course we will focus on operational semantics. The role of type theory
 is to give a set of rules which can be run (and will necessarily
 terminate) to decide these stipulations are met. In Racket, we do not
-have a static type system--it is easier to check these properties
+have a static type system–it is easier to check these properties
 on-the-fly and allow them to dynamically fail. Also, in my
-descriptions so far I'm cheating by not constraining the type of `v`
-in any way--in a static type system, we'd have to give `v` a type as
+descriptions so far I’m cheating by not constraining the type of <code class="language-plaintext highlighter-rouge">v</code>
+in any way–in a static type system, we’d have to give <code class="language-plaintext highlighter-rouge">v</code> a type as
 well, and features like parametric polymorphism offer one way to
-achieve this statically.
+achieve this statically.</p>
 
-So to sum it up, an algebraic data type is a type that is built out of
+<p>So to sum it up, an algebraic data type is a type that is built out of
 multiple constructors, each of which is allowed to take a specific
 sequence of arguments. We will not explicitly build this type into the
 type system in Racket (as Racket lacks a type system), but instead we
-will write "type predicates," functions which implement all of the
-runtime checks necessary to operationalize the type.
+will write “type predicates,” functions which implement all of the
+runtime checks necessary to operationalize the type.</p>
 
-Programming with algebraic data involves matching on it. The great
-news here is that *every usage of algebraically-defined data must
-follow the same template as the type definition itself*. This is not
-just an idiom--it is a requirement to ensure that the semantics is
+<p>Programming with algebraic data involves matching on it. The great
+news here is that <em>every usage of algebraically-defined data must
+follow the same template as the type definition itself</em>. This is not
+just an idiom–it is a requirement to ensure that the semantics is
 total, and prevent dynamic errors in the form of match failures. For
-example, let's say we have `distance?`:
+example, let’s say we have <code class="language-plaintext highlighter-rouge">distance?</code>:</p>
 
-</code></pre></div></div>
-<p>(define (distance? d)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define (distance? d)
   (match d
-    [<code class="language-plaintext highlighter-rouge">(,(? integer?) feet) #t]
-    [</code>(,(? integer?) miles) #t]
-    [_ #f]))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Now, if we have a function that expects distances, it would be an
-error to write something like: 
-
+    [`(,(? integer?) feet) #t]
+    [`(,(? integer?) miles) #t]
+    [_ #f]))
 </code></pre></div></div>
-<p>;; distance? -&gt; integer?
+
+<p>Now, if we have a function that expects distances, it would be an
+error to write something like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; distance? -&gt; integer?
 (define (to-inches d)
   (match d
-    [`(,i feet) (* 12 i)]))</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-The issue is that the match pattern is *non-exhaustive* with respect to `distance?`. Again, just to be clear--the comment is not enforced by Racket *at all*, it is a conceptual annotation of what expect the static type of the function to be. To see the bug, we can look at the following call:
-
+    [`(,i feet) (* 12 i)]))
 </code></pre></div></div>
-<p>(to-inches ‘(5 miles))
-```</p>
+
+<p>The issue is that the match pattern is <em>non-exhaustive</em> with respect to <code class="language-plaintext highlighter-rouge">distance?</code>. Again, just to be clear–the comment is not enforced by Racket <em>at all</em>, it is a conceptual annotation of what expect the static type of the function to be. To see the bug, we can look at the following call:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(to-inches '(5 miles))
+</code></pre></div></div>
 
 <p>Now, <code class="language-plaintext highlighter-rouge">to-inches</code> has no match pattern for <code class="language-plaintext highlighter-rouge">'(5 miles)</code>, and so it
 raises a dynamic error. If Racket had a static type system (like Typed
@@ -276,13 +277,20 @@ the same time. This becomes more important in larger developments,
 where errors manifest possibly far away from the code in which they
 originated (the “root cause” of the bug).</p>
 
-<h4 id="exercises">Exercises</h4>
+<h2 id="read-the-documentation">Read the Documentation</h2>
+
+<p>Here: <a href="https://docs.racket-lang.org/guide/match.html">https://docs.racket-lang.org/guide/match.html</a></p>
+
+<h2 id="exercises">Exercises</h2>
 
 <ul>
   <li>Let’s define a <code class="language-plaintext highlighter-rouge">shape?</code> to be one of the following:
--&gt; Rectangles can be shapes, and have to include points <code class="language-plaintext highlighter-rouge">x0, y0</code> and <code class="language-plaintext highlighter-rouge">x1, y1</code>
--&gt; Circles can be shapes, and have a starting point <code class="language-plaintext highlighter-rouge">x0, y0</code> and a radius <code class="language-plaintext highlighter-rouge">r</code> which is a real number
--&gt; No other things are shapes.</li>
+    <ul>
+      <li>Rectangles can be shapes, and have to include points <code class="language-plaintext highlighter-rouge">x0, y0</code> and <code class="language-plaintext highlighter-rouge">x1, y1</code></li>
+      <li>Circles can be shapes, and have a starting point <code class="language-plaintext highlighter-rouge">x0, y0</code> and a radius <code class="language-plaintext highlighter-rouge">r</code> which is a real number</li>
+      <li>No other things are shapes.</li>
+    </ul>
+  </li>
   <li>
     <p>Write this as a Racket type predicate.</p>
   </li>

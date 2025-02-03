@@ -5,8 +5,8 @@
     <description>CMSC352--Principles of Programming Languages (Spring '25) at Syracuse</description>
     <link>https://kmicinski.com/cis352-s25/</link>
     <atom:link href="https://kmicinski.com/cis352-s25/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 03 Feb 2025 13:51:27 -0500</pubDate>
-    <lastBuildDate>Mon, 03 Feb 2025 13:51:27 -0500</lastBuildDate>
+    <pubDate>Mon, 03 Feb 2025 15:17:25 -0500</pubDate>
+    <lastBuildDate>Mon, 03 Feb 2025 15:17:25 -0500</lastBuildDate>
     <generator>Jekyll v4.3.3</generator>
     
       <item>
@@ -184,66 +184,67 @@ a set of unary or binary trees:&lt;/p&gt;
     [`(unary ,v ,(? ubtree? t)) #t]
     [`(binary ,v ,(? ubtree? t0) ,(? ubtree? t1)) #t]
     [_ #f]))
-``
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-We can read the Racket code as implementing a common English language
+&lt;p&gt;We can read the Racket code as implementing a common English language
 description of the corresponding inductive definition of lists (using
-structural recursion to define the shape of lists):
+structural recursion to define the shape of lists):&lt;/p&gt;
 
-An value `t` is a `ubtree?` iff it:
-- is the specific symbol `'empty`
-- A list of length three beginning with `'unary` is a `ubtree?`,
-  assuming the third element also has to be a `ubtree?`.
-- A list of length four beginning with `'binary` is a `ubtree?`,
-  assuming its last two elements are also `ubtree?`s.
-- Last, and importantly, no other types of values are `ubtree?s`.
+&lt;p&gt;An value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt; iff it:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;is the specific symbol &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'empty&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;A list of length three beginning with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'unary&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;,
+assuming the third element also has to be a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;A list of length four beginning with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'binary&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;,
+assuming its last two elements are also &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;s.&lt;/li&gt;
+  &lt;li&gt;Last, and importantly, no other types of values are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?s&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
 
-We eschew type theory at the moment, and in the first parts of this
+&lt;p&gt;We eschew type theory at the moment, and in the first parts of this
 course we will focus on operational semantics. The role of type theory
 is to give a set of rules which can be run (and will necessarily
 terminate) to decide these stipulations are met. In Racket, we do not
-have a static type system--it is easier to check these properties
+have a static type system–it is easier to check these properties
 on-the-fly and allow them to dynamically fail. Also, in my
-descriptions so far I'm cheating by not constraining the type of `v`
-in any way--in a static type system, we'd have to give `v` a type as
+descriptions so far I’m cheating by not constraining the type of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;
+in any way–in a static type system, we’d have to give &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt; a type as
 well, and features like parametric polymorphism offer one way to
-achieve this statically.
+achieve this statically.&lt;/p&gt;
 
-So to sum it up, an algebraic data type is a type that is built out of
+&lt;p&gt;So to sum it up, an algebraic data type is a type that is built out of
 multiple constructors, each of which is allowed to take a specific
 sequence of arguments. We will not explicitly build this type into the
 type system in Racket (as Racket lacks a type system), but instead we
-will write &quot;type predicates,&quot; functions which implement all of the
-runtime checks necessary to operationalize the type.
+will write “type predicates,” functions which implement all of the
+runtime checks necessary to operationalize the type.&lt;/p&gt;
 
-Programming with algebraic data involves matching on it. The great
-news here is that *every usage of algebraically-defined data must
-follow the same template as the type definition itself*. This is not
-just an idiom--it is a requirement to ensure that the semantics is
+&lt;p&gt;Programming with algebraic data involves matching on it. The great
+news here is that &lt;em&gt;every usage of algebraically-defined data must
+follow the same template as the type definition itself&lt;/em&gt;. This is not
+just an idiom–it is a requirement to ensure that the semantics is
 total, and prevent dynamic errors in the form of match failures. For
-example, let's say we have `distance?`:
+example, let’s say we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;distance?&lt;/code&gt;:&lt;/p&gt;
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;(define (distance? d)
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(define (distance? d)
   (match d
-    [&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(,(? integer?) feet) #t]
-    [&lt;/code&gt;(,(? integer?) miles) #t]
-    [_ #f]))&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-Now, if we have a function that expects distances, it would be an
-error to write something like: 
-
+    [`(,(? integer?) feet) #t]
+    [`(,(? integer?) miles) #t]
+    [_ #f]))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;;; distance? -&amp;gt; integer?
+
+&lt;p&gt;Now, if we have a function that expects distances, it would be an
+error to write something like:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; distance? -&amp;gt; integer?
 (define (to-inches d)
   (match d
-    [`(,i feet) (* 12 i)]))&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-The issue is that the match pattern is *non-exhaustive* with respect to `distance?`. Again, just to be clear--the comment is not enforced by Racket *at all*, it is a conceptual annotation of what expect the static type of the function to be. To see the bug, we can look at the following call:
-
+    [`(,i feet) (* 12 i)]))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;(to-inches ‘(5 miles))
-```&lt;/p&gt;
+
+&lt;p&gt;The issue is that the match pattern is &lt;em&gt;non-exhaustive&lt;/em&gt; with respect to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;distance?&lt;/code&gt;. Again, just to be clear–the comment is not enforced by Racket &lt;em&gt;at all&lt;/em&gt;, it is a conceptual annotation of what expect the static type of the function to be. To see the bug, we can look at the following call:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(to-inches '(5 miles))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to-inches&lt;/code&gt; has no match pattern for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'(5 miles)&lt;/code&gt;, and so it
 raises a dynamic error. If Racket had a static type system (like Typed
@@ -255,13 +256,20 @@ the same time. This becomes more important in larger developments,
 where errors manifest possibly far away from the code in which they
 originated (the “root cause” of the bug).&lt;/p&gt;
 
-&lt;h4 id=&quot;exercises&quot;&gt;Exercises&lt;/h4&gt;
+&lt;h2 id=&quot;read-the-documentation&quot;&gt;Read the Documentation&lt;/h2&gt;
+
+&lt;p&gt;Here: &lt;a href=&quot;https://docs.racket-lang.org/guide/match.html&quot;&gt;https://docs.racket-lang.org/guide/match.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;exercises&quot;&gt;Exercises&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Let’s define a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;shape?&lt;/code&gt; to be one of the following:
--&amp;gt; Rectangles can be shapes, and have to include points &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x0, y0&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x1, y1&lt;/code&gt;
--&amp;gt; Circles can be shapes, and have a starting point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x0, y0&lt;/code&gt; and a radius &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;r&lt;/code&gt; which is a real number
--&amp;gt; No other things are shapes.&lt;/li&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Rectangles can be shapes, and have to include points &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x0, y0&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x1, y1&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Circles can be shapes, and have a starting point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x0, y0&lt;/code&gt; and a radius &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;r&lt;/code&gt; which is a real number&lt;/li&gt;
+      &lt;li&gt;No other things are shapes.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Write this as a Racket type predicate.&lt;/p&gt;
   &lt;/li&gt;
