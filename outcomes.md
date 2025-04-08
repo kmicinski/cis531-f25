@@ -42,11 +42,8 @@ higher-level program constructs (variable-arity lambdas,
 `let`-binding, recursion) to the lambda calculus. Specifically, be
 able to use the U and Y combinators to implement recursion.</li>
 
-<li><a href="lo10"></a>Explain the execution of code written with
-`call/cc` (i.e., full, undelimited continuations). Have an idea of how
-`call/cc` may be used to implement control constructs such as
-preemptive returns, exceptions, and loops.</li>
+<li><a href="lo10"></a>Construct correctly-formed proofs showing that a specific term in (a suitable extension of) the simply-typed lambda calculus has a particular type.</li>
 
-<li><a href="lo11"></a>Explain the key passes involved in a compiler from a simple high-level language to assembly.</li>
+<li><a href="lo11"></a>Explain the role of the root set as it pertains to mark-and-scan garbage collection.</li>
 
  </ol>
