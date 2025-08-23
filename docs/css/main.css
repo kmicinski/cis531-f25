@@ -85,7 +85,7 @@ a {
   text-decoration: none;
 }
 a:visited {
-  color: #1756a9;
+  color: rgb(22.9483471074, 86.2541322314, 168.5516528926);
 }
 a:hover {
   color: #111;
@@ -136,7 +136,7 @@ pre > code {
  */
 .wrapper {
   max-width: -webkit-calc(850px - (30px * 2));
-  max-width: calc(850px - (30px * 2));
+  max-width: calc(850px - 30px * 2);
   margin-right: auto;
   margin-left: auto;
   padding-right: 30px;
@@ -214,7 +214,7 @@ pre > code {
  * Site header
  */
 .site-header {
-  border-top: 5px solid #424242;
+  border-top: 5px solid rgb(66.25, 66.25, 66.25);
   border-bottom: 1px solid #e8e8e8;
   min-height: 56px;
   position: relative;
@@ -229,7 +229,7 @@ pre > code {
   float: left;
 }
 .site-title, .site-title:visited {
-  color: #424242;
+  color: rgb(66.25, 66.25, 66.25);
 }
 
 .site-nav {
@@ -270,7 +270,7 @@ pre > code {
     height: 15px;
   }
   .site-nav .menu-icon > svg path {
-    fill: #424242;
+    fill: rgb(66.25, 66.25, 66.25);
   }
   .site-nav .trigger {
     clear: both;
@@ -323,35 +323,35 @@ pre > code {
 
 .footer-col-1 {
   width: -webkit-calc(35% - (30px / 2));
-  width: calc(35% - (30px / 2));
+  width: calc(35% - 30px / 2);
 }
 
 .footer-col-2 {
   width: -webkit-calc(20% - (30px / 2));
-  width: calc(20% - (30px / 2));
+  width: calc(20% - 30px / 2);
 }
 
 .footer-col-3 {
   width: -webkit-calc(45% - (30px / 2));
-  width: calc(45% - (30px / 2));
+  width: calc(45% - 30px / 2);
 }
 
 @media screen and (max-width: 850px) {
   .footer-col-1,
   .footer-col-2 {
     width: -webkit-calc(50% - (30px / 2));
-    width: calc(50% - (30px / 2));
+    width: calc(50% - 30px / 2);
   }
   .footer-col-3 {
     width: -webkit-calc(100% - (30px / 2));
-    width: calc(100% - (30px / 2));
+    width: calc(100% - 30px / 2);
   }
 }
 @media screen and (max-width: 600px) {
   .footer-col {
     float: none;
     width: -webkit-calc(100% - (30px / 2));
-    width: calc(100% - (30px / 2));
+    width: calc(100% - 30px / 2);
   }
 }
 /**
@@ -941,7 +941,7 @@ ul p {
   position: relative;
   text-align: center;
   background-color: black;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.8) 100%), linear-gradient(to left, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.8) 100%), url(https://kmicinski.com//cis352-s25/assets/img/bannershort.png);
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.8) 100%), linear-gradient(to left, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.8) 100%), url(https://kmicinski.com//cis531-s25/assets/img/bannershort.png);
   background-size: 800px 250px;
   height: 250px;
   background-repeat: no-repeat;

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>CIS352</title>
-    <description>CMSC352--Principles of Programming Languages (Spring '25) at Syracuse</description>
-    <link>https://kmicinski.com/cis352-s25/</link>
-    <atom:link href="https://kmicinski.com/cis352-s25/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 27 Mar 2025 13:39:39 -0400</pubDate>
-    <lastBuildDate>Thu, 27 Mar 2025 13:39:39 -0400</lastBuildDate>
-    <generator>Jekyll v4.3.4</generator>
+    <title>CIS531</title>
+    <description>CIS531 -- Compilers at Syracuse (Fall &apos;25)</description>
+    <link>https://kmicinski.com/cis531-s25/</link>
+    <atom:link href="https://kmicinski.com/cis531-s25/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 23 Aug 2025 14:28:49 -0400</pubDate>
+    <lastBuildDate>Sat, 23 Aug 2025 14:28:49 -0400</lastBuildDate>
+    <generator>Jekyll v4.4.1</generator>
     
       <item>
         <title>Week 1: Course Introduction and Racket</title>
@@ -65,8 +65,8 @@ program on the command line. She will also demonstrate how this works on an Auto
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 14 Aug 2025 00:00:00 -0400</pubDate>
-        <link>https://kmicinski.com/cis352-s25/notes/week/1</link>
-        <guid isPermaLink="true">https://kmicinski.com/cis352-s25/notes/week/1</guid>
+        <link>https://kmicinski.com/cis531-s25/notes/week/1</link>
+        <guid isPermaLink="true">https://kmicinski.com/cis531-s25/notes/week/1</guid>
         
         
         <category>notes</category>
@@ -110,7 +110,7 @@ represented in the form:&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(cons x0 (cons x1 ... (cons xn '()) ...))
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(cons x0 (cons x1 ... (cons xn &apos;()) ...))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -139,7 +139,7 @@ no type checking imposed upon the value &lt;code class=&quot;language-plaintext 
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(define (tree? t)
   (match t
-    ['empty #t]
+    [&apos;empty #t]
     [`(node ,v ,(? tree? t0) ,(? tree? t1)) #t]
     [_ #f]))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -156,10 +156,10 @@ potentially).&lt;/p&gt;
 
 &lt;p&gt;Example trees here include:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(tree? 'empty) ;; #t
-(tree? '(node 1 empty empty)) ;; #t
-(tree? '(node 25 (node &quot;hello&quot; empty empty) empty)) ;; #t
-(tree? '(node &quot;hello&quot; 1 2)) ;; #f
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(tree? &apos;empty) ;; #t
+(tree? &apos;(node 1 empty empty)) ;; #t
+(tree? &apos;(node 25 (node &quot;hello&quot; empty empty) empty)) ;; #t
+(tree? &apos;(node &quot;hello&quot; 1 2)) ;; #f
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;ul&gt;
@@ -180,7 +180,7 @@ a set of unary or binary trees:&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(define (ubtree? t)
   (match t
-    ['empty #t]
+    [&apos;empty #t]
     [`(unary ,v ,(? ubtree? t)) #t]
     [`(binary ,v ,(? ubtree? t0) ,(? ubtree? t1)) #t]
     [_ #f]))
@@ -192,10 +192,10 @@ structural recursion to define the shape of lists):&lt;/p&gt;
 
 &lt;p&gt;An value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;t&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt; iff it:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;is the specific symbol &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'empty&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;A list of length three beginning with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'unary&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;,
+  &lt;li&gt;is the specific symbol &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&apos;empty&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;A list of length three beginning with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&apos;unary&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;,
 assuming the third element also has to be a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;A list of length four beginning with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'binary&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;,
+  &lt;li&gt;A list of length four beginning with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&apos;binary&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;,
 assuming its last two elements are also &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?&lt;/code&gt;s.&lt;/li&gt;
   &lt;li&gt;Last, and importantly, no other types of values are &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubtree?s&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
@@ -243,10 +243,10 @@ error to write something like:&lt;/p&gt;
 
 &lt;p&gt;The issue is that the match pattern is &lt;em&gt;non-exhaustive&lt;/em&gt; with respect to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;distance?&lt;/code&gt;. Again, just to be clear–the comment is not enforced by Racket &lt;em&gt;at all&lt;/em&gt;, it is a conceptual annotation of what expect the static type of the function to be. To see the bug, we can look at the following call:&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(to-inches '(5 miles))
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(to-inches &apos;(5 miles))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Now, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to-inches&lt;/code&gt; has no match pattern for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;'(5 miles)&lt;/code&gt;, and so it
+&lt;p&gt;Now, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;to-inches&lt;/code&gt; has no match pattern for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&apos;(5 miles)&lt;/code&gt;, and so it
 raises a dynamic error. If Racket had a static type system (like Typed
 Racket does), it could statically (at compile time) tell you that the
 match was non-total–however, this is also an optional feature
@@ -278,8 +278,8 @@ originated (the “root cause” of the bug).&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 03 Feb 2025 00:00:00 -0500</pubDate>
-        <link>https://kmicinski.com/cis352-s25/notes/week/4</link>
-        <guid isPermaLink="true">https://kmicinski.com/cis352-s25/notes/week/4</guid>
+        <link>https://kmicinski.com/cis531-s25/notes/week/4</link>
+        <guid isPermaLink="true">https://kmicinski.com/cis531-s25/notes/week/4</guid>
         
         
         <category>notes</category>
@@ -305,8 +305,8 @@ course.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 21 Jan 2025 00:00:00 -0500</pubDate>
-        <link>https://kmicinski.com/cis352-s25/notes/week/2</link>
-        <guid isPermaLink="true">https://kmicinski.com/cis352-s25/notes/week/2</guid>
+        <link>https://kmicinski.com/cis531-s25/notes/week/2</link>
+        <guid isPermaLink="true">https://kmicinski.com/cis531-s25/notes/week/2</guid>
         
         
         <category>notes</category>
@@ -762,7 +762,7 @@ select for your project to be graded.&lt;/p&gt;
 (define/contract (parse-line l)
   (-&amp;gt; string? line?)
   ;; TODO TODO TODO 
-  'todo)
+  &apos;todo)
 
 ;; starter code
 ;; read a file by mapping over its lines  
@@ -774,8 +774,8 @@ select for your project to be graded.&lt;/p&gt;
 ;; Input is a list of line? commands. Write a recursive function which
 ;; builds up a hash.
 ;;
-;; - If it's a `node` command, add a link from a node to itself.
-;; - If it's a `link` command, add a directional link as specified.
+;; - If it&apos;s a `node` command, add a link from a node to itself.
+;; - If it&apos;s a `link` command, add a directional link as specified.
 ;;
 ;; Hint: use (hash), (set n), hash-set, set-add, hash-ref, and similar.
 (define/contract (build-init-graph input)
@@ -789,7 +789,7 @@ select for your project to be graded.&lt;/p&gt;
 ;; 
 ;; Hint: use set-member? and hash-ref
 (define (forward-link? graph n0 n1)
-  'todo)
+  &apos;todo)
 
 ;; TODO
 ;; Add a directed link (from,to) to the graph graph, return the new graph with 
@@ -797,7 +797,7 @@ select for your project to be graded.&lt;/p&gt;
 ;;
 ;; Hint: use hash-set, hash-ref, and set-add.
 (define (add-link graph from to)
-  'todo)
+  &apos;todo)
 
 ;; TODO
 ;; Perform the transitive closure of the graph. This is the most challenging 
@@ -812,7 +812,7 @@ select for your project to be graded.&lt;/p&gt;
 ;; `add-link`. It is always possible to use a recursive helper function instead
 ;; of a foldl, but it makes the code much easier to understand in my opinion.
 (define (transitive-closure graph)
-  'todo)
+  &apos;todo)
 
 
 ;;
@@ -853,8 +853,8 @@ select for your project to be graded.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Sun, 02 Oct 2022 00:00:00 -0400</pubDate>
-        <link>https://kmicinski.com/cis352-s25/projects/2</link>
-        <guid isPermaLink="true">https://kmicinski.com/cis352-s25/projects/2</guid>
+        <link>https://kmicinski.com/cis531-s25/projects/2</link>
+        <guid isPermaLink="true">https://kmicinski.com/cis531-s25/projects/2</guid>
         
         
         <category>assignment</category>
@@ -871,8 +871,8 @@ select for your project to be graded.&lt;/p&gt;
 
 </description>
         <pubDate>Sat, 17 Sep 2022 00:00:00 -0400</pubDate>
-        <link>https://kmicinski.com/cis352-s25/projects/1</link>
-        <guid isPermaLink="true">https://kmicinski.com/cis352-s25/projects/1</guid>
+        <link>https://kmicinski.com/cis531-s25/projects/1</link>
+        <guid isPermaLink="true">https://kmicinski.com/cis531-s25/projects/1</guid>
         
         
         <category>assignment</category>
