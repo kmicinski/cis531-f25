@@ -3,7 +3,7 @@ layout: mainpage
 ---
 <!-- WEEK 1 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 1: Course Introduction and Autograder</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 1: Course Intro</h2>
 </div>
 <div class="week-schedule">
   <ul>
@@ -55,7 +55,7 @@ layout: mainpage
 
 <!-- WEEK 2 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 2: Racket Forms and Lists</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 2: Racket Refresher, Interpreting LVar</h2>
 </div>
 <div class="week-schedule">
   <ul>
@@ -119,7 +119,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-code project-icon"></i> 
-          Project P1: Tic-Tac-Toe -- Released (Due on 2/11)
+          Project P1: Interpreting LVar -- Released 9/4, <i>due 9/18</i>
         </div>
         <ul class="resources-list">
           <li>
@@ -146,7 +146,7 @@ layout: mainpage
 
 <!-- WEEK 3 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 3: Recursion and Lambdas</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 3: Syntactic Analysis and Parsing</h2>
 </div>
 <div class="week-schedule">
   <ul>
@@ -192,7 +192,7 @@ layout: mainpage
 
 <!-- WEEK 4 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 4: Tree-Shaped (Algebraic) Data</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 4: Compiling LVar to x86</h2>
 </div>
 <div class="week-schedule">
   <ul>
@@ -273,7 +273,7 @@ layout: mainpage
 
 <!-- WEEK 5 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 5: Tail Calls and Foldl/r</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 5: Branching Control-Flow (LIf), Type Checking</h2>
 </div>
 <div class="week-schedule">
   <ul>
@@ -341,7 +341,7 @@ layout: mainpage
 
 <!-- WEEK 6 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 6: Foldl/r and Building Our First Interpreter</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 6: Assignment Conversion and Garbage Collection</h2>
 </div>
 <div class="week-schedule">
   <ul>
@@ -405,7 +405,7 @@ layout: mainpage
 
 <!-- WEEK 7 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 7: Midterm Review and Midterm 1</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 7: Midterm 1</h2>
 </div>
 <div class="week-schedule">
   <ul>
@@ -434,7 +434,7 @@ layout: mainpage
 
 <!-- WEEK 8 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 8: Natural Deduction and Lambda Calculus Intro</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 8: Fall Break & Loops</h2>
 </div>
 <div class="week-schedule">
   <ul>
@@ -506,36 +506,10 @@ layout: mainpage
   </ul>
 </div>
 
-<!-- WEEK SPRING BREAK -->
-<div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i>  Spring Break</h2>
-</div>
-<div class="week-schedule">
-  <ul>
-    <li class="session-item">
-      <div class="date-col">3/11</div>
-      <div class="session-col">
-        <div class="session-title">
-          <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Spring Break (No Class)
-        </div>
-      </div>
-    </li>
-    <li class="session-item">
-      <div class="date-col">3/13</div>
-      <div class="session-col">
-        <div class="session-title">
-          <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Spring Break (No Class)
-        </div>
-      </div>
-    </li>
-  </ul> 
-</div>
 
 <!-- WEEK 9 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 9: Lambda Calculus Details</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 9: Loops and Data Flow Analysis</h2>
 </div>
 <div class="week-schedule">  
   <ul>  
@@ -598,7 +572,7 @@ layout: mainpage
 
 <!-- WEEK 10 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 10: Church Encoding and Recursion</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 10: Activation Records and Procedures</h2>
 </div>
 <div class="week-schedule">    
   <ul>
@@ -660,7 +634,7 @@ layout: mainpage
 
 <!-- WEEK  11 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i> Week 11: Midterm Review and Midterm 2</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i> Week 11: Register Allocation</h2>
 </div>
 <div class="week-schedule">
   <ul>
@@ -705,7 +679,7 @@ layout: mainpage
 
 <!-- WEEK 11 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i>Week 12: Simply-Typed λ-Calculus</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i>Week 12: Closures and Objects</h2>
 </div>
 <div class="week-schedule">    
   <ul>
@@ -754,7 +728,7 @@ layout: mainpage
 
 <!-- WEEK 12 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i>Week 13: Type Inference and Logic Programming</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i>Week 13: Midterm 2</h2>
 </div>
 <div class="week-schedule">    
   <ul>
@@ -798,7 +772,7 @@ layout: mainpage
 
 <!-- WEEK 13 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i>Week 14: Low-Level Programming in Rust</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i>Week 14: Final Project Presentations</h2>
 </div>
 <div class="week-schedule"> 
   <ul>

@@ -1,5 +1,5 @@
 # Site settings
-title: CIS352
+title: CIS531
 baseurl:  "" # "cis352-s25"
 url: "" #  "https://kmicinski.com/"
 description: "CMSC352--Principles of Programming Languages (Spring '25) at Syracuse"

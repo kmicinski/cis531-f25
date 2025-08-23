@@ -1,8 +1,8 @@
 # Site settings
-title: CIS352
-baseurl:  "cis352-s25"
+title: CIS531
+baseurl:  "cis531-s25"
 url:   "https://kmicinski.com/"
-description: "CMSC352--Principles of Programming Languages (Spring '25) at Syracuse"
+description: "CIS531 -- Compilers at Syracuse (Fall '25)
 permalink: pretty
 
 # Build settings
