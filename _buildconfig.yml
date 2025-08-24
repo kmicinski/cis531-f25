@@ -1,6 +1,6 @@
 # Site settings
 title: CIS531
-baseurl:  "cis531-sf5"
+baseurl:  "cis531-f25"
 url:   "https://kmicinski.com/"
 description: "CIS531 -- Compilers at Syracuse (Fall '25)"
 permalink: pretty
