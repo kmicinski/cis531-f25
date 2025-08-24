@@ -9,15 +9,6 @@ layout: mainpage
   <ul>
     <!-- Session 2: 8/27 Lecture L0 -->
     <li class="session-item">
-      <div class="date-col">Week 1</div>
-      <div class="session-col">
-        <div class="session-title">
-          <i class="fa-solid fa-book-open reading-icon"></i> 
-          <a href="https://kmicinski.com/cis352-s25/notes/week/1">Week 1 Lecture notes</a>
-        </div>
-      </div>
-    </li>
-    <li class="session-item">
       <div class="date-col">8/26</div>
       <div class="session-col">
         <div class="session-title">
