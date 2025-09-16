@@ -105,33 +105,7 @@ layout: mainpage
       </div>
     </li>
     <!-- Session: 9/5 Project P1 -->
-    <li class="session-item">
-      <div class="date-col">9/4</div>
-      <div class="session-col">
-        <div class="session-title">
-          <i class="fa-solid fa-code project-icon"></i> 
-          HW1: Interpreting LVar -- Released 9/4, <i>due 9/18</i>
-        </div>
-        <ul class="resources-list">
-          <!-- <li> -->
-          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
-          <!--   <a href="https://www.youtube.com/watch?v=ApIXt_Exf7g">Tic-Tac-Toe Video</a> -->
-          <!-- </li> -->
-        </ul>
-      </div>
-    </li>
     <!-- Session: L0–L3 Reading R0 -->
-    <li class="session-item">
-      <div class="date-col"></div>
-      <div class="session-col">
-        <ul class="resources-list">
-          <li>
-            <i class="fa-solid fa-book-open reading-icon"></i>
-            Optional Reading: TBA
-          </li>
-        </ul>
-      </div>
-    </li>
   </ul>
 </div>
 
@@ -171,13 +145,22 @@ layout: mainpage
           <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
           <!--   <a href="https://www.youtube.com/watch?v=OqZleNZto0A&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=9">Lecture Video</a> -->
           <!-- </li> -->
-          <!-- <li> -->
-          <!--   <i class="fa-solid fa-file-lines notes-icon"></i> -->
-          <!--   <a href="https://kmicinski.com/cis352-s25/assets/slides/lambdas.pdf">Lecture Slides</a> -->
-          <!-- </li> -->
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/parsing.pdf">Lecture Slides</a>
+          </li>
         </ul>
       </div>
     </li>
+    <li class="session-item">
+      <div class="date-col">Project 1</div>
+      <div class="session-col">
+        <div class="session-title">
+          <i class="fa-solid fa-book-open reading-icon"></i> 
+          <a href="/projects/1">Project 1 (assigned 9/10, due 9/23)</a>
+        </div>
+      </div>
+    </li>    
   </ul>
 </div>
 

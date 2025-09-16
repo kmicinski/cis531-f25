@@ -3,7 +3,7 @@ title: Syllabus
 layout: default
 --- 
 
-<a href="{{ '/assets/syllabus.pdf' | prepend: site.baseurl | prepend: site.url }}">Official CIS352 S25 course syllabus (PDF)</a> (first uploaded: Jan 7, 2025, updated Feb 3 to include office hours).
+<a href="{{ '/assets/syllabus.pdf' | prepend: site.baseurl | prepend: site.url }}">Official CIS531 F25 course syllabus (PDF)</a> (first uploaded: Aug 25, 2025).
 
 Below, I provide an abbreviated syllabus with the major points--this website is not the official syllabus, the official syllabus will always be available at the above PDF.
 
