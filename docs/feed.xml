@@ -5,8 +5,8 @@
     <description>CIS531 -- Compilers at Syracuse (Fall &apos;25)</description>
     <link>https://kmicinski.com/cis531-f25/</link>
     <atom:link href="https://kmicinski.com/cis531-f25/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 22 Sep 2025 11:11:20 -0400</pubDate>
-    <lastBuildDate>Mon, 22 Sep 2025 11:11:20 -0400</lastBuildDate>
+    <pubDate>Mon, 22 Sep 2025 11:25:59 -0400</pubDate>
+    <lastBuildDate>Mon, 22 Sep 2025 11:25:59 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -71,7 +71,8 @@ at runtime.&lt;/p&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;irs.rkt&lt;/code&gt; – IR definitions and predicates like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anf-program?&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c0-program?&lt;/code&gt;, etc.&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpreters.rkt&lt;/code&gt; – Reference interpreters for several IRs (used by tests and for your own debugging).&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;system.rkt&lt;/code&gt; – System/ABI configuration, pass names, runtime filenames, output paths, etc.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.rkt&lt;/code&gt; – Driver that runs all passes, can build a binary, and can launch a debug server.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.rkt&lt;/code&gt; – Driver that runs all passes, can build a binary&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debug-server.rkt&lt;/code&gt; – Launches a debugging server to help visualize each compiler pass&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test.rkt&lt;/code&gt; – Test harness. Runs isolation tests or end-to-end native tests depending on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-m&lt;/code&gt; mode.&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;runtime.c&lt;/code&gt; – Minimal runtime (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read_int64&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print_int64&lt;/code&gt;, etc.).&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-programs/&lt;/code&gt; – Example programs (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.scm&lt;/code&gt;).&lt;/li&gt;

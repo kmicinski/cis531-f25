@@ -158,7 +158,8 @@ at runtime.</p>
   <li><code class="language-plaintext highlighter-rouge">irs.rkt</code> – IR definitions and predicates like <code class="language-plaintext highlighter-rouge">anf-program?</code>, <code class="language-plaintext highlighter-rouge">c0-program?</code>, etc.</li>
   <li><code class="language-plaintext highlighter-rouge">interpreters.rkt</code> – Reference interpreters for several IRs (used by tests and for your own debugging).</li>
   <li><code class="language-plaintext highlighter-rouge">system.rkt</code> – System/ABI configuration, pass names, runtime filenames, output paths, etc.</li>
-  <li><code class="language-plaintext highlighter-rouge">main.rkt</code> – Driver that runs all passes, can build a binary, and can launch a debug server.</li>
+  <li><code class="language-plaintext highlighter-rouge">main.rkt</code> – Driver that runs all passes, can build a binary</li>
+  <li><code class="language-plaintext highlighter-rouge">debug-server.rkt</code> – Launches a debugging server to help visualize each compiler pass</li>
   <li><code class="language-plaintext highlighter-rouge">test.rkt</code> – Test harness. Runs isolation tests or end-to-end native tests depending on <code class="language-plaintext highlighter-rouge">-m</code> mode.</li>
   <li><code class="language-plaintext highlighter-rouge">runtime.c</code> – Minimal runtime (<code class="language-plaintext highlighter-rouge">read_int64</code>, <code class="language-plaintext highlighter-rouge">print_int64</code>, etc.).</li>
   <li><code class="language-plaintext highlighter-rouge">test-programs/</code> – Example programs (<code class="language-plaintext highlighter-rouge">.scm</code>).</li>
