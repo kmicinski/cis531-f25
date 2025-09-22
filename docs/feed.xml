@@ -5,12 +5,12 @@
     <description>CIS531 -- Compilers at Syracuse (Fall &apos;25)</description>
     <link>https://kmicinski.com/cis531-f25/</link>
     <atom:link href="https://kmicinski.com/cis531-f25/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 22 Sep 2025 11:25:59 -0400</pubDate>
-    <lastBuildDate>Mon, 22 Sep 2025 11:25:59 -0400</lastBuildDate>
+    <pubDate>Mon, 22 Sep 2025 11:28:43 -0400</pubDate>
+    <lastBuildDate>Mon, 22 Sep 2025 11:28:43 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
-        <title>Project 2: R1 → x86-64 Assembler</title>
+        <title>Project 2: LVar → x86-64 Assembler</title>
         <description>&lt;p&gt;&lt;em&gt;Starter code&lt;/em&gt;: &lt;a href=&quot;/cis531-f25/assets/p2-starter.tar.gz&quot;&gt;Download the starter here!&lt;/a&gt;&lt;/p&gt;
 
 &lt;div align=&quot;center&quot;&gt;
