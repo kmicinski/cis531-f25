@@ -5,8 +5,8 @@
     <description>CIS531 -- Compilers at Syracuse (Fall &apos;25)</description>
     <link>https://kmicinski.com/cis531-f25/</link>
     <atom:link href="https://kmicinski.com/cis531-f25/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 22 Sep 2025 11:28:43 -0400</pubDate>
-    <lastBuildDate>Mon, 22 Sep 2025 11:28:43 -0400</lastBuildDate>
+    <pubDate>Mon, 22 Sep 2025 11:29:11 -0400</pubDate>
+    <lastBuildDate>Mon, 22 Sep 2025 11:29:11 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -25,11 +25,11 @@ to keep the workload reasonable and to make grading/debugging
 clearer. Where behavior differs from the book, &lt;strong&gt;this README is the
 source of truth&lt;/strong&gt; for expectations, file names, and command lines.&lt;/p&gt;
 
-&lt;p&gt;You will compile a tiny expression language (R1) for straight-line
-arithmetic with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;let&lt;/code&gt;-bindings and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read&lt;/code&gt; into x86-64 assembly, then
-produce a real binary and test it on actual inputs. Essentially,
-programs in our language are sequences of reads, ultimately printing
-one final output.&lt;/p&gt;
+&lt;p&gt;You will compile a tiny expression language (R1/LVar, used
+interchangably) for straight-line arithmetic with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;let&lt;/code&gt;-bindings and
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read&lt;/code&gt; into x86-64 assembly, then produce a real binary and test it on
+actual inputs. Essentially, programs in our language are sequences of
+reads, ultimately printing one final output.&lt;/p&gt;
 
 &lt;h2 id=&quot;input-language-r1--lvar&quot;&gt;Input Language (R1 / LVar)&lt;/h2&gt;
 
