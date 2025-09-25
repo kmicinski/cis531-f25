@@ -157,7 +157,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-book-open reading-icon"></i> 
-          <a href="/projects/1">Project 1 (assigned 9/10, due 9/23)</a>
+          <a href="https://kmicinski.com/cis531-f25/projects/1">Project 1 (assigned 9/10, due 9/23)</a>
         </div>
       </div>
     </li>    
@@ -176,7 +176,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-book-open reading-icon"></i> 
-          <a href="https://kmicinski.com/cis352-s25/notes/week/4">Week 4 Lecture notes</a>
+          <a href="https://gist.github.com/kmicinski/7946389b585378d3fe79206bb5d46ea0">LL(k) Parsing Lecture Notes</a>
         </div>
       </div>
     </li>
@@ -203,7 +203,7 @@ layout: mainpage
           <!-- </li> -->
           <li>
             <i class="fa-solid fa-file-lines notes-icon"></i>
-            <a href="https://kmicinski.com/cis352-s25/assets/slides/ll-parsing.pdf">Lecture Slides (LL parsing)</a>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/ll-parsing.pdf">Lecture Slides (LL parsing)</a>
           </li>
           <!-- <li> -->
           <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
@@ -224,7 +224,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i> 
-          Introducing Project 2
+          Livecoding: recursive descent and project 2
         </div>
         <ul class="resources-list">
           <li>
@@ -236,20 +236,15 @@ layout: mainpage
     </li>
 
     <li class="session-item">
-      <div class="date-col">9/18</div>
+      <div class="date-col">9/20</div>
       <div class="session-col">
         <div class="session-title">
-          <i class="fa-solid fa-code project-icon"></i> 
-          HW2: Compiling LVar to x86 -- Released 9/18, <i>due 10/2</i>
+          <i class="fa-brands fa-youtube youtube-icon"></i> 
+	        <a href="https://www.youtube.com/watch?v=JEicgjQ-G78">(YouTube video) Parsing Left-Associative Operators with LL(k) parsers</a>
         </div>
-        <ul class="resources-list">
-          <!-- <li> -->
-          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
-          <!--   <a href="https://www.youtube.com/watch?v=ApIXt_Exf7g">Tic-Tac-Toe Video</a> -->
-          <!-- </li> -->
-        </ul>
       </div>
     </li>
+
 
   </ul>
 </div>
@@ -261,49 +256,24 @@ layout: mainpage
 
 <div class="week-schedule">
   <ul>
-    <!-- Week 4 Notes -->
     <li class="session-item">
-      <div class="date-col">Week 5</div>
+      <div class="date-col">Project 2</div>
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-book-open reading-icon"></i> 
-          <a href="https://kmicinski.com/cis352-s25/notes/week/4">Week 5 Lecture notes</a>
+          <a href="https://kmicinski.com/cis531-f25/projects/2">Project 2 (assigned 9/22, due 10/9)</a>
         </div>
       </div>
-    </li>
-    <!-- <li class="session-item"> -->
-    <!--   <div class="date-col">2/4</div> -->
-    <!--   <div class="session-col"> -->
-    <!--     <div class="session-title"> -->
-    <!--       <i class="fa-solid fa-book-open reading-icon"></i>  -->
-    <!--       <a href="https://gist.github.com/kmicinski/0e0ed7ac52c1fea9873e4d52ef5dc2d0">Code from Class, 2/4</a> -->
-    <!--     </div> -->
-    <!--   </div> -->
-    <!-- </li> -->
+    </li>    
+
     <li class="session-item">
       <div class="date-col">9/23</div>
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i> 
-          Static-Single Assignment and A-Normal Form
+	      Introducing the R1 Language: Project 2
         </div>
         <ul class="resources-list">
-          <!-- <li> -->
-          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
-		  <!-- 		<a href="https://www.youtube.com/watch?v=7NA9HZdlR0g&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=10">Lecture Video (Cons Diagrams)</a> -->
-          <!-- </li> -->
-          <!-- <li> -->
-          <!--   <i class="fa-solid fa-file-lines notes-icon"></i> -->
-          <!--   <a href="https://kmicinski.com/cis352-s25/assets/slides/cons.pdf">Lecture Slides (Cons)</a> -->
-          <!-- </li> -->
-          <!-- <li> -->
-          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
-          <!--   <a href="https://www.youtube.com/watch?v=RJFkmh9Wo8o&amp;list=PLXaqTeMx01E_eK1ZEpKvKL5KwSaj7cJW9&amp;index=12">Lecture Video (Matching)</a> -->
-          <!-- </li> -->
-          <!-- <li> -->
-          <!--   <i class="fa-solid fa-file-lines notes-icon"></i> -->
-          <!--   <a href="https://kmicinski.com/cis352-s25/assets/slides/maps-matches.pdf">Lecture Slides (Matching)</a> -->
-          <!-- </li> -->
         </ul>
       </div>
     </li>
@@ -318,10 +288,6 @@ layout: mainpage
 		  Branching Control-Flow, Control-Flow Graphs (CFGs)
         </div>
         <ul class="resources-list">
-          <li>
-            <i class="fa-solid fa-file-lines notes-icon"></i>
-            <a href="https://kmicinski.com/cis352-s25/assets/slides/maps-matches.pdf">Lecture Slides</a>
-          </li>
         </ul>
       </div>
     </li>
