@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Project 3: R2 / LIf -> x86-64</title>
+  <meta name="description" content="Download the starter files here">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://kmicinski.com/cis531-f25/css/main.css">
+  <link rel="canonical" href="https://kmicinski.com/cis531-f25/projects/3">
+  <link rel="alternate" type="application/rss+xml" title="CIS531" href="https://kmicinski.com/cis531-f25/feed.xml">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+</head>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href=https://kmicinski.com//cis531-f25/>CIS531</a>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis531-f25/#schedule>Schedule</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis531-f25/learning-objectives>Objectives</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis531-f25/syllabus>Syllabus</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://autograde.org">Autograde</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <!-- <nav class="site-nav"> -->
+    <!--   <a href="#" class="menu-icon"> -->
+    <!--     <svg viewBox="0 0 18 15"> -->
+    <!--       <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/> -->
+    <!--       <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/> -->
+    <!--       <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/> -->
+    <!--     </svg> -->
+    <!--   </a> -->
+
+    <!--   <div class="trigger"> -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--       <a class="page-link" href="https://kmicinski.com//cis531-f25/schedule/">Schedule</a> -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--       <a class="page-link" href="https://kmicinski.com//cis531-f25/syllabus/">Syllabus</a> -->
+    <!--        -->
+    <!--      -->
+    <!--   </div> -->
+    <!-- </nav> -->
+
+  </div>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Project 3: R2 / LIf -> x86-64</h1>
+    <h3><b>Project due date: <time datetime="2025-10-28T00:00:00-04:00">Oct 28,
+    2025 (11:59PM Eastern)</time></b></h3>
+  </header>
+
+  <div class="post-content writeup-content" itemprop="articleBody">
+    <p><a href="/assets/p3-starter.tar.gz">Download the starter files here</a></p>
+
+<p>This project is inspired by <em>Essentials of Compilation</em> (EoC), but the
+code here is a from-scratch reimplementation with some simplifications
+to keep the workload reasonable and to make grading/debugging
+clearer. Where behavior differs from the book, <strong>this README is the
+source of truth</strong> for expectations, file names, and command lines.</p>
+
+<p>You will compile a tiny expression language (<strong>R2 / LIf</strong>) with
+integers, booleans, <code class="language-plaintext highlighter-rouge">let</code>, arithmetic, conditionals, and comparisons
+into x86-64 assembly, then produce a real binary and test it on actual
+inputs. The power of this language is (roughly) decision diagrams (and
+functions on) finite input streams.</p>
+
+<p>This README file contains some specific tips which I hope you will
+read, including debugging tips and some project-specific
+instructions. Please read the whole README file and be prepared to
+discuss it in office hours, email, and class.</p>
+
+<h2 id="input-language-r2--lif">Input Language (R2 / LIf)</h2>
+
+<p>R2 extends the straight-line arithmetic core with booleans and simple
+conditionals. It includes integers, booleans, variables, <code class="language-plaintext highlighter-rouge">let</code>, unary
+minus, addition, logical operators, comparisons, and a zero-argument
+<code class="language-plaintext highlighter-rouge">(read)</code> primitive that consumes one integer from stdin at runtime.</p>
+
+<p>Before shrinking, the surface language allows <code class="language-plaintext highlighter-rouge">and</code>, <code class="language-plaintext highlighter-rouge">or</code>, <code class="language-plaintext highlighter-rouge">not</code>,
+<code class="language-plaintext highlighter-rouge">if</code>, and the comparators <code class="language-plaintext highlighter-rouge">eq?</code>, <code class="language-plaintext highlighter-rouge">&lt;</code>, <code class="language-plaintext highlighter-rouge">&lt;=</code>, <code class="language-plaintext highlighter-rouge">&gt;</code>, <code class="language-plaintext highlighter-rouge">&gt;=</code>. The <code class="language-plaintext highlighter-rouge">shrink</code>
+pass reduces this set to <code class="language-plaintext highlighter-rouge">eq?</code> and <code class="language-plaintext highlighter-rouge">&lt;</code>, removes binary minus, and
+desugars <code class="language-plaintext highlighter-rouge">and</code>/<code class="language-plaintext highlighter-rouge">or</code>.</p>
+
+<div class="language-racket highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">;; Core (pre-shrink) expressions and programs (abridged)</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">cmp?</span> <span class="nv">cmp</span><span class="p">)</span> <span class="p">(</span><span class="nb">member</span> <span class="nv">cmp</span> <span class="o">'</span><span class="p">(</span><span class="nb">eq?</span> <span class="nv">&lt;</span> <span class="nv">&lt;=</span> <span class="nv">&gt;</span> <span class="nv">&gt;=</span><span class="p">)))</span>
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">R2-exp?</span> <span class="nv">e</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">e</span>
+    <span class="p">[</span><span class="nf">#t</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">#f</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[(</span><span class="nf">?</span> <span class="nv">fixnum?</span> <span class="nv">n</span><span class="p">)</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nb">read</span><span class="p">)</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nb">-</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>                           <span class="c1">; unary minus</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nb">+</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e0</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e1</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="k">and</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e0</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e1</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="k">or</span>  <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e0</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e1</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nb">not</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">cmp?</span> <span class="nv">c</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e0</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e1</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="k">if</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">g</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">t</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">f</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[(</span><span class="nf">?</span> <span class="nv">symbol?</span> <span class="nv">var</span><span class="p">)</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="k">let</span> <span class="p">([</span><span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">symbol?</span> <span class="nv">x</span><span class="p">)</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e</span><span class="p">)])</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">e-body</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+
+<span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">R2?</span> <span class="nv">e</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">match</span> <span class="nv">e</span>
+    <span class="p">[</span><span class="o">`</span><span class="p">(</span><span class="nf">program</span> <span class="o">,</span><span class="p">(</span><span class="nf">?</span> <span class="nv">R2-exp?</span> <span class="nv">exp</span><span class="p">))</span> <span class="no">#t</span><span class="p">]</span>
+    <span class="p">[</span><span class="nf">_</span> <span class="no">#f</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<p>Programs on disk are s-expressions, e.g.:</p>
+
+<div class="language-racket highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nf">program</span>
+  <span class="p">(</span><span class="k">let</span> <span class="p">([</span><span class="nf">a</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">read</span><span class="p">))])</span>
+    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&lt;=</span> <span class="nv">a</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">(</span><span class="k">let</span> <span class="p">([</span><span class="nf">x</span> <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">a</span> <span class="mi">2</span><span class="p">)</span> <span class="mi">3</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">-</span> <span class="mi">2</span><span class="p">)))])</span>
+          <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="mi">3</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<h2 id="repository-layout">Repository Layout</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">compile.rkt</code> – Your pass implementations. You will edit functions provided here.
+-&gt; This is the <em>only</em> file you will edit! The rest are read-only</li>
+  <li><code class="language-plaintext highlighter-rouge">irs.rkt</code> – IR definitions and predicates like <code class="language-plaintext highlighter-rouge">anf-program?</code>, <code class="language-plaintext highlighter-rouge">c1-program?</code>, etc. (see also typed/shrunk variants)</li>
+  <li><code class="language-plaintext highlighter-rouge">interpreters.rkt</code> – Reference interpreters for several IRs (used by tests and for your own debugging).</li>
+  <li><code class="language-plaintext highlighter-rouge">system.rkt</code> – System/ABI configuration, pass names, runtime filenames, output paths, etc.</li>
+  <li><code class="language-plaintext highlighter-rouge">main.rkt</code> – Driver that runs all passes, can build a binary, and can launch a debug server.</li>
+  <li><code class="language-plaintext highlighter-rouge">test.rkt</code> – Test harness. Runs isolation tests or end-to-end native tests depending on <code class="language-plaintext highlighter-rouge">-m</code> mode.</li>
+  <li><code class="language-plaintext highlighter-rouge">runtime.c</code> – Minimal runtime (<code class="language-plaintext highlighter-rouge">read_int64</code>, <code class="language-plaintext highlighter-rouge">print_int64</code>, etc.).</li>
+  <li><code class="language-plaintext highlighter-rouge">test-programs/</code> – Example programs (<code class="language-plaintext highlighter-rouge">.scm</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">input-files/</code> – Input streams for programs (lines of integers).</li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/</code> – Instructor goldens (IR snapshots, interpreter outputs, and stdout baselines).</li>
+</ul>
+
+<p>Please do not rename files or directories (grading infra depends on them).</p>
+
+<h2 id="the-compiler-pipeline-passes">The Compiler Pipeline (passes)</h2>
+
+<p>The compiler consists of a number of passes. Please do not get
+overwhelmed: each of these passes is going to be very small, and each
+has a specific, isolated behavior that will allow us to explain the
+specific stages of compilation. Additionally, as the code is compiled,
+it is translated into an increasingly-lower-level IR.</p>
+
+<p>You will implement the following passes:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">typecheck</code> → assign R2 types (<code class="language-plaintext highlighter-rouge">Int</code>, <code class="language-plaintext highlighter-rouge">Bool</code>) or raise <code class="language-plaintext highlighter-rouge">'type-error</code>
+Input: <code class="language-plaintext highlighter-rouge">R2?</code> → Output: <code class="language-plaintext highlighter-rouge">R2?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-R2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">shrink</code> → remove binary <code class="language-plaintext highlighter-rouge">-</code>, <code class="language-plaintext highlighter-rouge">and</code>/<code class="language-plaintext highlighter-rouge">or</code>, and <code class="language-plaintext highlighter-rouge">&lt;=, &gt;, &gt;=</code> (desugar to <code class="language-plaintext highlighter-rouge">eq?</code>/<code class="language-plaintext highlighter-rouge">&lt;</code>)<br />
+Input: <code class="language-plaintext highlighter-rouge">R2?</code> → Output: <code class="language-plaintext highlighter-rouge">shrunk-R2?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-R2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">uniqueify</code> → ensure each bound identifier is written exactly once<br />
+Input: <code class="language-plaintext highlighter-rouge">shrunk-R2?</code> → Output: <code class="language-plaintext highlighter-rouge">unique-source-tree?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-R2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">anf-convert</code> → ANF conversion (introduce temps; maintain booleans/comparisons)<br />
+Input: <code class="language-plaintext highlighter-rouge">unique-source-tree?</code> → Output: <code class="language-plaintext highlighter-rouge">anf-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-anf</code></li>
+  <li><code class="language-plaintext highlighter-rouge">explicate-control</code> → ANF → <strong>C1</strong> (blocks with <code class="language-plaintext highlighter-rouge">(seq (assign …) …)</code>, <code class="language-plaintext highlighter-rouge">if</code>/<code class="language-plaintext highlighter-rouge">goto</code>)<br />
+Input: <code class="language-plaintext highlighter-rouge">anf-program?</code> → Output: <code class="language-plaintext highlighter-rouge">c1-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-c1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">uncover-locals</code> → collect locals for stack layout<br />
+Input: <code class="language-plaintext highlighter-rouge">c1-program?</code> → Output: <code class="language-plaintext highlighter-rouge">locals-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-c1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">select-instructions</code> → C1 → pseudo-x86 (vars, <code class="language-plaintext highlighter-rouge">cmpq</code>, <code class="language-plaintext highlighter-rouge">set e|l</code>, <code class="language-plaintext highlighter-rouge">jmp-if e|l</code>)<br />
+Input: <code class="language-plaintext highlighter-rouge">locals-program?</code> → Output: <code class="language-plaintext highlighter-rouge">instr-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">assign-homes</code> → map <code class="language-plaintext highlighter-rouge">(var x)</code> → <code class="language-plaintext highlighter-rouge">(deref (reg rbp) n)</code><br />
+Input: <code class="language-plaintext highlighter-rouge">instr-program?</code> → Output: <code class="language-plaintext highlighter-rouge">homes-assigned-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">patch-instructions</code> → fix illegal memory↔memory moves and related cases<br />
+Input: <code class="language-plaintext highlighter-rouge">homes-assigned-program?</code> → Output: <code class="language-plaintext highlighter-rouge">patched-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">prelude-and-conclusion</code> → prologue, print result, return 0<br />
+Input: <code class="language-plaintext highlighter-rouge">patched-program?</code> → Output: <code class="language-plaintext highlighter-rouge">x86-64?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">dump-x86-64</code> → render assembly text<br />
+Input: <code class="language-plaintext highlighter-rouge">x86-64?</code> → Output: <code class="language-plaintext highlighter-rouge">string?</code> → Interp: <code class="language-plaintext highlighter-rouge">dummy-interp-x86-64</code></li>
+</ol>
+
+<p><strong>What you implement</strong>: All passes in <code class="language-plaintext highlighter-rouge">compile.rkt</code> are scaffolded.
+Your job is to produce outputs that satisfy each predicate in
+<code class="language-plaintext highlighter-rouge">irs.rkt</code> and that remain semantically equivalent (the interpreters
+check this).</p>
+
+<p><strong>NOTE</strong>: Right now (in this version of the project), I testing
+typechecking rather minimally. Unfortunately that is a known
+limitation of this project; please do implement typechecking, but know
+that it is far less important than the other parts (you can simply
+implement it as a no-op to start).</p>
+
+<h2 id="ir-predicates-and-interpreters">IR Predicates and Interpreters</h2>
+
+<ul>
+  <li>
+    <p><strong>Predicates</strong> (<code class="language-plaintext highlighter-rouge">irs.rkt</code>): Each pass has a precise predicate (e.g.,
+<code class="language-plaintext highlighter-rouge">anf-program?</code>, <code class="language-plaintext highlighter-rouge">c1-program?</code>, etc.). Tests check both input and
+output predicates at every step to catch malformed IR early. You
+should read and understand each predicate.</p>
+  </li>
+  <li>
+    <p><strong>Interpreters</strong> (<code class="language-plaintext highlighter-rouge">interpreters.rkt</code>): For many stages we run the
+interpreter over your IR to check semantic consistency—different IRs
+must compute the same result on the same input stream. The harness
+reports whether outputs match and whether stdout across passes is
+consistent. Please do not modify this file.</p>
+  </li>
+</ul>
+
+<h2 id="how-to-compile-and-run">How to Compile and Run</h2>
+
+<p>To directly compile a single file using <code class="language-plaintext highlighter-rouge">main.rkt</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket main.rkt test-programs/&lt;prog&gt;.scm
+</code></pre></div></div>
+
+<p>The compiler dumps a long summary of the work done at each pass, and
+ultimately yields a program <code class="language-plaintext highlighter-rouge">./output</code> which it compiles using
+system-specific infrastructure (works on Linux/Mac).</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ racket main.rkt test-programs/example.scm
+Compiling IR (using *your* compile.rkt) …
+'(pushq (reg rbp))
+...
+🏗️ Now building a binary... 🏗️
+-&gt; Host: macosx/x86_64  Target: x86_64-apple-darwin  Entry: main
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./output.s -o ./output.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./runtime.c -o ./runtime.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 ./output.o ./runtime.o -o ./output
+Success! Executable produced at: ./output
+Done!
+$ ./output
+42
+</code></pre></div></div>
+
+<p>Programs that <code class="language-plaintext highlighter-rouge">(read)</code> input will prompt or consume stdin. You can use
+input redirection:<br />
+<code class="language-plaintext highlighter-rouge">./output &lt; input-files/1.in</code></p>
+
+<h2 id="debugging-guide">Debugging Guide</h2>
+
+<p>This is a tricky project, and it is really important that you lean
+into a debugging methodology that works for you. Let me share with you
+some advice I used when I was writing the compiler myself.</p>
+
+<ul>
+  <li>First, I started by writing a single manual test in the top-level of
+<code class="language-plaintext highlighter-rouge">compile.rkt</code>, so that I could easily just sit at the command line
+(or Dr. Racket) and run <code class="language-plaintext highlighter-rouge">compile.rkt</code> (with no command-line
+arguments) and see if the test would pass. At the early stages of
+debugging, this is an excellent strategy, since it means
+fully-pushbutton test. For example, I had (appended to
+<code class="language-plaintext highlighter-rouge">compile.rkt</code>) something like:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(displayln ;; or pretty-print 
+ (dump-x86-64
+  (prelude-and-conclusion
+   (patch-instructions
+    (assign-homes
+     (select-instructions
+      (uncover-locals
+       (explicate-control
+        (anf-convert
+         (uniqueify
+          (shrink
+           (typecheck '(program (let ([a (read)])
+                                  (let ([b (read)]) (if (or (&gt; a b) (eq? (+ b 1) 0))
+                                                        (+ a b)
+                                                        (- b a)))))))))))))))))
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>I started with a fairly large test in my case–since I was merely
+adding forms not present in my previous implementation. In this
+case, I would often be hitting match failures–this is a <em>good</em>
+thing, it allows me to trace down exactly where I need to add match
+cases and handle new behavior. Of course, the issue is that I also
+need to mix that with thinking holistically about the specs of each
+IR.</p>
+  </li>
+  <li>
+    <p>After I thought I had each pass of the compiler working, I started
+switching over to <code class="language-plaintext highlighter-rouge">main.rkt</code>, which will run all passes of the
+compiler and will report their outputs. I also needed to write the
+interpreters (you do not), and so I debugged some of those using
+<code class="language-plaintext highlighter-rouge">main.rkt</code>.</p>
+  </li>
+  <li>
+    <p>Last, once things are acutally working, I used <code class="language-plaintext highlighter-rouge">test.rkt</code>, which I
+adjusted to account for the possibility of expected type errors in
+malformed inputs.</p>
+  </li>
+  <li>
+    <p>My advice to you is similar: start with something where you can
+press “Run” (or continually reinvoke <code class="language-plaintext highlighter-rouge">racket compile.rkt</code>). It will
+facilitate rapid testing, and it is really important to build some
+skill and intuition for how to accomplish that exercise.</p>
+  </li>
+  <li>
+    <p>Remember, debugging is a key concept that you are practicing in this
+class. The worst possible thing you can do is “guess and check”
+debugging (running the tests and hoping they pass)–the issue is
+that doing this gives you very little observability into why the
+code is broken. To fix this, you need to have some way of
+interacting with the code. Experts debug their code using an
+iterative, hypothesis-driven methodology, where they (a) articulate
+a falsifiable hypothesis (“this match pattern never matches
+anything”), (b) change their code to observe the bug (“add a
+displayln at every match handler”), and (c)</p>
+  </li>
+</ul>
+
+<h2 id="tricky-parts-of-this-project">Tricky Parts of this Project</h2>
+
+<p><strong>BE CAREFUL</strong> of the following:</p>
+
+<ul>
+  <li>
+    <p>In the event of a type error, raise <code class="language-plaintext highlighter-rouge">(error (type-error-tag) "Error here...")</code></p>
+  </li>
+  <li>
+    <p>In the previous implementation, we had only a single block, and
+<code class="language-plaintext highlighter-rouge">prelude-and-conclusion</code> sandwiched the generated code between code
+to set up the function and code to print the value and exit the
+function. In this case, that will not work so well. Instead, I
+recommend the following approach: in the <code class="language-plaintext highlighter-rouge">select-instructions</code> pass,
+assume the existence of a special block named <code class="language-plaintext highlighter-rouge">conclusion</code>, which
+assumes the return value (to be printed) is in <code class="language-plaintext highlighter-rouge">%rax</code>, and jump to
+that label. Then, in <code class="language-plaintext highlighter-rouge">prelude-and-conclusion</code>, add this label to the
+program with the right code to print the value of <code class="language-plaintext highlighter-rouge">%rax</code>.</p>
+  </li>
+  <li>
+    <p>On Mac OSX, you need to prefix labels for functions, meaning <code class="language-plaintext highlighter-rouge">_main</code>
+instead of <code class="language-plaintext highlighter-rouge">main</code>. To facilitate this, I provide a function <code class="language-plaintext highlighter-rouge">(rt-sym
+s)</code>, which converts a symbol to a system-specific variant (based on
+the OS). However, you only need to worry about this for labels that
+correspond to exported <em>function</em> entrypoints, not other labels that
+are internal to the program (e.g., the target of a jump, or even
+<code class="language-plaintext highlighter-rouge">conclusion</code>). This is important, because you don’t want to call
+<code class="language-plaintext highlighter-rouge">(rt-sym ...)</code> until the <em>very last pass</em> (it is ugly to make the
+previous passes OSX/Linux-specific). The issue is this: if you
+naively rename every label from <code class="language-plaintext highlighter-rouge">foo</code> to <code class="language-plaintext highlighter-rouge">_foo</code>, then you also need
+to ensure that you clean up jumps so that instead of jumping to
+<code class="language-plaintext highlighter-rouge">foo</code>, they go to <code class="language-plaintext highlighter-rouge">_foo</code>. In my implementation, I handled this as
+follows: I simply used <code class="language-plaintext highlighter-rouge">(rt-sym ...)</code> on the <code class="language-plaintext highlighter-rouge">(entry-symbol)</code> (i.e.,
+<code class="language-plaintext highlighter-rouge">main</code>), which is the <em>only</em> function in this project.</p>
+  </li>
+  <li>
+    <p>Ensure 16-byte stack alignment before <code class="language-plaintext highlighter-rouge">callq</code></p>
+  </li>
+</ul>
+
+<h2 id="testing-infrastructure">Testing Infrastructure</h2>
+
+<p>The file <code class="language-plaintext highlighter-rouge">test.rkt</code> runs a set of formal tests, as in the last
+project.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">frontend</code> – runs <code class="language-plaintext highlighter-rouge">typecheck</code> → <code class="language-plaintext highlighter-rouge">anf-convert</code>, checks ANF via interpreter</li>
+  <li><code class="language-plaintext highlighter-rouge">middleend</code> – runs <code class="language-plaintext highlighter-rouge">explicate-control</code> → <code class="language-plaintext highlighter-rouge">uncover-locals</code>, checks via <code class="language-plaintext highlighter-rouge">interpret-c1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">backend</code> – runs <code class="language-plaintext highlighter-rouge">select-instructions</code> → <code class="language-plaintext highlighter-rouge">patch-instructions</code>, checks via <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">native</code> – full compile → build binary → run with stdin → compare stdout to golden</li>
+</ul>
+
+<p>Usage:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket test.rkt -m &lt;mode&gt; -i &lt;comma-separated input files&gt; -g &lt;comma-separated goldens&gt; &lt;program.scm&gt;
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket test.rkt -m native -i ./input-files/1.in -g goldens/example_1_uniqueify.stdout test-programs/example.scm
+</code></pre></div></div>
+
+<h2 id="goldens-what-they-are">Goldens: What They Are</h2>
+
+<p>We use goldens to verify correctness:</p>
+
+<ol>
+  <li><strong>Isolation goldens</strong> – for non-native modes:
+    <ul>
+      <li>Compare serialized ASTs and interpreter stdout</li>
+    </ul>
+  </li>
+  <li><strong>Native goldens</strong> – for full pipeline:
+    <ul>
+      <li>Run your compiled binary, compare stdout</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Layout:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.in-ast</code></li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.out-ast</code></li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.interp</code></li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.stdout</code></li>
+</ul>
+
+<p>Instructor-only <code class="language-plaintext highlighter-rouge">gengoldens</code> mode regenerates these.</p>
+
+<h2 id="faq">FAQ</h2>
+
+<ul>
+  <li>
+    <p><strong>Do I need register allocation?</strong><br />
+No. Stack-based only.</p>
+  </li>
+  <li>
+    <p><strong>Can I write helpers?</strong><br />
+Yes—keep pass signatures unchanged.</p>
+  </li>
+  <li>
+    <p><strong>Can I call arbitrary C functions?</strong><br />
+No. Only use <code class="language-plaintext highlighter-rouge">read_int64</code> / <code class="language-plaintext highlighter-rouge">print_int64</code>.</p>
+  </li>
+  <li>
+    <p><strong>How are inputs fed?</strong><br />
+Via stdin; <code class="language-plaintext highlighter-rouge">.in</code> files are whitespace-separated integers.</p>
+  </li>
+</ul>
+
+<h2 id="autograder-tests">Autograder Tests</h2>
+
+<p>The autograder invokes <code class="language-plaintext highlighter-rouge">test.rkt</code> in JSON mode. Your job is to make
+each pass satisfy its predicates and produce semantically equivalent
+IRs until final native code passes all tests.</p>
+
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">CIS531</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>CIS531</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>CIS531 -- Compilers at Syracuse (Fall '25)</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src=https://kmicinski.com//cis531-f25/bower_components/jquery/dist/jquery.min.js></script>
+<script src=https://kmicinski.com//cis531-f25/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js></script>
+
+
+  </body>
+
+</html>

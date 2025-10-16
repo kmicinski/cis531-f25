@@ -24,13 +24,13 @@ layout: mainpage
           <!-- </li> -->
           <li>
             <i class="fa-solid fa-file-lines notes-icon"></i>
-            <a href="https://kmicinski.com/cis352-s25/assets/slides/intro.pdf">
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/intro.pdf">
               Lecture Slides
             </a>
           </li>
           <li>
             <i class="fa-solid fa-file-lines notes-icon"></i>
-            <a href="https://kmicinski.com/cis352-s25/assets/slides/compiletoc.pdf">
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/compiletoc.pdf">
               Lecture Slides (Demo: Compiling LArith to C, our first compiler)
             </a>
           </li>
@@ -48,7 +48,7 @@ layout: mainpage
         <ul class="resources-list">
           <li>
             <i class="fa-solid fa-file-lines notes-icon"></i>
-            <a href="https://kmicinski.com/cis352-s25/assets/slides/preliminaries.pdf">
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/preliminaries.pdf">
               Lecture slides
             </a>
           </li>
@@ -211,7 +211,7 @@ layout: mainpage
           <!-- </li> -->
           <!-- <li> -->
           <!--   <i class="fa-solid fa-file-lines notes-icon"></i> -->
-          <!--   <a href="https://kmicinski.com/cis352-s25/assets/slides/maps-matches.pdf">Lecture Slides (Matching)</a> -->
+          <!--   <a href="https://kmicinski.com/cis531-f25/assets/slides/maps-matches.pdf">Lecture Slides (Matching)</a> -->
           <!-- </li> -->
         </ul>
       </div>
@@ -229,7 +229,7 @@ layout: mainpage
         <ul class="resources-list">
           <li>
             <i class="fa-solid fa-file-lines notes-icon"></i>
-            <a href="https://kmicinski.com/cis352-s25/assets/slides/maps-matches.pdf">Lecture Slides</a>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/maps-matches.pdf">Lecture Slides</a>
           </li>
         </ul>
       </div>
@@ -349,9 +349,17 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-code project-icon"></i> 
-          HW3: Compiling LIf to x86 -- Released 10/7, <i>due 10/23</i>
+          SSA, A-Normal Form, and CPS (Introduction)
         </div>
         <ul class="resources-list">
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/ssa-cps.pdf">Lecture Slides</a>
+          </li>
+          <!-- <li> -->
+          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
+          <!--   <a href="https://www.youtube.com/watch?v=ApIXt_Exf7g">Tic-Tac-Toe Video</a> -->
+          <!-- </li> -->
           <!-- <li> -->
           <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
           <!--   <a href="https://www.youtube.com/watch?v=ApIXt_Exf7g">Tic-Tac-Toe Video</a> -->
@@ -366,9 +374,13 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Implementing Assignment Conversion
+          Branching Control-Flow, Project 3 Intro
         </div>
         <ul class="resources-list">
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/r2-lang.pdf">Lecture Slides</a>
+          </li>
         </ul>
       </div>
     </li>
@@ -401,7 +413,7 @@ layout: mainpage
     <!--     <ul class="resources-list"> -->
     <!--       <li> -->
     <!--         <i class="fa-solid fa-upload"></i> -->
-    <!--         <a href="https://kmicinski.com/cis352-s25/projects/1">Submit Project by 03/04</a> -->
+    <!--         <a href="https://kmicinski.com/cis531-f25/projects/1">Submit Project by 03/04</a> -->
     <!--       </li> -->
     <!--     </ul> -->
     <!--   </div> -->
@@ -415,7 +427,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Adding Loops to LIf
+		  R2 / LIf Project
         </div>
         <ul class="resources-list">
           <!-- <li> -->
@@ -424,11 +436,21 @@ layout: mainpage
           <!-- </li> -->
           <!-- <li> -->
           <!--   <i class="fa-solid fa-file-lines notes-icon"></i> -->
-          <!--   <a href="https://kmicinski.com/cis352-s25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
+          <!--   <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
           <!-- </li> -->
         </ul>
       </div>
     </li>
+	    <li class="session-item">
+      <div class="date-col">Project 2</div>
+      <div class="session-col">
+        <div class="session-title">
+          <i class="fa-solid fa-book-open reading-icon"></i> 
+          <a href="https://kmicinski.com/cis531-f25/projects/2">Project 2 (assigned 9/22, due 10/9)</a>
+        </div>
+      </div>
+    </li>    
+
   </ul>
 </div>
 
@@ -454,7 +476,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -488,7 +510,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -533,7 +555,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -570,7 +592,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -604,7 +626,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -634,7 +656,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -668,7 +690,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -704,7 +726,7 @@ layout: mainpage
 <!--         <ul class="resources-list"> -->
 <!--           <li> -->
 <!--             <i class="fa-solid fa-file-lines notes-icon"></i> -->
-<!--             <a href="https://kmicinski.com/cis352-s25/assets/slides/types-part1.pdf">Lecture Slides</a> -->
+<!--             <a href="https://kmicinski.com/cis531-f25/assets/slides/types-part1.pdf">Lecture Slides</a> -->
 <!--           </li> -->
 <!--         </ul> -->
 <!--       </div> -->
@@ -719,7 +741,7 @@ layout: mainpage
 <!--         <ul class="resources-list"> -->
 <!--           <li> -->
 <!--             <i class="fa-brands fa-youtube youtube-icon"></i> -->
-<!--             <a href="https://kmicinski.com/cis352-s25/projects/3">Project Details</a> -->
+<!--             <a href="https://kmicinski.com/cis531-f25/projects/3">Project Details</a> -->
 <!--           </li> -->
 <!--         </ul> -->
 <!--       </div> -->
@@ -758,7 +780,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -792,7 +814,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -821,7 +843,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -855,7 +877,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -884,7 +906,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -918,7 +940,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -946,7 +968,7 @@ layout: mainpage
         <!--   </li> -->
         <!--   <li> -->
         <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis352-s25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
+        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
         <!--   </li> -->
         <!-- </ul> -->
       </div>
@@ -998,7 +1020,7 @@ layout: mainpage
 <!--         <ul class="resources-list"> -->
 <!--           <li> -->
 <!--             <i class="fa-solid fa-upload"></i> -->
-<!--             <a href="https://kmicinski.com/cis352-s25/projects/4">Submit Project by 4/28</a> -->
+<!--             <a href="https://kmicinski.com/cis531-f25/projects/4">Submit Project by 4/28</a> -->
 <!--           </li> -->
 <!--         </ul> -->
 <!--       </div> -->
