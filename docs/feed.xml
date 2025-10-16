@@ -5,13 +5,13 @@
     <description>CIS531 -- Compilers at Syracuse (Fall &apos;25)</description>
     <link>https://kmicinski.com/cis531-f25/</link>
     <atom:link href="https://kmicinski.com/cis531-f25/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 16 Oct 2025 15:15:08 -0400</pubDate>
-    <lastBuildDate>Thu, 16 Oct 2025 15:15:08 -0400</lastBuildDate>
+    <pubDate>Thu, 16 Oct 2025 15:16:23 -0400</pubDate>
+    <lastBuildDate>Thu, 16 Oct 2025 15:16:23 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
         <title>Project 3: R2 / LIf -&gt; x86-64</title>
-        <description>&lt;p&gt;&lt;a href=&quot;/assets/p3-starter.tar.gz&quot;&gt;Download the starter files here&lt;/a&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;a href=&quot;https://kmicinski.com/cis531-f25/assets/p3-starter.tar.gz&quot;&gt;Download the starter files here&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;This project is inspired by &lt;em&gt;Essentials of Compilation&lt;/em&gt; (EoC), but the
 code here is a from-scratch reimplementation with some simplifications
