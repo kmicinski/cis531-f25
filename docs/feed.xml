@@ -5,8 +5,8 @@
     <description>CIS531 -- Compilers at Syracuse (Fall &apos;25)</description>
     <link>https://kmicinski.com/cis531-f25/</link>
     <atom:link href="https://kmicinski.com/cis531-f25/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 16 Oct 2025 15:16:23 -0400</pubDate>
-    <lastBuildDate>Thu, 16 Oct 2025 15:16:23 -0400</lastBuildDate>
+    <pubDate>Thu, 16 Oct 2025 15:17:13 -0400</pubDate>
+    <lastBuildDate>Thu, 16 Oct 2025 15:17:13 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
@@ -383,6 +383,345 @@ Via stdin; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.i
 each pass satisfy its predicates and produce semantically equivalent
 IRs until final native code passes all tests.&lt;/p&gt;
 
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#lang racket
+
+;; CIS531 Fall &apos;25 Project 1
+;; Compiling LVar -&amp;gt; x86-64
+(require &quot;irs.rkt&quot;) ;; Definition of each IR (please read)
+(require &quot;system.rkt&quot;) ;; System-specific details
+
+(provide (all-defined-out)) ;; export everything for testing
+
+;; The compiler is designed in passes, which go:
+;;
+;; --&amp;gt; R2? -- Source program
+;; |
+;; +-&amp;gt; typed-R2? -- Typechecking R2
+;; | 
+;; +-&amp;gt; shrunk-R2? -- Shrunken R2 (removes several forms)
+;; |
+;; +-&amp;gt; unique-source-tree? -- every bound identifier is written exactly once
+;; |
+;; +-&amp;gt; anf-program? -- A-Normal form (flattening nested expressions)
+;; |
+;; +-&amp;gt; c1-program? -- The C1 IR: blocks of sequences of commands, if, and gotos
+;; |
+;; +-&amp;gt; locals-program? -- Uncovering local variables
+;; |
+;; +-&amp;gt; instr-program? -- Pseudo-x86, flattened (blocks of lists) IR
+;; |
+;; +-&amp;gt; homes-assigned-program? -- Assign variables to stack locations
+;; |
+;; +-&amp;gt; patched-program? -- Patch up problematic double-indirect moves
+;; |
+;; +-&amp;gt; x86-64? -- The final x86-program
+;; |
+;; +-&amp;gt; string? -- Rendered as a string so we can print it to a file
+
+
+
+;; 
+;; Type checking is separated into two functions: expr-&amp;gt;type and
+;; typecheck. If type checking fails, an exception is thrown.
+;; 
+
+;; Translate an expression to its corresponding type.
+;;       e : R2-exp?
+;;     env : hash from symbol -&amp;gt; R2-type?
+;; 
+;; If there is a type ERORR, you should raise an exception, but you
+;; *MUST* raise an exception using the &apos;type-error tag, for example:
+;;      (error type-error-tag &quot;Expected integer, got boolean&quot;)
+;; Note that type-error-tag is defined in irs.rkt--you are encouraged
+;; to make use of it. 
+(define (expr-&amp;gt;type e env)
+  ;; helper function, typechecks e, expects type typ, and continues by
+  ;; invoking the zero-argument function k.
+  (define (expect-type e typ k)
+    (if (equal? (expr-&amp;gt;type e env) typ) 
+        (k)
+        (error type-error-tag (format &quot;~a: Expected type ~a&quot; (pretty-format e) (symbol-&amp;gt;string typ)))))
+  (match e
+    [#t &apos;Bool] 
+    [#f &apos;Bool] 
+    [(? fixnum? n) &apos;Int]
+    [`(read) &apos;Int] ;; assume (read) returns int
+    [`(- ,(? R2-exp? e)) (expect-type e &apos;Int (λ () &apos;Int))]
+    [`(- ,(? R2-exp? e0) ,(? R2-exp? e1))
+     &apos;todo]
+    [`(+ ,(? R2-exp? e0) ,(? R2-exp? e1))
+     &apos;todo]
+    [`(and ,(? R2-exp? e0) ,(? R2-exp? e1)) 
+     &apos;todo]
+    [`(or ,(? R2-exp? e0) ,(? R2-exp? e1))
+     &apos;todo]
+    [`(if ,(? R2-exp? e-g) ,(? R2-exp? e-t) ,(? R2-exp? e-f))
+     &apos;todo]
+    [`(not ,e)
+     &apos;todo] 
+    [`(,(? cmp? cmp) ,(? R2-exp? e0) ,(? R2-exp? e1))
+     &apos;todo]
+    [(? symbol? x) &apos;todo]
+    [`(let ([,x ,e]) ,e-b)
+     &apos;todo]))
+
+;; Typecheck a program: a thin wrapper around expr-&amp;gt;type. 
+(define (typecheck p)
+  (match-define `(program ,e) p)
+  ;; possibly throw type error
+  (define program-type (expr-&amp;gt;type e (hash)))
+  ;; success, if we got here the program typechecked
+  p)
+
+;; Takes p and...
+;; - Removes binary minus
+;; - Removes and/or (using if)
+;; - Removes all binary comparators except &amp;lt; and eq?
+(define (shrink p)
+  (define (h e)
+    (match e 
+      ;; base cases
+      [(? symbol?) e]
+      [(? number?) e]
+      [#t #t]
+      [#f #f]
+      [`(read) &apos;(read)]
+      [`(+ ,e0 ,e1) `(+ ,(h e0) ,(h e1))]
+      [`(- ,e0 ,e1) `(+ ,(h e0) (- ,(h e1)))]
+      [`(- ,e) `(- ,(h e))]
+      [`(and ,e0 ,e1) &apos;todo]
+      [`(or ,e0 ,e1) &apos;todo]
+      [`(&amp;lt;= ,e0 ,e1) &apos;todo]
+      [`(&amp;gt; ,e0 ,e1) &apos;todo]
+      [`(&amp;gt;= ,e0 ,e1) &apos;todo]
+      [`(eq? ,e0 ,e1) &apos;todo]
+      [`(if ,e0 ,e1 ,e2) &apos;todo]))
+  (match p
+    [`(program ,exp)
+     ;; empty info
+     `(program ,(h exp))]))
+
+;; must handle new cases, booleans, etc.
+(define (uniqueify p)
+  (define (rename e assignment)
+    (match e
+      ;; ... other cases todo...
+      [`(if ,e0 ,e1 ,e2) &apos;todo]
+      [`(,(? cmp? c) ,e0 ,e1) &apos;todo]
+      [`(and ,e0 ,e1) &apos;todo]
+      [`(or ,e0 ,e1)  &apos;todo]
+      [`(not ,e) &apos;todo]))
+  (match p
+    [`(program ,exp)
+     ;; empty info
+     `(program () ,(rename exp (hash)))]))
+
+;; ANF Conversion--handle new cases, think carefully about if
+(define (anf-convert p)
+  (define (convert-expr e k)
+    (match e
+      [(? fixnum? n) (k n)]
+      [(? boolean? b) (k b)]
+      [&apos;(read)
+       (let ([x (gensym &apos;read)])
+         `(let ([,x (read)]) ,(k x)))]
+      [(? symbol? x) (k x)]
+      [`(- ,e) &apos;todo]
+      [`(not ,e) &apos;todo]
+      [`(,(? cmp? c) ,e0 ,e1)
+       &apos;todo]
+      [`(+ ,e0 ,e1)
+       &apos;todo]
+      [`(if ,e0 ,e1 ,e2)
+       &apos;todo]
+      [`(let ([,x ,e]) ,e-b)
+       &apos;todo]))
+  (match p
+    [`(program ,info ,e)
+     `(program ,info ,(convert-expr e (lambda (x) x)))]))
+
+;; The output of this pass is almost x86, but there will still be an
+;; issue: we won&apos;t be using *registers*, we&apos;ll keep using variables
+;; for now.
+(define (select-instructions p)
+  ;; Translate ANF-ified C0 to a block of instructions
+  (define (c1-&amp;gt;block c1)
+    (define (h-atom a)
+      (match a
+        [(? fixnum? n) `(imm ,n)]
+        [(? symbol? x) `(var ,x)]
+        [(? boolean? b) `(imm ,(if b 1 0))]))
+    (define (h seq)
+      (match seq
+        ;; ...other cases todo...
+        [`(seq (assign ,x (&amp;lt; ,a0 ,a1)) ,rst)
+         &apos;todo]
+        [`(seq (assign ,x (eq? ,a0 ,a1)) ,rst)
+         &apos;todo]
+        ;; cmp is {eq?, &amp;lt;}
+        [`(if (,cmp ,a0 ,a1) (goto ,l0) (goto ,l1))
+         &apos;todo]))
+    (h c1))
+  ;; the input is C0: h is (hash &apos;start &apos;(let ...))
+  (match p
+    [`(program ,info ,h)
+     (define blocks (hash-set 
+                     (foldl (λ (block acc) (hash-set acc block (c1-&amp;gt;block (hash-ref h block)))) h (hash-keys h))
+                     (conclusion-block-name)
+                     &apos;())) ;; also add an empty conclusion block
+     `(program ,info ,blocks)]))
+
+;; I provide this one for you, again--I do not find it especially
+;; challenging / interesting except that we have to work over all
+;; blocks
+(define (uncover-locals p)
+  (define (h seq)
+    (match seq
+      [`(return ,_) (set)]
+      [`(if (,cmp ,a0 ,a1) (goto ,l0) (goto ,l1)) (set)]
+      [`(seq (assign ,x0 ,_) ,rest)
+       (set-add (h rest) x0)]))
+  (match p
+    [`(program () ,blocks)
+     (define locals (foldl (λ (block acc) (set-union acc (h (hash-ref blocks block))))
+                           (set)
+                           (hash-keys blocks)))
+     `(program ,locals ,blocks)]))
+
+;; Convert p (in ANF) to  C-style IR consisting consisting of labeled blocks
+(define (explicate-control p)
+  ;; merge two hashes, assume no common keys--useful in handling if
+  (define (merge h0 h1)
+    (foldl (λ (k0 h1) (hash-set h1 k0 (hash-ref h0 k0))) h1 (hash-keys h0)))
+  (define (atom? a) (or (fixnum? a) (symbol? a) (boolean? a)))
+  ;; basic idea: return a hash which maps blocks to a label name
+  (define (expr-&amp;gt;blocks e current-block)
+    ;; prefixing a basic block with an instruction
+    ;; (prefix-w-instruction (hash &apos;main (return 1)) &apos;main (assign x 1))
+    ;; =&amp;gt; (hash &apos;main (seq (assign x 1) (return 1)))
+    (define (extend h label instruction)
+      (hash-set h label `(seq ,instruction ,(hash-ref h label))))
+    (match e
+      ;; ... other cases todo...
+      [`(if ,a ,e-t ,e-f)
+       ;; basic idea: call expr-&amp;gt;blocks on e-t and e-f with a
+       ;; freshly-generated label. Both of these calls return hashes,
+       ;; which you can combine using `merge`, and then you can
+       ;; generate an `if` expression which uses `goto` on both
+       ;; branches.
+       (hash current-block `(if (eq? ,a #f) &apos;todo &apos;todo))]))
+  (match p
+    [`(program ,info ,anf)
+     `(program ,info ,(expr-&amp;gt;blocks anf (entry-symbol)))]))
+
+;; Take variables into either the stack/registers
+(define (assign-homes p)
+  (match-define `(program ,info ,blocks) p)
+  (define var-&amp;gt;stackloc
+    (let ([l (set-&amp;gt;list info)])
+      (foldl (lambda (v i h) (hash-set h v (* -8 i))) (hash) l (range 1 (add1 (length l))))))
+  ;; map (var x) to its home (an offset of rbp)
+  (define (home a)
+    (match a
+      [`(var ,x) `(deref (reg rbp) ,(hash-ref var-&amp;gt;stackloc x))]
+      [_ a]))
+  ;; traverse each instruction in the block to replace (var x) with
+  ;; the appropriate stack position. Note: this will leave some
+  ;; instructions in a bad configuration, which will be cleaned up in
+  ;; patch-instructions.
+  (define (h block)
+    (match block
+      ;; ... other cases todo ...
+      [&apos;() &apos;()]))
+  (define blocks+ (foldl (λ (blk acc)
+                           (hash-set acc blk (h (hash-ref blocks blk)))) blocks (hash-keys blocks)))
+  `(program ,var-&amp;gt;stackloc ,blocks+))
+
+;; walks over instructions and replaces invalid movqs, where both
+;; operands are indirects (offsets of %rax). In x86_64, we *cannot*
+;; have both arguments in registers, so
+(define (patch-instructions p)
+  (define (patch-tail block)
+    (match block
+      [&apos;() &apos;()]
+      ;; first move into %rax, then move %rax into i1(%r1)
+      [`((movq (deref (reg ,r0) ,i0) (deref (reg ,r1) ,i1)) ,rest ...)
+       &apos;todo]
+      ;; new ...
+      [`((movzbq (byte-reg ,r) (deref (reg ,r1) ,i1)) ,rest ...)
+       &apos;todo]
+      ;; new ...
+      [`((cmpq ,a (deref (reg ,r1) ,i1)) ,rest ...)
+       &apos;todo]
+      ;; new ...
+      [`((cmpq ,a (imm ,d)) ,rest ...)
+       &apos;todo]
+      [`(,instr ,rest ...)
+       `(,instr ,@(patch-tail rest))]))
+  (match p
+    [`(program ,info ,blocks)
+     (define blocks+ (foldl (λ (blk acc) (hash-set acc blk (patch-tail (hash-ref blocks blk)))) blocks (hash-keys blocks)))
+     `(program ,info ,blocks+)]))
+
+;; adds the prelude and conclusion to each of the functions in the program
+(define (prelude-and-conclusion p)
+  ;; ensure the stack is aligned
+  (define (align8 n)
+    (bitwise-and (+ n 8)
+                 (bitwise-not 8)))  ; clear the low four bits
+  (match p
+    [`(program ,locals ,blocks)
+     ;; negative number, added to %rsp
+     (define space-needed (if (empty? (hash-values locals))
+                              0
+                              (- (align8 (- (apply min (hash-values locals)))))))
+     (define start-block (hash-ref blocks (entry-symbol)))
+     (define new-start-block
+       `((pushq (reg rbp))
+         (movq (reg rsp) (reg rbp))
+         (addq (imm ,space-needed) (reg rsp))
+         ,@start-block))
+     ;; Consider using a conclusion block as well, that prints the
+     ;; value assuming it is in %rax and exits with return value 0
+     ;;
+     ;; TODO: extend blocks so that you write the (entry-symbol)
+     ;; and also the conclusion symbol
+     `(program ,locals ,blocks)]))
+
+;; Dump x86-64 code to GAS assmbler
+(define (dump-x86-64 p)
+  (define (render-op op)
+    (match op
+      [`(imm ,i) (format &quot;$~a&quot; i)]
+      [`(reg ,x) (format &quot;%~a&quot; (symbol-&amp;gt;string x))]
+      [`(byte-reg ,x) (format &quot;%~a&quot; (symbol-&amp;gt;string x))]
+      [`(deref (reg ,reg) ,i) (format &quot;~a(%~a)&quot; i (symbol-&amp;gt;string reg))]))
+  (define (render-instr instr)
+    (match instr
+      [`(xorq ,src ,dst) &apos;todo]
+      ;; others ...
+      [&apos;(retq) &quot;ret&quot;]
+      [&apos;(leave) &quot;leave&quot;]))
+  (define (render-block block name)
+    (apply string-append
+           (cons (format &quot;~a:\n&quot; name)
+                 (map (λ (instr) (format &quot;    ~a\n&quot; (render-instr instr))) block))))
+  ;; which block names are top-level functions? In this language, this
+  ;; is only `main`.
+  (define (function-name? block-name) (equal? block-name (entry-symbol)))
+  (match p
+    [`(program ,info ,blocks)
+     (string-append
+      ;; Tells the ABI that we&apos;re OK with non-executable stacks (security enhancement)
+      (format &quot;.globl ~a\n&quot; (rt-sym (entry-symbol)))
+      ;; include these for sure
+      (runtime-function-externs)
+      ;; walk over all blocks, render each block by calling
+      ;; `render-block` with the appropriate name. If the block&apos;s
+      ;; name is main (or any function name), then make sure you call
+      ;; `(rt-sym ...)`
+      &quot;;; todo -- erase this and replace with answer&quot;)]))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Thu, 16 Oct 2025 00:00:00 -0400</pubDate>
         <link>https://kmicinski.com/cis531-f25/projects/3</link>
