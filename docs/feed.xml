@@ -5,13 +5,13 @@
     <description>CIS531 -- Compilers at Syracuse (Fall &apos;25)</description>
     <link>https://kmicinski.com/cis531-f25/</link>
     <atom:link href="https://kmicinski.com/cis531-f25/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 16 Oct 2025 15:18:07 -0400</pubDate>
-    <lastBuildDate>Thu, 16 Oct 2025 15:18:07 -0400</lastBuildDate>
+    <pubDate>Thu, 16 Oct 2025 22:26:35 -0400</pubDate>
+    <lastBuildDate>Thu, 16 Oct 2025 22:26:35 -0400</lastBuildDate>
     <generator>Jekyll v4.4.1</generator>
     
       <item>
         <title>Project 3: R2 / LIf -&gt; x86-64</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://kmicinski.com/cis531-f25/assets/p3-starter.tar.gz&quot;&gt;Download the starter files here&lt;/a&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;a href=&quot;/assets/p3-starter.tar.gz&quot;&gt;Download the starter files here&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;This project is inspired by &lt;em&gt;Essentials of Compilation&lt;/em&gt; (EoC), but the
 code here is a from-scratch reimplementation with some simplifications
@@ -42,21 +42,20 @@ minus, addition, logical operators, comparisons, and a zero-argument
 pass reduces this set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;eq?&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;&lt;/code&gt;, removes binary minus, and
 desugars &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;and&lt;/code&gt;/&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;or&lt;/code&gt;.&lt;/p&gt;
 
-&lt;div class=&quot;language-racket highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;;; Core (pre-shrink) expressions and programs (abridged)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;cmp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;cmp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;member&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;cmp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eq?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&amp;gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;div class=&quot;language-racket highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;define&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;match&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;#t&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;#f&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;fixnum?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;                           &lt;span class=&quot;c1&quot;&gt;; unary minus&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;or&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e-g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e-t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e-f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;cmp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;symbol?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;symbol?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;R2-exp?&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;e-body&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;#f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
@@ -383,349 +382,379 @@ Via stdin; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.i
 each pass satisfy its predicates and produce semantically equivalent
 IRs until final native code passes all tests.&lt;/p&gt;
 
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#lang racket
-
-;; CIS531 Fall &apos;25 Project 1
-;; Compiling LVar -&amp;gt; x86-64
-(require &quot;irs.rkt&quot;) ;; Definition of each IR (please read)
-(require &quot;system.rkt&quot;) ;; System-specific details
-
-(provide (all-defined-out)) ;; export everything for testing
-
-;; The compiler is designed in passes, which go:
-;;
-;; --&amp;gt; R2? -- Source program
-;; |
-;; +-&amp;gt; typed-R2? -- Typechecking R2
-;; | 
-;; +-&amp;gt; shrunk-R2? -- Shrunken R2 (removes several forms)
-;; |
-;; +-&amp;gt; unique-source-tree? -- every bound identifier is written exactly once
-;; |
-;; +-&amp;gt; anf-program? -- A-Normal form (flattening nested expressions)
-;; |
-;; +-&amp;gt; c1-program? -- The C1 IR: blocks of sequences of commands, if, and gotos
-;; |
-;; +-&amp;gt; locals-program? -- Uncovering local variables
-;; |
-;; +-&amp;gt; instr-program? -- Pseudo-x86, flattened (blocks of lists) IR
-;; |
-;; +-&amp;gt; homes-assigned-program? -- Assign variables to stack locations
-;; |
-;; +-&amp;gt; patched-program? -- Patch up problematic double-indirect moves
-;; |
-;; +-&amp;gt; x86-64? -- The final x86-program
-;; |
-;; +-&amp;gt; string? -- Rendered as a string so we can print it to a file
-
-
-
-;; 
-;; Type checking is separated into two functions: expr-&amp;gt;type and
-;; typecheck. If type checking fails, an exception is thrown.
-;; 
-
-;; Translate an expression to its corresponding type.
-;;       e : R2-exp?
-;;     env : hash from symbol -&amp;gt; R2-type?
-;; 
-;; If there is a type ERORR, you should raise an exception, but you
-;; *MUST* raise an exception using the &apos;type-error tag, for example:
-;;      (error type-error-tag &quot;Expected integer, got boolean&quot;)
-;; Note that type-error-tag is defined in irs.rkt--you are encouraged
-;; to make use of it. 
-(define (expr-&amp;gt;type e env)
-  ;; helper function, typechecks e, expects type typ, and continues by
-  ;; invoking the zero-argument function k.
-  (define (expect-type e typ k)
-    (if (equal? (expr-&amp;gt;type e env) typ) 
-        (k)
-        (error type-error-tag (format &quot;~a: Expected type ~a&quot; (pretty-format e) (symbol-&amp;gt;string typ)))))
-  (match e
-    [#t &apos;Bool] 
-    [#f &apos;Bool] 
-    [(? fixnum? n) &apos;Int]
-    [`(read) &apos;Int] ;; assume (read) returns int
-    [`(- ,(? R2-exp? e)) (expect-type e &apos;Int (λ () &apos;Int))]
-    [`(- ,(? R2-exp? e0) ,(? R2-exp? e1))
-     &apos;todo]
-    [`(+ ,(? R2-exp? e0) ,(? R2-exp? e1))
-     &apos;todo]
-    [`(and ,(? R2-exp? e0) ,(? R2-exp? e1)) 
-     &apos;todo]
-    [`(or ,(? R2-exp? e0) ,(? R2-exp? e1))
-     &apos;todo]
-    [`(if ,(? R2-exp? e-g) ,(? R2-exp? e-t) ,(? R2-exp? e-f))
-     &apos;todo]
-    [`(not ,e)
-     &apos;todo] 
-    [`(,(? cmp? cmp) ,(? R2-exp? e0) ,(? R2-exp? e1))
-     &apos;todo]
-    [(? symbol? x) &apos;todo]
-    [`(let ([,x ,e]) ,e-b)
-     &apos;todo]))
-
-;; Typecheck a program: a thin wrapper around expr-&amp;gt;type. 
-(define (typecheck p)
-  (match-define `(program ,e) p)
-  ;; possibly throw type error
-  (define program-type (expr-&amp;gt;type e (hash)))
-  ;; success, if we got here the program typechecked
-  p)
-
-;; Takes p and...
-;; - Removes binary minus
-;; - Removes and/or (using if)
-;; - Removes all binary comparators except &amp;lt; and eq?
-(define (shrink p)
-  (define (h e)
-    (match e 
-      ;; base cases
-      [(? symbol?) e]
-      [(? number?) e]
-      [#t #t]
-      [#f #f]
-      [`(read) &apos;(read)]
-      [`(+ ,e0 ,e1) `(+ ,(h e0) ,(h e1))]
-      [`(- ,e0 ,e1) `(+ ,(h e0) (- ,(h e1)))]
-      [`(- ,e) `(- ,(h e))]
-      [`(and ,e0 ,e1) &apos;todo]
-      [`(or ,e0 ,e1) &apos;todo]
-      [`(&amp;lt;= ,e0 ,e1) &apos;todo]
-      [`(&amp;gt; ,e0 ,e1) &apos;todo]
-      [`(&amp;gt;= ,e0 ,e1) &apos;todo]
-      [`(eq? ,e0 ,e1) &apos;todo]
-      [`(if ,e0 ,e1 ,e2) &apos;todo]))
-  (match p
-    [`(program ,exp)
-     ;; empty info
-     `(program ,(h exp))]))
-
-;; must handle new cases, booleans, etc.
-(define (uniqueify p)
-  (define (rename e assignment)
-    (match e
-      ;; ... other cases todo...
-      [`(if ,e0 ,e1 ,e2) &apos;todo]
-      [`(,(? cmp? c) ,e0 ,e1) &apos;todo]
-      [`(and ,e0 ,e1) &apos;todo]
-      [`(or ,e0 ,e1)  &apos;todo]
-      [`(not ,e) &apos;todo]))
-  (match p
-    [`(program ,exp)
-     ;; empty info
-     `(program () ,(rename exp (hash)))]))
-
-;; ANF Conversion--handle new cases, think carefully about if
-(define (anf-convert p)
-  (define (convert-expr e k)
-    (match e
-      [(? fixnum? n) (k n)]
-      [(? boolean? b) (k b)]
-      [&apos;(read)
-       (let ([x (gensym &apos;read)])
-         `(let ([,x (read)]) ,(k x)))]
-      [(? symbol? x) (k x)]
-      [`(- ,e) &apos;todo]
-      [`(not ,e) &apos;todo]
-      [`(,(? cmp? c) ,e0 ,e1)
-       &apos;todo]
-      [`(+ ,e0 ,e1)
-       &apos;todo]
-      [`(if ,e0 ,e1 ,e2)
-       &apos;todo]
-      [`(let ([,x ,e]) ,e-b)
-       &apos;todo]))
-  (match p
-    [`(program ,info ,e)
-     `(program ,info ,(convert-expr e (lambda (x) x)))]))
-
-;; The output of this pass is almost x86, but there will still be an
-;; issue: we won&apos;t be using *registers*, we&apos;ll keep using variables
-;; for now.
-(define (select-instructions p)
-  ;; Translate ANF-ified C0 to a block of instructions
-  (define (c1-&amp;gt;block c1)
-    (define (h-atom a)
-      (match a
-        [(? fixnum? n) `(imm ,n)]
-        [(? symbol? x) `(var ,x)]
-        [(? boolean? b) `(imm ,(if b 1 0))]))
-    (define (h seq)
-      (match seq
-        ;; ...other cases todo...
-        [`(seq (assign ,x (&amp;lt; ,a0 ,a1)) ,rst)
-         &apos;todo]
-        [`(seq (assign ,x (eq? ,a0 ,a1)) ,rst)
-         &apos;todo]
-        ;; cmp is {eq?, &amp;lt;}
-        [`(if (,cmp ,a0 ,a1) (goto ,l0) (goto ,l1))
-         &apos;todo]))
-    (h c1))
-  ;; the input is C0: h is (hash &apos;start &apos;(let ...))
-  (match p
-    [`(program ,info ,h)
-     (define blocks (hash-set 
-                     (foldl (λ (block acc) (hash-set acc block (c1-&amp;gt;block (hash-ref h block)))) h (hash-keys h))
-                     (conclusion-block-name)
-                     &apos;())) ;; also add an empty conclusion block
-     `(program ,info ,blocks)]))
-
-;; I provide this one for you, again--I do not find it especially
-;; challenging / interesting except that we have to work over all
-;; blocks
-(define (uncover-locals p)
-  (define (h seq)
-    (match seq
-      [`(return ,_) (set)]
-      [`(if (,cmp ,a0 ,a1) (goto ,l0) (goto ,l1)) (set)]
-      [`(seq (assign ,x0 ,_) ,rest)
-       (set-add (h rest) x0)]))
-  (match p
-    [`(program () ,blocks)
-     (define locals (foldl (λ (block acc) (set-union acc (h (hash-ref blocks block))))
-                           (set)
-                           (hash-keys blocks)))
-     `(program ,locals ,blocks)]))
-
-;; Convert p (in ANF) to  C-style IR consisting consisting of labeled blocks
-(define (explicate-control p)
-  ;; merge two hashes, assume no common keys--useful in handling if
-  (define (merge h0 h1)
-    (foldl (λ (k0 h1) (hash-set h1 k0 (hash-ref h0 k0))) h1 (hash-keys h0)))
-  (define (atom? a) (or (fixnum? a) (symbol? a) (boolean? a)))
-  ;; basic idea: return a hash which maps blocks to a label name
-  (define (expr-&amp;gt;blocks e current-block)
-    ;; prefixing a basic block with an instruction
-    ;; (prefix-w-instruction (hash &apos;main (return 1)) &apos;main (assign x 1))
-    ;; =&amp;gt; (hash &apos;main (seq (assign x 1) (return 1)))
-    (define (extend h label instruction)
-      (hash-set h label `(seq ,instruction ,(hash-ref h label))))
-    (match e
-      ;; ... other cases todo...
-      [`(if ,a ,e-t ,e-f)
-       ;; basic idea: call expr-&amp;gt;blocks on e-t and e-f with a
-       ;; freshly-generated label. Both of these calls return hashes,
-       ;; which you can combine using `merge`, and then you can
-       ;; generate an `if` expression which uses `goto` on both
-       ;; branches.
-       (hash current-block `(if (eq? ,a #f) &apos;todo &apos;todo))]))
-  (match p
-    [`(program ,info ,anf)
-     `(program ,info ,(expr-&amp;gt;blocks anf (entry-symbol)))]))
-
-;; Take variables into either the stack/registers
-(define (assign-homes p)
-  (match-define `(program ,info ,blocks) p)
-  (define var-&amp;gt;stackloc
-    (let ([l (set-&amp;gt;list info)])
-      (foldl (lambda (v i h) (hash-set h v (* -8 i))) (hash) l (range 1 (add1 (length l))))))
-  ;; map (var x) to its home (an offset of rbp)
-  (define (home a)
-    (match a
-      [`(var ,x) `(deref (reg rbp) ,(hash-ref var-&amp;gt;stackloc x))]
-      [_ a]))
-  ;; traverse each instruction in the block to replace (var x) with
-  ;; the appropriate stack position. Note: this will leave some
-  ;; instructions in a bad configuration, which will be cleaned up in
-  ;; patch-instructions.
-  (define (h block)
-    (match block
-      ;; ... other cases todo ...
-      [&apos;() &apos;()]))
-  (define blocks+ (foldl (λ (blk acc)
-                           (hash-set acc blk (h (hash-ref blocks blk)))) blocks (hash-keys blocks)))
-  `(program ,var-&amp;gt;stackloc ,blocks+))
-
-;; walks over instructions and replaces invalid movqs, where both
-;; operands are indirects (offsets of %rax). In x86_64, we *cannot*
-;; have both arguments in registers, so
-(define (patch-instructions p)
-  (define (patch-tail block)
-    (match block
-      [&apos;() &apos;()]
-      ;; first move into %rax, then move %rax into i1(%r1)
-      [`((movq (deref (reg ,r0) ,i0) (deref (reg ,r1) ,i1)) ,rest ...)
-       &apos;todo]
-      ;; new ...
-      [`((movzbq (byte-reg ,r) (deref (reg ,r1) ,i1)) ,rest ...)
-       &apos;todo]
-      ;; new ...
-      [`((cmpq ,a (deref (reg ,r1) ,i1)) ,rest ...)
-       &apos;todo]
-      ;; new ...
-      [`((cmpq ,a (imm ,d)) ,rest ...)
-       &apos;todo]
-      [`(,instr ,rest ...)
-       `(,instr ,@(patch-tail rest))]))
-  (match p
-    [`(program ,info ,blocks)
-     (define blocks+ (foldl (λ (blk acc) (hash-set acc blk (patch-tail (hash-ref blocks blk)))) blocks (hash-keys blocks)))
-     `(program ,info ,blocks+)]))
-
-;; adds the prelude and conclusion to each of the functions in the program
-(define (prelude-and-conclusion p)
-  ;; ensure the stack is aligned
-  (define (align8 n)
-    (bitwise-and (+ n 8)
-                 (bitwise-not 8)))  ; clear the low four bits
-  (match p
-    [`(program ,locals ,blocks)
-     ;; negative number, added to %rsp
-     (define space-needed (if (empty? (hash-values locals))
-                              0
-                              (- (align8 (- (apply min (hash-values locals)))))))
-     (define start-block (hash-ref blocks (entry-symbol)))
-     (define new-start-block
-       `((pushq (reg rbp))
-         (movq (reg rsp) (reg rbp))
-         (addq (imm ,space-needed) (reg rsp))
-         ,@start-block))
-     ;; Consider using a conclusion block as well, that prints the
-     ;; value assuming it is in %rax and exits with return value 0
-     ;;
-     ;; TODO: extend blocks so that you write the (entry-symbol)
-     ;; and also the conclusion symbol
-     `(program ,locals ,blocks)]))
-
-;; Dump x86-64 code to GAS assmbler
-(define (dump-x86-64 p)
-  (define (render-op op)
-    (match op
-      [`(imm ,i) (format &quot;$~a&quot; i)]
-      [`(reg ,x) (format &quot;%~a&quot; (symbol-&amp;gt;string x))]
-      [`(byte-reg ,x) (format &quot;%~a&quot; (symbol-&amp;gt;string x))]
-      [`(deref (reg ,reg) ,i) (format &quot;~a(%~a)&quot; i (symbol-&amp;gt;string reg))]))
-  (define (render-instr instr)
-    (match instr
-      [`(xorq ,src ,dst) &apos;todo]
-      ;; others ...
-      [&apos;(retq) &quot;ret&quot;]
-      [&apos;(leave) &quot;leave&quot;]))
-  (define (render-block block name)
-    (apply string-append
-           (cons (format &quot;~a:\n&quot; name)
-                 (map (λ (instr) (format &quot;    ~a\n&quot; (render-instr instr))) block))))
-  ;; which block names are top-level functions? In this language, this
-  ;; is only `main`.
-  (define (function-name? block-name) (equal? block-name (entry-symbol)))
-  (match p
-    [`(program ,info ,blocks)
-     (string-append
-      ;; Tells the ABI that we&apos;re OK with non-executable stacks (security enhancement)
-      (format &quot;.globl ~a\n&quot; (rt-sym (entry-symbol)))
-      ;; include these for sure
-      (runtime-function-externs)
-      ;; walk over all blocks, render each block by calling
-      ;; `render-block` with the appropriate name. If the block&apos;s
-      ;; name is main (or any function name), then make sure you call
-      ;; `(rt-sym ...)`
-      &quot;;; todo -- erase this and replace with answer&quot;)]))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Thu, 16 Oct 2025 00:00:00 -0400</pubDate>
         <link>https://kmicinski.com/cis531-f25/projects/3</link>
         <guid isPermaLink="true">https://kmicinski.com/cis531-f25/projects/3</guid>
+        
+        
+        <category>assignment</category>
+        
+        <category>project</category>
+        
+      </item>
+    
+      <item>
+        <title>Project 2: LVar → x86-64 Assembler</title>
+        <description>&lt;p&gt;&lt;em&gt;Starter code&lt;/em&gt;: &lt;a href=&quot;/cis531-f25/assets/p2-starter.tar.gz&quot;&gt;Download the starter here!&lt;/a&gt;&lt;/p&gt;
+
+&lt;div align=&quot;center&quot;&gt;
+	&lt;img src=&quot;/cis531-f25/assets/img/p1_demo.png&quot; alt=&quot;Debug server demo&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;(Pictured: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debug-server.rkt&lt;/code&gt; in action.)&lt;/p&gt;
+
+&lt;p&gt;This project is inspired by &lt;em&gt;Essentials of Compilation&lt;/em&gt; (EoC), but the
+code here is a from-scratch reimplementation with some simplifications
+to keep the workload reasonable and to make grading/debugging
+clearer. Where behavior differs from the book, &lt;strong&gt;this README is the
+source of truth&lt;/strong&gt; for expectations, file names, and command lines.&lt;/p&gt;
+
+&lt;p&gt;You will compile a tiny expression language (R1/LVar, used
+interchangably) for straight-line arithmetic with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;let&lt;/code&gt;-bindings and
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read&lt;/code&gt; into x86-64 assembly, then produce a real binary and test it on
+actual inputs. Essentially, programs in our language are sequences of
+reads, ultimately printing one final output.&lt;/p&gt;
+
+&lt;h2 id=&quot;input-language-r1--lvar&quot;&gt;Input Language (R1 / LVar)&lt;/h2&gt;
+
+&lt;p&gt;R1 (covered in the book, chapter 2) is a straight-line expression
+language with integers, variables, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;let&lt;/code&gt;, unary minus, addition, and a
+zero-argument &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(read)&lt;/code&gt; primitive that consumes one integer from stdin
+at runtime.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;;; Expressions (exp) and programs
+(define (R1-exp? e)
+  (match e
+    [(? fixnum? n) #t]
+    [`(read) #t]
+    [`(- ,(? R1-exp? e)) #t]
+    [`(+ ,(? R1-exp? e0) ,(? R1-exp? e1)) #t]
+    [(? symbol? var) #t]
+    [`(let ([,(? symbol? x) ,(? R1-exp? e)]) ,(? R1-exp? e-body)) #t]
+    [_ #f]))
+
+(define (R1? e)
+  (match e
+    [`(program ,(? R1-exp? exp)) #t]
+    [_ #f]))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Programs on disk are s-expressions, e.g.:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(program
+  (let ([x (read)])
+    (let ([y (+ x 10)])
+      (+ y (- y)))))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;repository-layout&quot;&gt;Repository Layout&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;compile.rkt&lt;/code&gt; – TODO - Your pass implementations. You will edit functions provided here.
+-&amp;gt; This is the &lt;em&gt;only&lt;/em&gt; file you will edit! The rest are read-only&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;irs.rkt&lt;/code&gt; – IR definitions and predicates like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anf-program?&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c0-program?&lt;/code&gt;, etc.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpreters.rkt&lt;/code&gt; – Reference interpreters for several IRs (used by tests and for your own debugging).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;system.rkt&lt;/code&gt; – System/ABI configuration, pass names, runtime filenames, output paths, etc.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.rkt&lt;/code&gt; – Driver that runs all passes, can build a binary&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debug-server.rkt&lt;/code&gt; – Launches a debugging server to help visualize each compiler pass&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test.rkt&lt;/code&gt; – Test harness. Runs isolation tests or end-to-end native tests depending on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-m&lt;/code&gt; mode.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;runtime.c&lt;/code&gt; – Minimal runtime (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read_int64&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print_int64&lt;/code&gt;, etc.).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-programs/&lt;/code&gt; – Example programs (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.scm&lt;/code&gt;).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;input-files/&lt;/code&gt; – Input streams for programs (lines of integers).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;goldens/&lt;/code&gt; – Instructor goldens (IR snapshots, interpreter outputs, and stdout baselines).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Please do not rename files or directories (grading infra depends on them).&lt;/p&gt;
+
+&lt;h2 id=&quot;the-compiler-pipeline-passes&quot;&gt;The Compiler Pipeline (passes)&lt;/h2&gt;
+
+&lt;p&gt;The compiler consists of a number of passes. Please do not get
+overwhelmed: each of these passes is going to be very small, and each
+have a specific, isolated behavior that will allow us to explain the
+specific stages of compilation. Additionally, as the code is compiled,
+it is translated into an increasinglly-lower-level IR.&lt;/p&gt;
+
+&lt;p&gt;You will implement the following passes:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uniqueify&lt;/code&gt; → ensures every bound identifier is unique&lt;br /&gt;
+Input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;R1?&lt;/code&gt; → Output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unique-source-tree?&lt;/code&gt; → Interp: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-R1&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anf-convert&lt;/code&gt; → ANF conversion (introduce temps to flatten nested ops)&lt;br /&gt;
+Input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unique-source-tree?&lt;/code&gt; → Output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anf-program?&lt;/code&gt; → Interp: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-anf&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;explicate-control&lt;/code&gt; → convert ANF to C0 (a statement/block flavor)&lt;br /&gt;
+Input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anf-program?&lt;/code&gt; → Output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c0-program?&lt;/code&gt; → Interp: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-c0&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uncover-locals&lt;/code&gt; → collect local variables (stack frame sizing later)&lt;br /&gt;
+Input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c0-program?&lt;/code&gt; → Output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;locals-program?&lt;/code&gt; → Interp: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-c0&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select-instructions&lt;/code&gt; → map C0 statements to pseudo-x86 instructions over vars&lt;br /&gt;
+Input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;locals-program?&lt;/code&gt; → Output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;instr-program?&lt;/code&gt; → Interp: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-instr&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assign-homes&lt;/code&gt; → assign each var to a stack slot &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(deref (reg rbp) offset)&lt;/code&gt;&lt;br /&gt;
+Input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;instr-program?&lt;/code&gt; → Output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;homes-assigned-program?&lt;/code&gt; → Interp: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-instr&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;patch-instructions&lt;/code&gt; → break illegal memory→memory &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;movq&lt;/code&gt; into two moves via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%rax&lt;/code&gt;&lt;br /&gt;
+Input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;homes-assigned-program?&lt;/code&gt; → Output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;patched-program?&lt;/code&gt; → Interp: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-instr&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;prelude-and-conclusion&lt;/code&gt; → function prologue/epilogue; call &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print_int64&lt;/code&gt; on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%rax&lt;/code&gt;&lt;br /&gt;
+Input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;patched-program?&lt;/code&gt; → Output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x86-64?&lt;/code&gt; → Interp: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-instr&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dump-x86-64&lt;/code&gt; → render to assembler text (string)&lt;br /&gt;
+Input: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x86-64?&lt;/code&gt; → Output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;string?&lt;/code&gt; → Interp: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dummy-interp-x86-64&lt;/code&gt; (skips interpretation)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;What you implement&lt;/strong&gt;: All passes in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;compile.rkt&lt;/code&gt; are
+scaffolded. Your job is to produce outputs that satisfy each predicate
+in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;irs.rkt&lt;/code&gt; and that remain semantically equivalent (the interpreters
+check this).&lt;/p&gt;
+
+&lt;h2 id=&quot;ir-predicates-and-interpreters&quot;&gt;IR Predicates and Interpreters&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Predicates (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;irs.rkt&lt;/code&gt;): Each pass has a precise predicate (e.g.,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anf-program?&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c0-program?&lt;/code&gt;, etc.). Tests check both input and
+output predicates at every step to catch malformed IR early. You
+should read and understand each predicate.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Interpreters (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpreters.rkt&lt;/code&gt;): For many stages we run the
+interpreter over your IR to check semantic consistency—different IRs
+must compute the same result on the same input stream. The harness
+reports whether outputs match and whether stdout across passes is
+consistent. Please do not modify this file.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-compile-and-run&quot;&gt;How to Compile and Run&lt;/h2&gt;
+
+&lt;p&gt;To directly compile a single file using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.rkt&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;racket main.rkt test-programs/&amp;lt;prog&amp;gt;.scm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The compiler dumps a long summary of the work done at each pass, and
+ultimately yielding a program &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./output&lt;/code&gt; which it compiles using
+system-specific infrastructure (this should work on Linux/Mac–ping me
+if any issues). For example, I can see:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;kkmicins@lcs-QVR7XH2QGR p1 % racket main.rkt test-programs/r0-0.scm
+Compiling IR (using *your* compile.rkt) …
+&apos;(pushq (reg rbp))
+...
+🏗️ Now building a binary... 🏗️
+-&amp;gt; Host: macosx/x86_64  Target: x86_64-apple-darwin  Entry: main
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./output.s -o ./output.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./runtime.c -o ./runtime.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 ./output.o ./runtime.o -o ./output
+Success! Executable produced at: ./output
+Done!
+kkmicins@lcs-QVR7XH2QGR p1 % ./output
+42
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here, I invoked &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.rkt&lt;/code&gt; and passed it a single file, one of the
+files in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-programs&lt;/code&gt;. This is by far the easiest way to &lt;em&gt;begin&lt;/em&gt;
+your work on this project. My advice to you is to start with the
+simplest programs in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-programs&lt;/code&gt;, get them to compile, and then
+move on to larger programs.&lt;/p&gt;
+
+&lt;p&gt;For programs that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(read)&lt;/code&gt; input, they will emit programs which
+require you to type inputs into the console. For example, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(print
+(read) + (read))&lt;/code&gt; will compile to a program which calls &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read_int64&lt;/code&gt;
+(from runtime.c) twice. You can either manually type in inputs, or you
+can use redirection (e.g., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;output &amp;lt;input-files/1.in&lt;/code&gt;) to input them
+from a file.&lt;/p&gt;
+
+&lt;h2 id=&quot;common-tricky-systems-issues&quot;&gt;Common Tricky Systems Issues&lt;/h2&gt;
+
+&lt;p&gt;Systems-specific code is in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;system.rkt&lt;/code&gt;, which you should (hopefully)
+have to use minimally, as my starter files give a good amount of help
+here.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;IMPORTANT&lt;/strong&gt;: ensure 16-byte stack alignment &lt;em&gt;before&lt;/em&gt; calls (System
+V / macOS both require it).&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;IMPORTANT&lt;/strong&gt;: To ensure your code is portable across Linux/Mach
+ABIs, our intermediate IRs work with “symbols” rather than labels,
+and (during the last pass, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dump-x86&lt;/code&gt;) we specialize labels to
+Mach/Linux. To do this, you should use the helper function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(rt-sym
+symbol)&lt;/code&gt; which produces “_symbol” on Mac and “symbol” as required by
+the ABI.&lt;/li&gt;
+  &lt;li&gt;Output assembly: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./output.s&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Objects: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./output.o&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./runtime.o&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Binary: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./a.out&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Assembler/Linker: Clang by default. Override with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CC=/path/to/clang&lt;/code&gt; if needed.&lt;/li&gt;
+  &lt;li&gt;Runtime linkage: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;runtime.c&lt;/code&gt; is compiled and linked in. The renderer emits externs for runtime symbols.&lt;/li&gt;
+  &lt;li&gt;Linux linking uses &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-no-pie&lt;/code&gt; for simple non-PIE linking.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;debug-server&quot;&gt;Debug server&lt;/h2&gt;
+
+&lt;p&gt;There is a debug server, which (if you can get it to work) offers the
+ability to interactively visualize the output of each pass of the
+requisite input in your language.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;racket debug-server.rkt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can either type programs, or you can (hopefully) select from a set
+of programs.&lt;/p&gt;
+
+&lt;h2 id=&quot;testing-infrastructure&quot;&gt;Testing infrastructure&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test.rkt&lt;/code&gt; is the primary entrypoint during development. Modes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;frontend&lt;/code&gt; – runs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uniqueify&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;anf-convert&lt;/code&gt; and checks ANF via interpreter&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;middleend&lt;/code&gt; – runs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;explicate-control&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uncover-locals&lt;/code&gt; and checks via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-c0&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;backend&lt;/code&gt; – runs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;select-instructions&lt;/code&gt; → &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;patch-instructions&lt;/code&gt; and checks via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;interpret-instr&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;native&lt;/code&gt; – full compile to assembly, build the binary, run it with real stdin; compare stdout to goldens&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Usage:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;racket test.rkt -m &amp;lt;mode&amp;gt; -i &amp;lt;comma-separated input files&amp;gt; -g &amp;lt;comma-separated goldens&amp;gt; &amp;lt;program.scm&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;program.scm&amp;gt;&lt;/code&gt; is a file in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;test-programs/&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-i&lt;/code&gt; paths are usually in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./input-files/&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-g&lt;/code&gt; paths point into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;./goldens/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;racket test.rkt -m middleend -i ./input-files/1.in \
+  -g goldens/r0-0_1_uniqueify.stdout,goldens/r0-0_1_explicate-control.in-ast \
+  test-programs/r0-0_1.scm
+
+racket test.rkt -m backend -i ./input-files/1.in \
+  -g goldens/r0-0_1_uniqueify.stdout,goldens/r0-0_1_select-instructions.in-ast \
+  test-programs/r0-0_1.scm
+
+racket test.rkt -m native -i ./input-files/1.in \
+  -g goldens/r0-0_1_uniqueify.stdout \
+  test-programs/r0-0_1.scm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;autograder-tests&quot;&gt;Autograder tests&lt;/h2&gt;
+
+&lt;p&gt;The autograder tests use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tester.py&lt;/code&gt; infrastructure. These tests
+are designed to be compatible with the Autograder. You can use the
+standard &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;python3 tester -av&lt;/code&gt; to run all tests (in verbose mode), or
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;python3 tester.py -t &amp;lt;TEST&amp;gt; -v&lt;/code&gt; to run a specific test.&lt;/p&gt;
+
+&lt;h2 id=&quot;goldens-what-they-are-and-how-we-use-them&quot;&gt;Goldens: what they are and how we use them&lt;/h2&gt;
+
+&lt;p&gt;We use goldens in several ways:&lt;/p&gt;
+
+&lt;p&gt;1) Isolation goldens (IR &amp;amp; stdout):&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;For non-native modes, we compare:
+    &lt;ul&gt;
+      &lt;li&gt;Your pass output (serialized) to an instructor-provided &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.in-ast&lt;/code&gt; file&lt;/li&gt;
+      &lt;li&gt;The interpreter’s stdout to a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;*.stdout&lt;/code&gt; file&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;2) Native goldens (end-to-end):&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;We run your produced binary and compare its stdout to a golden stdout file&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;How goldens are organized:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;goldens/&amp;lt;progname&amp;gt;_&amp;lt;input#&amp;gt;_&amp;lt;passname&amp;gt;.in-ast&lt;/code&gt; – serialized input to that pass&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;goldens/&amp;lt;progname&amp;gt;_&amp;lt;input#&amp;gt;_&amp;lt;passname&amp;gt;.out-ast&lt;/code&gt; – serialized output of that pass&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;goldens/&amp;lt;progname&amp;gt;_&amp;lt;input#&amp;gt;_&amp;lt;passname&amp;gt;.interp&lt;/code&gt; – interpreter result snapshot&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;goldens/&amp;lt;progname&amp;gt;_&amp;lt;input#&amp;gt;_&amp;lt;passname&amp;gt;.stdout&lt;/code&gt; – stdout (what we actually check)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The instructor has a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gengoldens&lt;/code&gt; mode to regenerate these. Students do not need it.&lt;/p&gt;
+
+&lt;h2 id=&quot;common-errors--fixes&quot;&gt;Common Errors &amp;amp; Fixes&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;“Satisfies output predicate: no”
+    &lt;ul&gt;
+      &lt;li&gt;Your pass constructed malformed IR. Re-read the corresponding
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;…-program?&lt;/code&gt; predicate in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;irs.rkt&lt;/code&gt;. Print your term and compare
+shapes.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Interpreter mismatch or inconsistent stdout across passes
+    &lt;ul&gt;
+      &lt;li&gt;You are changing the behavior of the code in compiling it. Debug
+by narrowing the pass window. Compare interpreter outputs before
+and after each pass to locate the offensive one.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Illegal memory→memory &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;movq&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;patch-instructions&lt;/code&gt; must rewrite &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;(movq (deref …) (deref …))&lt;/code&gt;
+into two moves via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%rax&lt;/code&gt;.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Stack alignment or frame size wrong
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;prelude-and-conclusion&lt;/code&gt; relies on correct locals and
+offsets. Ensure &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;uncover-locals&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;assign-homes&lt;/code&gt; agree.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Executable missing after “building a binary…”
+    &lt;ul&gt;
+      &lt;li&gt;Toolchain failed. Check clang/ld messages. On Linux ensure clang
+is installed (or set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CC&lt;/code&gt;).&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Mach-O underscores vs ELF
+    &lt;ul&gt;
+      &lt;li&gt;Do not hardcode &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt;. Always go through &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rt-sym&lt;/code&gt; and
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;runtime-function-externs&lt;/code&gt;.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Native test says no executable present
+    &lt;ul&gt;
+      &lt;li&gt;You ran &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-m native&lt;/code&gt; without a successful build. Ensure the final
+pass emits assembly and the assembler/linker stage succeeds.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;faq&quot;&gt;FAQ&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Do I need register allocation?
+    &lt;ul&gt;
+      &lt;li&gt;Not in P1. We mostly compute into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%rax&lt;/code&gt;, store into vars, then place vars on the stack.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Can I write helper functions?
+    &lt;ul&gt;
+      &lt;li&gt;Yes, as long as pass interfaces/types remain as specified by the predicates.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Can I emit calls to other C library functions?
+    &lt;ul&gt;
+      &lt;li&gt;Not in P1. Use the provided runtime functions (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read_int64&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print_int64&lt;/code&gt;).&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Why underscores on macOS?
+    &lt;ul&gt;
+      &lt;li&gt;Mach-O prefixes symbols. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;rt-sym&lt;/code&gt; abstracts this. Don’t add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt; yourself.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;How are inputs fed to my program?
+    &lt;ul&gt;
+      &lt;li&gt;For native tests, the harness writes the whitespace-separated
+numbers from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.in&lt;/code&gt; file to your program’s stdin. Your stdout
+must match the golden.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 22 Sep 2025 00:00:00 -0400</pubDate>
+        <link>https://kmicinski.com/cis531-f25/projects/2</link>
+        <guid isPermaLink="true">https://kmicinski.com/cis531-f25/projects/2</guid>
         
         
         <category>assignment</category>

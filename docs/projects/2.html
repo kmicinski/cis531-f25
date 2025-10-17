@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Project 2: Transitive Closure</title>
-  <meta name="description" content="Due: Wednesday, March 1st, 11:59PM.">
+  <title>Project 2: LVar → x86-64 Assembler</title>
+  <meta name="description" content="Starter code: Download the starter here!">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://kmicinski.com/cis531-f25/css/main.css">
@@ -92,548 +92,367 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Project 2: Transitive Closure</h1>
-    <h3><b>Project due date: <time datetime="2023-03-01T00:00:00-05:00">Mar 1,
-    2023 (11:59PM Eastern)</time></b></h3>
+    <h1 class="post-title" itemprop="name headline">Project 2: LVar → x86-64 Assembler</h1>
+    <h3><b>Project due date: <time datetime="2025-10-09T00:00:00-04:00">Oct 9,
+    2025 (11:59PM Eastern)</time></b></h3>
   </header>
 
   <div class="post-content writeup-content" itemprop="articleBody">
-    <p><strong>Due</strong>: Wednesday, March 1st, 11:59PM.</p>
-
-<p>Available on http://autograde.org. Use your credentials to login.</p>
-
-<p>In this project we will implement a domain-specific programming
-language that allows us to specify network topologies and check their
-connectivity. Production datacenters and commercial networks are
-composed of myriad hosts, routers, and switches, connected in a
-complex web of infrastructure. An important but challenging question
-is simply: which nodes may connect to which others?  Even in the
-modern age, network misconfigurations still account for <a href="https://www.forbes.com/sites/forbestechcouncil/2022/01/27/whats-causing-all-these-network-outages-and-what-can-cios-do-to-prevent-them/?sh=6dc268d37e7b">global
-internet outage
-events</a>. To
-address this, several cloud providers have begun to provide tools for
-analyzing properties of networks specified via domain-specific
-configuration languages. For example, AWS’s <a href="https://aws.amazon.com/blogs/aws/new-vpc-insights-analyzes-reachability-and-visibility-in-vpcs/">VPC Reachability
-Analyzer</a>
-is a commercial offering that is now used by some cloud system
-engineers as part of their day-to-day jobs.</p>
-
-<p>In this project, we will build a minimal language for expressing
-network topologies and implement transitive closure, the algorithm for
-graph reachability. This will allow us to check for connectivity
-properties of (potentially huge) graphs. Our language is loosely
-inspired by <a href="https://cornell-pl.github.io/cs6114/netkat.html">NetKAT</a>,
-and we encourage you to read about its features if software-defined
-networking is of interest to you.</p>
-
-<h3 id="academic-integrity">Academic Integrity</h3>
-
-<p>The coding on this project is to be completed by you alone, without
-help from any other students. You are encouraged to discuss the
-project specification at a high level, but should not discuss
-specifics or show students your solution code.</p>
-
-<h2 id="input-format">Input Format</h2>
-
-<p>Networks include various pieces of physical infrastructure: routers,
-switches, and servers. In this project we will ignore the
-physical properties of network nodes, and will simply call every
-entity capable of sending or receiving data a “node.” Nodes are
-connected by (directed) links. Both nodes and links are specified as
-commands, each command residing on a unique line of the input file
-format. Syntactically, the two specification commands are (a) the
-<code class="language-plaintext highlighter-rouge">NODE &lt;name&gt;</code> command, which specifies the existence of a node named
-<code class="language-plaintext highlighter-rouge">&lt;name&gt;</code> and (b) the <code class="language-plaintext highlighter-rouge">LINK &lt;from&gt; &lt;to&gt;</code> command, which establishes a
-(directed) link from node <code class="language-plaintext highlighter-rouge">&lt;from&gt;</code> to node <code class="language-plaintext highlighter-rouge">&lt;to&gt;</code>. For convenience, we
-assume all nodes are specified before any occurrences of <code class="language-plaintext highlighter-rouge">LINK</code>
-commands. For example, the following is valid:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NODE node0-name
-NODE node1-name
-LINK node0-name node1-name
-</code></pre></div></div>
-
-<p>But the next is not:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NODE node0-name
-LINK node0-name node1-name
-NODE node1-name
-</code></pre></div></div>
-
-<p>We can visualize the first graph in the following way:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    +------------+  link    +------------+
-    | node0-name | -------&gt; | node1-name |
-    +------------+          +------------+
-</code></pre></div></div>
-
-<p>Let’s add some more nodes and links:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NODE node0-name
-NODE node1-name
-NODE node2-name
-LINK node0-name node1-name
-LINK node1-name node2-name
-</code></pre></div></div>
-
-<p>Now our network looks like this:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    +------------+  link    +------------+  link    +------------+
-    | node0-name | -------&gt; | node1-name | -------&gt; | node2-name |
-    +------------+          +------------+          +------------+
-</code></pre></div></div>
-
-<h1 id="transitive-closure">Transitive Closure</h1>
-
-<p>The above networks are toy examples. In practice, networks may have
-millions of nodes, and orders-of-magnitude more links. Network
-engineers work hard to ensure that networks are designed to adhere to
-specific connectivity invariants. For example, we may wish to ensure
-that <code class="language-plaintext highlighter-rouge">main-server</code> can connect to <code class="language-plaintext highlighter-rouge">backup-srv</code>:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NODE main-server
-NODE backup-srv
-NODE switch
-NODE db-server
-LINK main-server switch
-LINK switch main-server
-LINK switch backup-srv
-LINK backup-srv switch
-LINK db-server switch
-LINK switch db-server
-</code></pre></div></div>
-
-<p>Note that we explicitly enumerated bidirectional links. The above
-specification may be visualized as:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    +-------------+          +------------+          +------------+
-    | main-server | &lt;------&gt; |   switch   | &lt;------&gt; | backup-srv |
-    +-------------+          +------------+          +------------+
-                                 ^
-    +------------+               |
-    | db-server  | &lt;-------------+ 
-    +------------+
-</code></pre></div></div>
-
-<p>Now, we can make queries:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CONNECT main-server backup-srv
-CONNECT db-server main-server
-</code></pre></div></div>
-
-<p>Checking these queries is easy for small examples: we can trace in our
-head a path between <code class="language-plaintext highlighter-rouge">main-server</code> and <code class="language-plaintext highlighter-rouge">db-server</code>. But larger examples
-may involve a great many nodes, and even more links between them. As
-such, we need an algorithm which will infer <em>transitive</em> links through
-the input graph:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>          +----------------------------------------------+
-          v                                              v
-    +-------------+          +------------+          +------------+
-    | main-server | &lt;------&gt; |   switch   | &lt;------&gt; | backup-srv |
-    +-------------+          +------------+          +------------+
-          |                      ^                        ^
-    +------------+               |                        |
-    | db-server  | &lt;-------------+                        |
-    +------------+                                        |
-          ^                                               |
-          +-----------------------------------------------+
-</code></pre></div></div>
-
-<p>We do this through an iterative process named <em>transitive
-closure</em>. Transitive closure consists of a series of steps applied in
-an iterative fashion, until no more answers are possible. In other
-words, the algorithm is defined in terms of its behavior at each “time
-step.”</p>
-
-<ul>
-  <li>
-    <p>The transitive closure (of links) at time 0 is simply the set of
-extensionally-specified (input) links.</p>
-  </li>
-  <li>
-    <p>To construct the transitive closure at time n+1, look at the
-transitive closure at time n. For any pair of links in that graph,
-<code class="language-plaintext highlighter-rouge">(x,y)</code> and <code class="language-plaintext highlighter-rouge">(y,z)</code>, such that the intermediate node <code class="language-plaintext highlighter-rouge">y</code> is
-matching, draw a (possibly new) link between <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">z</code>, <code class="language-plaintext highlighter-rouge">(x,z)</code>.</p>
-  </li>
-  <li>
-    <p>Repeat this process until no new links are found. I.e., until the
-transitive closure at some time n is equal to the transitive closure
-at time n+1</p>
-  </li>
-</ul>
-
-<p>This process necessarily terminates, as long as you are careful to
-ensure elements are not added twice (which will be easy using the
-correct datastructures, namely sets and hashes). This is because there
-are a finite number of nodes, and so the “worst-case” scenario would
-be that every node was connected to every other (as it is in the above
-graph). At each step of the process, we add more information to
-(monotonically) increase our knowledge base (of transitive links). At
-some point we will either (a) not add any new links or (b) add all
-possible links, at which point no more links may be added and we
-terminate.</p>
-
-<p>A generalized version of this reasoning gives us the <a href="https://en.wikipedia.org/wiki/Knaster%E2%80%93Tarski_theorem">Knaster-Tarski fixed-point theorem</a> and the <a href="https://en.wikipedia.org/wiki/Kleene_fixed-point_theorem">Klenne fixed-point theorem</a>.</p>
-
-<h1 id="hashes">Hashes</h1>
-
-<p>We will represent graphs of links as Racket <code class="language-plaintext highlighter-rouge">hashes</code>. We strongly
-encourage you to read <a href="https://docs.racket-lang.org/reference/hashtables.html">their documentation</a>. You
-will need to know at least the following key functions: <code class="language-plaintext highlighter-rouge">(hash key0 value0
-...)</code>, <code class="language-plaintext highlighter-rouge">(hash-ref key)</code>, <code class="language-plaintext highlighter-rouge">(hash-set hsh key value)</code>, and <code class="language-plaintext highlighter-rouge">(hash-keys
-hsh)</code>. Note: you are specifically <strong>forbidden</strong> from using
-<code class="language-plaintext highlighter-rouge">make-hash</code>, <code class="language-plaintext highlighter-rouge">hash-set!</code>, and other mutable variants of hashes.</p>
-
-<p>To represent a graph as a hash, we will adopt the following
-representation: keys will be strings, and their associated values will
-be <strong>sets</strong> of strings, manipulated using Racket’s <code class="language-plaintext highlighter-rouge">set</code>s (whose
-<a href="https://docs.racket-lang.org/reference/sets.html">documentation you should read
-here</a>. For example,
-the first example graph would be represented as</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define x (hash "node0-name" (set "node1-name")
-                "node1-name" (set "node2-name")))
-</code></pre></div></div>
-
-<p>To add a new link to the graph, we must be careful to use <code class="language-plaintext highlighter-rouge">set-add</code> to
-extend the set of nodes. For example, consider that we wanted to
-<em>extend</em> the above graph with a pointer from <code class="language-plaintext highlighter-rouge">node0-name</code> to
-<code class="language-plaintext highlighter-rouge">node3-name</code>, we would do it via the following:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(hash-set x "node0-name" (set-add (hash-ref x "node0-name") "node3-name"))
-</code></pre></div></div>
-
-<p>Make sure you understand in the above code how <code class="language-plaintext highlighter-rouge">set-add</code> and
-<code class="language-plaintext highlighter-rouge">hash-ref</code> are used in combination to ensure that no
-previously-present nodes are dropped.</p>
-
-<h1 id="tasks">Tasks</h1>
-
-<p>You will implement several functions, I have ranked them roughly in
-order of difficulty.</p>
-
-<ul>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">(parse-line l)</code> – You will parse an input line given as a string
-and you will transform it into an output that conforms to
-<code class="language-plaintext highlighter-rouge">line?</code>. Hint: use <code class="language-plaintext highlighter-rouge">string-split</code> and matching. (Difficulty:
-easy/medium)</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">(forward-link? graph n0 n1)</code> – Check whether there is a forward
-link from <code class="language-plaintext highlighter-rouge">n0</code> to <code class="language-plaintext highlighter-rouge">n1</code> in the graph <code class="language-plaintext highlighter-rouge">graph</code>. Return <code class="language-plaintext highlighter-rouge">#t</code> iff <code class="language-plaintext highlighter-rouge">n1</code> is
-linked to from (pointed at by) <code class="language-plaintext highlighter-rouge">n0</code>. (Difficulty: easier)</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">(add-link graph from to)</code> – Add an “edge” in the graph from node 
-<code class="language-plaintext highlighter-rouge">from</code> to node <code class="language-plaintext highlighter-rouge">to</code>. Hint: use <code class="language-plaintext highlighter-rouge">hash-ref</code>, <code class="language-plaintext highlighter-rouge">set-add</code>, and <code class="language-plaintext highlighter-rouge">hash-set</code> 
-to accomplish this. (Difficulty: easier)</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">(build-init-graph input)</code> – Assume that <code class="language-plaintext highlighter-rouge">input</code> is a program given
-as input. You will build up an <em>initial</em> graph datastructure
-corresponding to the program. Essentially, you are building an
-initial graph upon which you will subsequently perform iterative
-rounds of transitive closure. You will do this by looking at each
-line of input and changing the hash in one of two ways:</p>
-
-    <p>-&gt; If you see a <code class="language-plaintext highlighter-rouge">(node &lt;n&gt;)</code> command, you will add a self link
-  between <code class="language-plaintext highlighter-rouge">n</code> and itself.
-  -&gt; If you see an <code class="language-plaintext highlighter-rouge">(link &lt;from&gt; &lt;to&gt;)</code> command, you will insert an
-  edge from <code class="language-plaintext highlighter-rouge">from</code> to <code class="language-plaintext highlighter-rouge">to</code>.</p>
-
-    <p>(Difficulty: medium)</p>
-  </li>
-  <li>
-    <p><code class="language-plaintext highlighter-rouge">(transitive-closure graph)</code> – Perform the transitive closure of
-the graph <code class="language-plaintext highlighter-rouge">graph</code>. Your solution must be the final answer of
-transitive closure, not just a single iteration. In other words,
-your solution must possess the property that there are no additional
-links possible to add. (Difficulty: harder)</p>
-  </li>
-</ul>
-
-<h3 id="implementing-transitive-closure">Implementing Transitive Closure</h3>
-
-<p>There are a variety of algorithms to implement transitive closure. I
-will describe the so-called “naive” approach here, and then sketch a
-more refined (semi-naive) approach. I would recommend you implement
-your code using a combination of either recursive functions or the
-functions <code class="language-plaintext highlighter-rouge">foldl/r</code>. My solution is roughly ten lines and uses <code class="language-plaintext highlighter-rouge">foldl</code>
-three times.</p>
-
-<p>Here is an iterative algorithm for calculating the transitive closure
-of a graph.</p>
-
-<ul>
-  <li>
-    <p>Proceeding one iteration at a time, accumulate a variable <code class="language-plaintext highlighter-rouge">solution</code></p>
-  </li>
-  <li>
-    <p>At time step zero, initialize <code class="language-plaintext highlighter-rouge">solution</code> to be the graph of initial
-links.</p>
-  </li>
-  <li>
-    <p>To obtain the next time step, iterate over each edge in <code class="language-plaintext highlighter-rouge">solution</code>,
-<code class="language-plaintext highlighter-rouge">(x,y)</code> (this can be done using <code class="language-plaintext highlighter-rouge">hash-keys</code> and a recursive function
-or <code class="language-plaintext highlighter-rouge">foldl</code>)</p>
-
-    <ul>
-      <li>For each of these edges, <code class="language-plaintext highlighter-rouge">(x,y)</code> identify the set of edges
- starting from <code class="language-plaintext highlighter-rouge">y</code>, <code class="language-plaintext highlighter-rouge">(y,z)</code>, add <code class="language-plaintext highlighter-rouge">(x,z)</code> to the graph (this can be
- done using <code class="language-plaintext highlighter-rouge">hash-ref</code>, which will return a set: you can iterate
- over that set as a list by using <code class="language-plaintext highlighter-rouge">set-&gt;list</code>). Hint: you may want
- to call <code class="language-plaintext highlighter-rouge">hash-ref</code> with a third argument to specify a “default”
- value of the empty set (e.g., <code class="language-plaintext highlighter-rouge">(hash-ref h key (set))</code>).</li>
-    </ul>
-  </li>
-  <li>
-    <p>At some point this process will add no new edges, and <code class="language-plaintext highlighter-rouge">solution</code> at
-timestep <code class="language-plaintext highlighter-rouge">n</code> will be the same as <code class="language-plaintext highlighter-rouge">solution</code> at timestamp
-<code class="language-plaintext highlighter-rouge">n+1</code>. When this happens, the search is over.</p>
-  </li>
-</ul>
-
-<p>As an example, let’s see what happens on the following</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NODE node0
-NODE node1
-NODE node2
-LINK node0 node1
-LINK node1 node2
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>We start with <code class="language-plaintext highlighter-rouge">solution</code> being the graph <code class="language-plaintext highlighter-rouge">{node0 -&gt; {node1}, node1 -&gt; {node2}}</code></p>
-  </li>
-  <li>
-    <p>We examine edge <code class="language-plaintext highlighter-rouge">(node0,node1)</code>:</p>
-
-    <ul>
-      <li>Consider the set of edges beginning with <code class="language-plaintext highlighter-rouge">node1</code>: this is just the
-single edge <code class="language-plaintext highlighter-rouge">(node1,node2)</code>. We add it to the graph, and now our
-graph is <code class="language-plaintext highlighter-rouge">{node0 -&gt; {node1, node2}, node1 -&gt; {node2}}</code></li>
-    </ul>
-  </li>
-  <li>
-    <p>We examine edge <code class="language-plaintext highlighter-rouge">(node1,node2)</code>:</p>
-
-    <ul>
-      <li>Consider the set of edges beginning with <code class="language-plaintext highlighter-rouge">node2</code>: there are no
-such edges, so the graph doesn’t change.</li>
-    </ul>
-  </li>
-  <li>
-    <p>At the end of the first iteration (time step), the graph is <code class="language-plaintext highlighter-rouge">{node0
--&gt; {node1, node2}, node1 -&gt; {node2}}</code>.</p>
-  </li>
-  <li>
-    <p>During the next iteration, we reexamine <code class="language-plaintext highlighter-rouge">node0</code> and <code class="language-plaintext highlighter-rouge">node1</code>, but we
-don’t discover any new edges, so the graph remains the same.</p>
-  </li>
-  <li>
-    <p>We’re done: the final answer is <code class="language-plaintext highlighter-rouge">{node0 -&gt; {node1, node2}, node1 -&gt; {node2}}</code></p>
-  </li>
-</ul>
-
-<p>All in all my reference solution uses roughly 14 lines of code and
-uses <code class="language-plaintext highlighter-rouge">foldl</code> several times. I predict reasonable solutions will be
-between 10 and 50 lines, if you find yourself doing significantly more
-work please consult the instructors to ensure you’ve got the algorithm
-down.</p>
-
-<h1 id="bonus-tests">Bonus Tests</h1>
-
-<p>There are three bonus tests: <code class="language-plaintext highlighter-rouge">bonus-add-edge-3</code>,
-<code class="language-plaintext highlighter-rouge">bonus-transitive-closure-ring100</code>, and
-<code class="language-plaintext highlighter-rouge">bonus-transitive-closure-ring200</code>. The difference between these tests
-and the normal (secret) tests is that they operate over much larger
-graphs (the last two are ring graphs of size 200 and 300). To pass
-these tests, ensure you don’t add extra algorithmic overhead to your
-solution. The normal secret tests use graphs up to 30 nodes in
-size. In sum, you can earn roughly 18% bonus.</p>
-
-<h1 id="testing">Testing</h1>
-
-<p>Once you implement all of your work, you will unlock the ability to 
-run <code class="language-plaintext highlighter-rouge">connectivity.rkt</code> with an input file. The <code class="language-plaintext highlighter-rouge">demo</code> function canonicalizes 
-the database and prints out the starting database and its transitive closure:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket connectivity.rkt demo/1.net "CONNECTED n13 n52"
-</code></pre></div></div>
-
-<p>This will allow you to see your code in action. To run the testing
-infrastructure on your code, use <code class="language-plaintext highlighter-rouge">tester.py</code>. It is invoked as
-follows:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 tester.py -av
-</code></pre></div></div>
-
-<p>You may wish to add more example networks in the <code class="language-plaintext highlighter-rouge">demos</code> folder.</p>
-
-<h1 id="submitting-your-code-for-testing">Submitting your code for testing</h1>
-
-<p><strong>NOTE</strong> Before you can submit your project for grading you <em>must</em> git
-add, commit, and push. On a terminal (in your project directory)
-type:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Add all files in the directory
-git add .
-# Make a commit
-git commit -m "my commit message here"
-# Push to server
-git push
-</code></pre></div></div>
-
-<p>Once you have done a git commit and push, go to the autograder and
-select for your project to be graded.</p>
-
-<h1 id="starter-code">Starter Code</h1>
-
-<p>For those of you not currently enrolled in the class</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; Honor Pledge (bottom too) FILL IN NAME:
-;;
-;; I _____ submit this assignment as my own work
-#lang racket
-(provide (all-defined-out))
-
-;;
-;; CIS352 (Fall 22) Project 2 -- Network Connectivity
-;; 
-
-;; To see the demo, invoke using:
-;;     racket connectivity.rkt &lt;input-file&gt;.net
-;;     racket connectivity.rkt &lt;input-file&gt;.net "CONNECTED &lt;from&gt; &lt;to&gt;"
-
-;; Lines are pared into an intermediate representation satisfying the
-;; line? predicate.
-(define (line? l)
-  (match l
-    [`(node ,(? string? node-name)) #t]
-    [`(link ,(? string? from-node) ,(? string? to-node)) #t]
+    <p><em>Starter code</em>: <a href="/cis531-f25/assets/p2-starter.tar.gz">Download the starter here!</a></p>
+
+<div align="center">
+	<img src="/cis531-f25/assets/img/p1_demo.png" alt="Debug server demo" />
+</div>
+
+<p>(Pictured: <code class="language-plaintext highlighter-rouge">debug-server.rkt</code> in action.)</p>
+
+<p>This project is inspired by <em>Essentials of Compilation</em> (EoC), but the
+code here is a from-scratch reimplementation with some simplifications
+to keep the workload reasonable and to make grading/debugging
+clearer. Where behavior differs from the book, <strong>this README is the
+source of truth</strong> for expectations, file names, and command lines.</p>
+
+<p>You will compile a tiny expression language (R1/LVar, used
+interchangably) for straight-line arithmetic with <code class="language-plaintext highlighter-rouge">let</code>-bindings and
+<code class="language-plaintext highlighter-rouge">read</code> into x86-64 assembly, then produce a real binary and test it on
+actual inputs. Essentially, programs in our language are sequences of
+reads, ultimately printing one final output.</p>
+
+<h2 id="input-language-r1--lvar">Input Language (R1 / LVar)</h2>
+
+<p>R1 (covered in the book, chapter 2) is a straight-line expression
+language with integers, variables, <code class="language-plaintext highlighter-rouge">let</code>, unary minus, addition, and a
+zero-argument <code class="language-plaintext highlighter-rouge">(read)</code> primitive that consumes one integer from stdin
+at runtime.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>;; Expressions (exp) and programs
+(define (R1-exp? e)
+  (match e
+    [(? fixnum? n) #t]
+    [`(read) #t]
+    [`(- ,(? R1-exp? e)) #t]
+    [`(+ ,(? R1-exp? e0) ,(? R1-exp? e1)) #t]
+    [(? symbol? var) #t]
+    [`(let ([,(? symbol? x) ,(? R1-exp? e)]) ,(? R1-exp? e-body)) #t]
     [_ #f]))
 
-;; The input format is a list of line?s
-(define (input-format? lst)
-  (and (list? lst)
-       (andmap line? lst)))
-
-;; A graph? is a hash table whose keys are strings and whose values
-;; are sets of strings.
-(define (graph? gr) (and (hash? gr)
-                         (immutable? gr)
-                         (andmap string? (hash-keys gr))
-                         (andmap (lambda (key) (andmap string? (set-&gt;list (hash-ref gr key))))
-                                 (hash-keys gr))))
-
-
-;; 
-;; BEGIN PROJECT BELOW
-;; 
-
-;; TODO
-;; Parse a line of text input. Lines will have the following format:
-;;     NODE &lt;node-name&gt;
-;;     LINK &lt;node-name&gt; &lt;node-name&gt;
-;; 
-;; Hint: use string-split and match, make sure to produce something
-;; that adheres to `line?`.
-(define/contract (parse-line l)
-  (-&gt; string? line?)
-  ;; TODO TODO TODO 
-  'todo)
-
-;; starter code
-;; read a file by mapping over its lines  
-(define/contract (read-file f)
-  (-&gt; string? input-format?)
-  (map parse-line (file-&gt;lines f)))
-
-;; TODO 
-;; Input is a list of line? commands. Write a recursive function which
-;; builds up a hash.
-;;
-;; - If it's a `node` command, add a link from a node to itself.
-;; - If it's a `link` command, add a directional link as specified.
-;;
-;; Hint: use (hash), (set n), hash-set, set-add, hash-ref, and similar.
-(define/contract (build-init-graph input)
-  (-&gt; input-format? graph?)
-  ;; TODO TODO TODO 
-  (hash))
-
-;; TODO
-;; Check whether or not there is a forward line from n0 to n1 in
-;; graph.
-;; 
-;; Hint: use set-member? and hash-ref
-(define (forward-link? graph n0 n1)
-  'todo)
-
-;; TODO
-;; Add a directed link (from,to) to the graph graph, return the new graph with 
-;; the additional link.
-;;
-;; Hint: use hash-set, hash-ref, and set-add.
-(define (add-link graph from to)
-  'todo)
-
-;; TODO
-;; Perform the transitive closure of the graph. This is the most challenging 
-;; operation in the project, so we recommend putting it off until the end.
-;; 
-;; To perform the transitive closure of the graph, iteratively add links
-;; whenever you find a matching (x,y) and (y,z). This can be done in one of 
-;; two broad ways: (a) chaotic iteration or (b) semi-naive evaluation. 
-;; Read the project description for more details and hints at a solution.
-;; 
-;; My solution uses `foldl`, `hash-keys`, `set-&gt;list`, `hash-ref`, and 
-;; `add-link`. It is always possible to use a recursive helper function instead
-;; of a foldl, but it makes the code much easier to understand in my opinion.
-(define (transitive-closure graph)
-  'todo)
-
-
-;;
-;; END PROJECT CODE, DO NOT TOUCH BELOW
-;;
-
-;; Print a DB
-(define (print-db db)
-  (for ([key (sort (hash-keys db) string&lt;?)])
-    (displayln (format "Key ~a:" key))
-    (displayln (string-append "    " (string-join (sort (set-&gt;list (hash-ref db key)) string&lt;?) ", ")))))
-
-(define (demo file query)
-  (define ir (read-file file))
-  (define initial-db (build-init-graph ir))
-  (displayln "The input is:")
-  (print-db initial-db)
-  (displayln "Now running transitive closure...")
-  (define final-db (transitive-closure initial-db))
-  (displayln "Transitive closure:")
-  (print-db final-db)
-  (unless (equal? query "")
-    (match (string-split query)
-      [`("CONNECTED" ,n0 ,n1)
-        (if (forward-link? final-db n0 n1)
-          (displayln "CONNECTED")
-          (displayln "DISCONNECTED"))])))
-
-(match-define (cons file query)
-  (command-line
-   #:program "connectivity.rkt"
-   #:args ([filename ""]  [query ""])
-   (cons filename query)))
-
-;; if called with a single argument, this racket program will execute
-;; the demo.
-(if (not (equal? file "")) (demo file query) (void))
+(define (R1? e)
+  (match e
+    [`(program ,(? R1-exp? exp)) #t]
+    [_ #f]))
 </code></pre></div></div>
+
+<p>Programs on disk are s-expressions, e.g.:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(program
+  (let ([x (read)])
+    (let ([y (+ x 10)])
+      (+ y (- y)))))
+</code></pre></div></div>
+
+<h2 id="repository-layout">Repository Layout</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">compile.rkt</code> – TODO - Your pass implementations. You will edit functions provided here.
+-&gt; This is the <em>only</em> file you will edit! The rest are read-only</li>
+  <li><code class="language-plaintext highlighter-rouge">irs.rkt</code> – IR definitions and predicates like <code class="language-plaintext highlighter-rouge">anf-program?</code>, <code class="language-plaintext highlighter-rouge">c0-program?</code>, etc.</li>
+  <li><code class="language-plaintext highlighter-rouge">interpreters.rkt</code> – Reference interpreters for several IRs (used by tests and for your own debugging).</li>
+  <li><code class="language-plaintext highlighter-rouge">system.rkt</code> – System/ABI configuration, pass names, runtime filenames, output paths, etc.</li>
+  <li><code class="language-plaintext highlighter-rouge">main.rkt</code> – Driver that runs all passes, can build a binary</li>
+  <li><code class="language-plaintext highlighter-rouge">debug-server.rkt</code> – Launches a debugging server to help visualize each compiler pass</li>
+  <li><code class="language-plaintext highlighter-rouge">test.rkt</code> – Test harness. Runs isolation tests or end-to-end native tests depending on <code class="language-plaintext highlighter-rouge">-m</code> mode.</li>
+  <li><code class="language-plaintext highlighter-rouge">runtime.c</code> – Minimal runtime (<code class="language-plaintext highlighter-rouge">read_int64</code>, <code class="language-plaintext highlighter-rouge">print_int64</code>, etc.).</li>
+  <li><code class="language-plaintext highlighter-rouge">test-programs/</code> – Example programs (<code class="language-plaintext highlighter-rouge">.scm</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">input-files/</code> – Input streams for programs (lines of integers).</li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/</code> – Instructor goldens (IR snapshots, interpreter outputs, and stdout baselines).</li>
+</ul>
+
+<p>Please do not rename files or directories (grading infra depends on them).</p>
+
+<h2 id="the-compiler-pipeline-passes">The Compiler Pipeline (passes)</h2>
+
+<p>The compiler consists of a number of passes. Please do not get
+overwhelmed: each of these passes is going to be very small, and each
+have a specific, isolated behavior that will allow us to explain the
+specific stages of compilation. Additionally, as the code is compiled,
+it is translated into an increasinglly-lower-level IR.</p>
+
+<p>You will implement the following passes:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">uniqueify</code> → ensures every bound identifier is unique<br />
+Input: <code class="language-plaintext highlighter-rouge">R1?</code> → Output: <code class="language-plaintext highlighter-rouge">unique-source-tree?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-R1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">anf-convert</code> → ANF conversion (introduce temps to flatten nested ops)<br />
+Input: <code class="language-plaintext highlighter-rouge">unique-source-tree?</code> → Output: <code class="language-plaintext highlighter-rouge">anf-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-anf</code></li>
+  <li><code class="language-plaintext highlighter-rouge">explicate-control</code> → convert ANF to C0 (a statement/block flavor)<br />
+Input: <code class="language-plaintext highlighter-rouge">anf-program?</code> → Output: <code class="language-plaintext highlighter-rouge">c0-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-c0</code></li>
+  <li><code class="language-plaintext highlighter-rouge">uncover-locals</code> → collect local variables (stack frame sizing later)<br />
+Input: <code class="language-plaintext highlighter-rouge">c0-program?</code> → Output: <code class="language-plaintext highlighter-rouge">locals-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-c0</code></li>
+  <li><code class="language-plaintext highlighter-rouge">select-instructions</code> → map C0 statements to pseudo-x86 instructions over vars<br />
+Input: <code class="language-plaintext highlighter-rouge">locals-program?</code> → Output: <code class="language-plaintext highlighter-rouge">instr-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">assign-homes</code> → assign each var to a stack slot <code class="language-plaintext highlighter-rouge">(deref (reg rbp) offset)</code><br />
+Input: <code class="language-plaintext highlighter-rouge">instr-program?</code> → Output: <code class="language-plaintext highlighter-rouge">homes-assigned-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">patch-instructions</code> → break illegal memory→memory <code class="language-plaintext highlighter-rouge">movq</code> into two moves via <code class="language-plaintext highlighter-rouge">%rax</code><br />
+Input: <code class="language-plaintext highlighter-rouge">homes-assigned-program?</code> → Output: <code class="language-plaintext highlighter-rouge">patched-program?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">prelude-and-conclusion</code> → function prologue/epilogue; call <code class="language-plaintext highlighter-rouge">print_int64</code> on <code class="language-plaintext highlighter-rouge">%rax</code><br />
+Input: <code class="language-plaintext highlighter-rouge">patched-program?</code> → Output: <code class="language-plaintext highlighter-rouge">x86-64?</code> → Interp: <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">dump-x86-64</code> → render to assembler text (string)<br />
+Input: <code class="language-plaintext highlighter-rouge">x86-64?</code> → Output: <code class="language-plaintext highlighter-rouge">string?</code> → Interp: <code class="language-plaintext highlighter-rouge">dummy-interp-x86-64</code> (skips interpretation)</li>
+</ol>
+
+<p><strong>What you implement</strong>: All passes in <code class="language-plaintext highlighter-rouge">compile.rkt</code> are
+scaffolded. Your job is to produce outputs that satisfy each predicate
+in <code class="language-plaintext highlighter-rouge">irs.rkt</code> and that remain semantically equivalent (the interpreters
+check this).</p>
+
+<h2 id="ir-predicates-and-interpreters">IR Predicates and Interpreters</h2>
+
+<ul>
+  <li>
+    <p>Predicates (<code class="language-plaintext highlighter-rouge">irs.rkt</code>): Each pass has a precise predicate (e.g.,
+<code class="language-plaintext highlighter-rouge">anf-program?</code>, <code class="language-plaintext highlighter-rouge">c0-program?</code>, etc.). Tests check both input and
+output predicates at every step to catch malformed IR early. You
+should read and understand each predicate.</p>
+  </li>
+  <li>
+    <p>Interpreters (<code class="language-plaintext highlighter-rouge">interpreters.rkt</code>): For many stages we run the
+interpreter over your IR to check semantic consistency—different IRs
+must compute the same result on the same input stream. The harness
+reports whether outputs match and whether stdout across passes is
+consistent. Please do not modify this file.</p>
+  </li>
+</ul>
+
+<h2 id="how-to-compile-and-run">How to Compile and Run</h2>
+
+<p>To directly compile a single file using <code class="language-plaintext highlighter-rouge">main.rkt</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket main.rkt test-programs/&lt;prog&gt;.scm
+</code></pre></div></div>
+
+<p>The compiler dumps a long summary of the work done at each pass, and
+ultimately yielding a program <code class="language-plaintext highlighter-rouge">./output</code> which it compiles using
+system-specific infrastructure (this should work on Linux/Mac–ping me
+if any issues). For example, I can see:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kkmicins@lcs-QVR7XH2QGR p1 % racket main.rkt test-programs/r0-0.scm
+Compiling IR (using *your* compile.rkt) …
+'(pushq (reg rbp))
+...
+🏗️ Now building a binary... 🏗️
+-&gt; Host: macosx/x86_64  Target: x86_64-apple-darwin  Entry: main
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./output.s -o ./output.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./runtime.c -o ./runtime.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 ./output.o ./runtime.o -o ./output
+Success! Executable produced at: ./output
+Done!
+kkmicins@lcs-QVR7XH2QGR p1 % ./output
+42
+</code></pre></div></div>
+
+<p>Here, I invoked <code class="language-plaintext highlighter-rouge">main.rkt</code> and passed it a single file, one of the
+files in <code class="language-plaintext highlighter-rouge">test-programs</code>. This is by far the easiest way to <em>begin</em>
+your work on this project. My advice to you is to start with the
+simplest programs in <code class="language-plaintext highlighter-rouge">test-programs</code>, get them to compile, and then
+move on to larger programs.</p>
+
+<p>For programs that <code class="language-plaintext highlighter-rouge">(read)</code> input, they will emit programs which
+require you to type inputs into the console. For example, <code class="language-plaintext highlighter-rouge">(print
+(read) + (read))</code> will compile to a program which calls <code class="language-plaintext highlighter-rouge">read_int64</code>
+(from runtime.c) twice. You can either manually type in inputs, or you
+can use redirection (e.g., <code class="language-plaintext highlighter-rouge">output &lt;input-files/1.in</code>) to input them
+from a file.</p>
+
+<h2 id="common-tricky-systems-issues">Common Tricky Systems Issues</h2>
+
+<p>Systems-specific code is in <code class="language-plaintext highlighter-rouge">system.rkt</code>, which you should (hopefully)
+have to use minimally, as my starter files give a good amount of help
+here.</p>
+
+<ul>
+  <li><strong>IMPORTANT</strong>: ensure 16-byte stack alignment <em>before</em> calls (System
+V / macOS both require it).</li>
+  <li><strong>IMPORTANT</strong>: To ensure your code is portable across Linux/Mach
+ABIs, our intermediate IRs work with “symbols” rather than labels,
+and (during the last pass, <code class="language-plaintext highlighter-rouge">dump-x86</code>) we specialize labels to
+Mach/Linux. To do this, you should use the helper function <code class="language-plaintext highlighter-rouge">(rt-sym
+symbol)</code> which produces “_symbol” on Mac and “symbol” as required by
+the ABI.</li>
+  <li>Output assembly: <code class="language-plaintext highlighter-rouge">./output.s</code></li>
+  <li>Objects: <code class="language-plaintext highlighter-rouge">./output.o</code> and <code class="language-plaintext highlighter-rouge">./runtime.o</code></li>
+  <li>Binary: <code class="language-plaintext highlighter-rouge">./a.out</code></li>
+  <li>Assembler/Linker: Clang by default. Override with <code class="language-plaintext highlighter-rouge">CC=/path/to/clang</code> if needed.</li>
+  <li>Runtime linkage: <code class="language-plaintext highlighter-rouge">runtime.c</code> is compiled and linked in. The renderer emits externs for runtime symbols.</li>
+  <li>Linux linking uses <code class="language-plaintext highlighter-rouge">-no-pie</code> for simple non-PIE linking.</li>
+</ul>
+
+<h2 id="debug-server">Debug server</h2>
+
+<p>There is a debug server, which (if you can get it to work) offers the
+ability to interactively visualize the output of each pass of the
+requisite input in your language.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket debug-server.rkt
+</code></pre></div></div>
+
+<p>You can either type programs, or you can (hopefully) select from a set
+of programs.</p>
+
+<h2 id="testing-infrastructure">Testing infrastructure</h2>
+
+<p><code class="language-plaintext highlighter-rouge">test.rkt</code> is the primary entrypoint during development. Modes:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">frontend</code> – runs <code class="language-plaintext highlighter-rouge">uniqueify</code> → <code class="language-plaintext highlighter-rouge">anf-convert</code> and checks ANF via interpreter</li>
+  <li><code class="language-plaintext highlighter-rouge">middleend</code> – runs <code class="language-plaintext highlighter-rouge">explicate-control</code> → <code class="language-plaintext highlighter-rouge">uncover-locals</code> and checks via <code class="language-plaintext highlighter-rouge">interpret-c0</code></li>
+  <li><code class="language-plaintext highlighter-rouge">backend</code> – runs <code class="language-plaintext highlighter-rouge">select-instructions</code> → <code class="language-plaintext highlighter-rouge">patch-instructions</code> and checks via <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">native</code> – full compile to assembly, build the binary, run it with real stdin; compare stdout to goldens</li>
+</ul>
+
+<p>Usage:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket test.rkt -m &lt;mode&gt; -i &lt;comma-separated input files&gt; -g &lt;comma-separated goldens&gt; &lt;program.scm&gt;
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">&lt;program.scm&gt;</code> is a file in <code class="language-plaintext highlighter-rouge">test-programs/</code></li>
+  <li><code class="language-plaintext highlighter-rouge">-i</code> paths are usually in <code class="language-plaintext highlighter-rouge">./input-files/</code></li>
+  <li><code class="language-plaintext highlighter-rouge">-g</code> paths point into <code class="language-plaintext highlighter-rouge">./goldens/</code></li>
+</ul>
+
+<p>Examples:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket test.rkt -m middleend -i ./input-files/1.in \
+  -g goldens/r0-0_1_uniqueify.stdout,goldens/r0-0_1_explicate-control.in-ast \
+  test-programs/r0-0_1.scm
+
+racket test.rkt -m backend -i ./input-files/1.in \
+  -g goldens/r0-0_1_uniqueify.stdout,goldens/r0-0_1_select-instructions.in-ast \
+  test-programs/r0-0_1.scm
+
+racket test.rkt -m native -i ./input-files/1.in \
+  -g goldens/r0-0_1_uniqueify.stdout \
+  test-programs/r0-0_1.scm
+</code></pre></div></div>
+
+<h2 id="autograder-tests">Autograder tests</h2>
+
+<p>The autograder tests use the <code class="language-plaintext highlighter-rouge">tester.py</code> infrastructure. These tests
+are designed to be compatible with the Autograder. You can use the
+standard <code class="language-plaintext highlighter-rouge">python3 tester -av</code> to run all tests (in verbose mode), or
+<code class="language-plaintext highlighter-rouge">python3 tester.py -t &lt;TEST&gt; -v</code> to run a specific test.</p>
+
+<h2 id="goldens-what-they-are-and-how-we-use-them">Goldens: what they are and how we use them</h2>
+
+<p>We use goldens in several ways:</p>
+
+<p>1) Isolation goldens (IR &amp; stdout):</p>
+<ul>
+  <li>For non-native modes, we compare:
+    <ul>
+      <li>Your pass output (serialized) to an instructor-provided <code class="language-plaintext highlighter-rouge">.in-ast</code> file</li>
+      <li>The interpreter’s stdout to a <code class="language-plaintext highlighter-rouge">*.stdout</code> file</li>
+    </ul>
+  </li>
+</ul>
+
+<p>2) Native goldens (end-to-end):</p>
+<ul>
+  <li>We run your produced binary and compare its stdout to a golden stdout file</li>
+</ul>
+
+<p>How goldens are organized:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;progname&gt;_&lt;input#&gt;_&lt;passname&gt;.in-ast</code> – serialized input to that pass</li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;progname&gt;_&lt;input#&gt;_&lt;passname&gt;.out-ast</code> – serialized output of that pass</li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;progname&gt;_&lt;input#&gt;_&lt;passname&gt;.interp</code> – interpreter result snapshot</li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;progname&gt;_&lt;input#&gt;_&lt;passname&gt;.stdout</code> – stdout (what we actually check)</li>
+</ul>
+
+<p>The instructor has a <code class="language-plaintext highlighter-rouge">gengoldens</code> mode to regenerate these. Students do not need it.</p>
+
+<h2 id="common-errors--fixes">Common Errors &amp; Fixes</h2>
+
+<ul>
+  <li>“Satisfies output predicate: no”
+    <ul>
+      <li>Your pass constructed malformed IR. Re-read the corresponding
+<code class="language-plaintext highlighter-rouge">…-program?</code> predicate in <code class="language-plaintext highlighter-rouge">irs.rkt</code>. Print your term and compare
+shapes.</li>
+    </ul>
+  </li>
+  <li>Interpreter mismatch or inconsistent stdout across passes
+    <ul>
+      <li>You are changing the behavior of the code in compiling it. Debug
+by narrowing the pass window. Compare interpreter outputs before
+and after each pass to locate the offensive one.</li>
+    </ul>
+  </li>
+  <li>Illegal memory→memory <code class="language-plaintext highlighter-rouge">movq</code>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">patch-instructions</code> must rewrite <code class="language-plaintext highlighter-rouge">(movq (deref …) (deref …))</code>
+into two moves via <code class="language-plaintext highlighter-rouge">%rax</code>.</li>
+    </ul>
+  </li>
+  <li>Stack alignment or frame size wrong
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">prelude-and-conclusion</code> relies on correct locals and
+offsets. Ensure <code class="language-plaintext highlighter-rouge">uncover-locals</code> and <code class="language-plaintext highlighter-rouge">assign-homes</code> agree.</li>
+    </ul>
+  </li>
+  <li>Executable missing after “building a binary…”
+    <ul>
+      <li>Toolchain failed. Check clang/ld messages. On Linux ensure clang
+is installed (or set <code class="language-plaintext highlighter-rouge">CC</code>).</li>
+    </ul>
+  </li>
+  <li>Mach-O underscores vs ELF
+    <ul>
+      <li>Do not hardcode <code class="language-plaintext highlighter-rouge">_</code>. Always go through <code class="language-plaintext highlighter-rouge">rt-sym</code> and
+<code class="language-plaintext highlighter-rouge">runtime-function-externs</code>.</li>
+    </ul>
+  </li>
+  <li>Native test says no executable present
+    <ul>
+      <li>You ran <code class="language-plaintext highlighter-rouge">-m native</code> without a successful build. Ensure the final
+pass emits assembly and the assembler/linker stage succeeds.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="faq">FAQ</h2>
+
+<ul>
+  <li>Do I need register allocation?
+    <ul>
+      <li>Not in P1. We mostly compute into <code class="language-plaintext highlighter-rouge">%rax</code>, store into vars, then place vars on the stack.</li>
+    </ul>
+  </li>
+  <li>Can I write helper functions?
+    <ul>
+      <li>Yes, as long as pass interfaces/types remain as specified by the predicates.</li>
+    </ul>
+  </li>
+  <li>Can I emit calls to other C library functions?
+    <ul>
+      <li>Not in P1. Use the provided runtime functions (<code class="language-plaintext highlighter-rouge">read_int64</code>, <code class="language-plaintext highlighter-rouge">print_int64</code>).</li>
+    </ul>
+  </li>
+  <li>Why underscores on macOS?
+    <ul>
+      <li>Mach-O prefixes symbols. <code class="language-plaintext highlighter-rouge">rt-sym</code> abstracts this. Don’t add <code class="language-plaintext highlighter-rouge">_</code> yourself.</li>
+    </ul>
+  </li>
+  <li>How are inputs fed to my program?
+    <ul>
+      <li>For native tests, the harness writes the whitespace-separated
+numbers from the <code class="language-plaintext highlighter-rouge">.in</code> file to your program’s stdin. Your stdout
+must match the golden.</li>
+    </ul>
+  </li>
+</ul>
+
 
   </div>
 
