@@ -338,7 +338,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-	      Assignment (set!), Garbage Collection (GC) Introduction
+	      More Project 2 Discussion
         </div>
         <ul class="resources-list">
         </ul>
@@ -427,7 +427,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-		  R2 / LIf Project
+		  Project 3: R2 / LIf -> x86
         </div>
         <ul class="resources-list">
           <!-- <li> -->
@@ -442,11 +442,11 @@ layout: mainpage
       </div>
     </li>
 	    <li class="session-item">
-      <div class="date-col">Project 2</div>
+      <div class="date-col">Project 3</div>
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-book-open reading-icon"></i> 
-          <a href="https://kmicinski.com/cis531-f25/projects/2">Project 2 (assigned 9/22, due 10/9)</a>
+          <a href="https://kmicinski.com/cis531-f25/projects/3">Project 3 (assigned 10/16, due 10/28)</a>
         </div>
       </div>
     </li>    
@@ -467,18 +467,18 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Data-Flow Analysis Introduction
+          Heap-Allocated Data and Assignment Conversion
         </div>
-        <!-- <ul class="resources-list"> -->
-        <!--   <li> -->
-        <!--     <i class="fa-brands fa-youtube youtube-icon"></i> -->
-        <!--     <a href="https://www.youtube.com/watch?v=Paxvaq0Q-S0&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=21">Lecture Video</a> -->
-        <!--   </li> -->
-        <!--   <li> -->
-        <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
-        <!--   </li> -->
-        <!-- </ul> -->
+        <ul class="resources-list">
+          <!-- <li> -->
+          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
+          <!--   <a href="https://www.youtube.com/watch?v=Paxvaq0Q-S0&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=21">Lecture Video</a> -->
+          <!-- </li> -->
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/vectors.pdf">Lecture Slides</a>
+          </li>
+        </ul>
       </div>
     </li>
     <!-- <li class="session-item"> -->
@@ -501,18 +501,18 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Monotone Frameworks, Worklist Algorithm
+          Loops and Data-Flow Analysis Introduction
         </div>
-        <!-- <ul class="resources-list"> -->
-        <!--   <li> -->
-        <!--     <i class="fa-brands fa-youtube youtube-icon"></i> -->
-        <!--     <a href="https://www.youtube.com/watch?v=GNkQrqAGB-o&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=22">Lecture Video</a> -->
-        <!--   </li> -->
-        <!--   <li> -->
-        <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
-        <!--   </li> -->
-        <!-- </ul> -->
+        <ul class="resources-list">
+          <li>
+            <i class="fa-brands fa-youtube youtube-icon"></i>
+            <a href="https://youtu.be/CDWYjiwBU6g">Lecture Video</a>
+          </li>
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/loops.pdf">Lecture Slides</a>
+          </li>
+        </ul>
       </div>
     </li>
   </ul>
