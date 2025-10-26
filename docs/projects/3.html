@@ -346,7 +346,13 @@ interacting with the code. Experts debug their code using an
 iterative, hypothesis-driven methodology, where they (a) articulate
 a falsifiable hypothesis (“this match pattern never matches
 anything”), (b) change their code to observe the bug (“add a
-displayln at every match handler”), and (c)</p>
+displayln at every match handler”), and (c) execute a test to
+falsify / validate their hypothesis, going back to step (a) with a
+refined hypothesis if necessary. Competence in debugging means
+becoming adept at iteratively formulating and refining hypotheses
+that will give you insight into what, exactly, is broken in your
+code: once the issue becomes possible to articulate, the fix is
+often trivial.</p>
   </li>
 </ul>
 
