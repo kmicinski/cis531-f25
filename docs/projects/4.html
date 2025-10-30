@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Project 4: vectors, set!, and loops</title>
+  <meta name="description" content="Download the starter files here">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://kmicinski.com/cis531-f25/css/main.css">
+  <link rel="canonical" href="https://kmicinski.com/cis531-f25/projects/4">
+  <link rel="alternate" type="application/rss+xml" title="CIS531" href="https://kmicinski.com/cis531-f25/feed.xml">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+</head>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href=https://kmicinski.com//cis531-f25/>CIS531</a>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis531-f25/#schedule>Schedule</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis531-f25/learning-objectives>Objectives</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis531-f25/syllabus>Syllabus</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://autograde.org">Autograde</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <!-- <nav class="site-nav"> -->
+    <!--   <a href="#" class="menu-icon"> -->
+    <!--     <svg viewBox="0 0 18 15"> -->
+    <!--       <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/> -->
+    <!--       <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/> -->
+    <!--       <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/> -->
+    <!--     </svg> -->
+    <!--   </a> -->
+
+    <!--   <div class="trigger"> -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--       <a class="page-link" href="https://kmicinski.com//cis531-f25/schedule/">Schedule</a> -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--       <a class="page-link" href="https://kmicinski.com//cis531-f25/syllabus/">Syllabus</a> -->
+    <!--        -->
+    <!--      -->
+    <!--   </div> -->
+    <!-- </nav> -->
+
+  </div>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Project 4: vectors, set!, and loops</h1>
+    <h3><b>Project due date: <time datetime="2025-11-12T00:00:00-05:00">Nov 12,
+    2025 (11:59PM Eastern)</time></b></h3>
+  </header>
+
+  <div class="post-content writeup-content" itemprop="articleBody">
+    <p><a href="/assets/p4-starter.tar.gz">Download the starter files here</a></p>
+
+<p>This project is inspired by <em>Essentials of Compilation</em> (EoC), but in
+this project I take a departure from the book’s content in several
+important ways. The language in this project, R3, is an
+imperative-style language with loops, but at the core the important
+thing happening is dynamic memory allocation on the heap. In the EoC
+book, this is covered alongside garbage collection–in my class (at
+least this iteration) I prefer to skip implementing garbage
+collection: you need to know C well (to do it correctly), and the
+algorithms are both tricky to describe and challenging to implement
+and debug in class where we have not covered C programming. Thus, I
+opt for a simpler route: just use malloc, and (optionally) get garbage
+collection by using (e.g.,) the Boehm garbage collector; I also leave
+something such as arena allocation as a stretch goal, which you should
+pursue if you are a PhD student or interested to learn more.</p>
+
+<h2 id="input-language-r3">Input Language (R3)</h2>
+
+<p>this language, which I am calling <strong>R3</strong>, adds imperative features to
+<strong>R2/LIf</strong>. Specifically, we add the forms:</p>
+
+<div class="language-racket highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">let*</span> <span class="p">([</span><span class="nf">x</span> <span class="nv">e</span><span class="p">]</span> <span class="o">...</span><span class="p">)</span> <span class="nv">e-b</span><span class="p">)</span> <span class="c1">;; let*, allows multiple simultaneously definitions</span>
+<span class="p">(</span><span class="nb">void</span><span class="p">)</span> <span class="c1">;; operations like vector-set! return void</span>
+<span class="p">(</span><span class="nb">make-vector</span> <span class="nv">i</span><span class="p">)</span> <span class="c1">;; Allocate a vector of size i, initialize all entries to 0</span>
+<span class="p">(</span><span class="nb">vector-ref</span> <span class="nv">e</span> <span class="nv">i</span><span class="p">)</span> <span class="c1">;; Dereference the vector e at index i, i must be static </span>
+<span class="p">(</span><span class="nb">vector-set!</span> <span class="nv">e</span> <span class="nv">i</span> <span class="nv">ev</span><span class="p">)</span> <span class="c1">;; e[i] := v</span>
+<span class="p">(</span><span class="k">set!</span> <span class="nv">x</span> <span class="nv">e</span><span class="p">)</span> <span class="c1">;; Any variable can be set!d</span>
+<span class="p">(</span><span class="nf">while</span> <span class="nv">e-g</span> <span class="nv">e-b</span><span class="p">)</span> <span class="c1">;; While e-g, do e-b, eval to (void)</span>
+<span class="p">(</span><span class="k">begin</span> <span class="nv">es</span> <span class="o">...</span> <span class="nv">e-last</span><span class="p">)</span> <span class="c1">;; Do all of es..., eval to the result of e-last</span>
+</code></pre></div></div>
+
+<p>As an example of an R3 program…</p>
+
+<div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="p">(</span><span class="nf">program</span>
+              <span class="p">(</span><span class="k">let*</span> <span class="p">([</span><span class="nf">x</span> <span class="p">(</span><span class="nb">read</span><span class="p">)]</span>
+                     <span class="p">[</span><span class="nf">i</span> <span class="mi">0</span><span class="p">]</span>
+                     <span class="p">[</span><span class="nf">acc</span> <span class="mi">0</span><span class="p">])</span>
+                <span class="p">(</span><span class="k">begin</span>
+                  <span class="p">(</span><span class="nf">while</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">i</span> <span class="nv">x</span><span class="p">)</span>
+                         <span class="p">(</span><span class="k">begin</span>
+                           <span class="p">(</span><span class="k">set!</span> <span class="nv">acc</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">acc</span> <span class="nv">i</span><span class="p">))</span>
+                           <span class="p">(</span><span class="k">set!</span> <span class="nv">i</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">i</span> <span class="mi">1</span><span class="p">))))</span>
+                  <span class="nv">acc</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>The major extensions are these:</p>
+
+<ul>
+  <li>
+    <p>We have a new literal, called <code class="language-plaintext highlighter-rouge">(void)</code>. This is sometimes called the
+“unit value,” and carries no computational information, i.e.,
+control-flow never depends on the value of its contents; in an ideal
+world we would eliminate voids entirely via optimization, but their
+inclusion allows us to answer questions like: “what should
+vector-set! return?”</p>
+  </li>
+  <li>
+    <p>Programs may allocate vectors using <code class="language-plaintext highlighter-rouge">(make-vector i)</code>, which zeros
+all entries of the vector. These get translated into calls to an
+allocation function in <code class="language-plaintext highlighter-rouge">runtime.c</code>.</p>
+  </li>
+  <li>
+    <p>Programs may perform vector operations, but these operations are
+limited to constant indices (i.e., we can’t compute the index that
+we want to write / read via <code class="language-plaintext highlighter-rouge">vector-ref</code>/<code class="language-plaintext highlighter-rouge">vector-set!</code>))–we may
+generalize this in subsequent projects.</p>
+  </li>
+  <li>
+    <p><em>All</em> variables may be mutated via set!, our language is no longer
+pure. We handle this by “boxing” every variable, a process we
+describe below.</p>
+  </li>
+  <li>
+    <p>Mutability goes hand-in-hand with loops, in the sense that mutable
+variables are not much fun unless you add loops. So we add a form,
+<code class="language-plaintext highlighter-rouge">(while e-g e-b)</code>, which continually evaluates the loop guard <code class="language-plaintext highlighter-rouge">e-g</code>
+and executes the body <code class="language-plaintext highlighter-rouge">e-b</code> (discarding its result) until the loop
+is finished. <code class="language-plaintext highlighter-rouge">(while ...)</code> reduces to <code class="language-plaintext highlighter-rouge">(void)</code>.</p>
+  </li>
+</ul>
+
+<h2 id="repository-layout">Repository Layout</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">compile.rkt</code> – Your pass implementations. You will edit functions provided here.
+-&gt; This is the <em>only</em> file you will edit! The rest are read-only</li>
+  <li><code class="language-plaintext highlighter-rouge">irs.rkt</code> – IR definitions and predicates like <code class="language-plaintext highlighter-rouge">anf-program?</code>, <code class="language-plaintext highlighter-rouge">c1-program?</code>, etc. (see also typed/shrunk variants)</li>
+  <li><code class="language-plaintext highlighter-rouge">interpreters.rkt</code> – Reference interpreters for several IRs (used by tests and for your own debugging).</li>
+  <li><code class="language-plaintext highlighter-rouge">system.rkt</code> – System/ABI configuration, pass names, runtime filenames, output paths, etc.</li>
+  <li><code class="language-plaintext highlighter-rouge">main.rkt</code> – Driver that runs all passes, can build a binary, and can launch a debug server.</li>
+  <li><code class="language-plaintext highlighter-rouge">test.rkt</code> – Test harness. Runs isolation tests or end-to-end native tests depending on <code class="language-plaintext highlighter-rouge">-m</code> mode.</li>
+  <li><code class="language-plaintext highlighter-rouge">runtime.c</code> – Minimal runtime (<code class="language-plaintext highlighter-rouge">read_int64</code>, <code class="language-plaintext highlighter-rouge">print_int64</code>, etc.).</li>
+  <li><code class="language-plaintext highlighter-rouge">test-programs/</code> – Example programs (<code class="language-plaintext highlighter-rouge">.scm</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">input-files/</code> – Input streams for programs (lines of integers).</li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/</code> – Instructor goldens (IR snapshots, interpreter outputs, and stdout baselines).</li>
+</ul>
+
+<p>Please do not rename files or directories (grading infra depends on them).</p>
+
+<h2 id="the-compiler-pipeline-passes">The Compiler Pipeline (passes)</h2>
+
+<p>We skip typechecking in this project; programs are assumed type-correct. If not, behavior is undefined (e.g., segfaults). You’ll implement the following passes in <code class="language-plaintext highlighter-rouge">compile.rkt</code>. Each pass must produce an output that satisfies the corresponding predicate in <code class="language-plaintext highlighter-rouge">irs.rkt</code>, and preserve behavior across interpretable stages.</p>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">shrink</code> Removes binary <code class="language-plaintext highlighter-rouge">-</code>, <code class="language-plaintext highlighter-rouge">and</code>/<code class="language-plaintext highlighter-rouge">or</code>, and <code class="language-plaintext highlighter-rouge">&lt;=, &gt;, &gt;=</code> by rewriting to <code class="language-plaintext highlighter-rouge">eq?</code>/<code class="language-plaintext highlighter-rouge">&lt;</code>/<code class="language-plaintext highlighter-rouge">if</code>. Preserves <code class="language-plaintext highlighter-rouge">let</code>, <code class="language-plaintext highlighter-rouge">while</code>, vectors, <code class="language-plaintext highlighter-rouge">set!</code>, and <code class="language-plaintext highlighter-rouge">begin</code> (canonically as <code class="language-plaintext highlighter-rouge">let</code> chains). Rewrites <code class="language-plaintext highlighter-rouge">while</code> so that it appears only in non-tail position: <code class="language-plaintext highlighter-rouge">(while e-g e-b) =&gt; (let ([_ (while e-g e-b)]) (void))</code>
+Input: <code class="language-plaintext highlighter-rouge">R3?</code> → Output: <code class="language-plaintext highlighter-rouge">shrunk-R3?</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">uniqueify</code> Alpha-renames so that each bound identifier is written exactly once. Output program’s info field is <code class="language-plaintext highlighter-rouge">()</code>.<br />
+Input: <code class="language-plaintext highlighter-rouge">shrunk-R3?</code> → Output: <code class="language-plaintext highlighter-rouge">unique-source-tree?</code></p>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">assignment-convert</code>
+Boxes variables. Rewrites:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">let</code> → <code class="language-plaintext highlighter-rouge">(make-vector 1)</code> + <code class="language-plaintext highlighter-rouge">vector-set!</code> to initialize</li>
+      <li>uses of <code class="language-plaintext highlighter-rouge">x</code> → <code class="language-plaintext highlighter-rouge">(vector-ref x 0)</code></li>
+      <li><code class="language-plaintext highlighter-rouge">(set! x e)</code> → <code class="language-plaintext highlighter-rouge">(vector-set! x 0 e)</code>
+Loops and vector ops remain.<br />
+Input: <code class="language-plaintext highlighter-rouge">unique-source-tree?</code> → Output: <code class="language-plaintext highlighter-rouge">assignment-converted-program?</code></li>
+    </ul>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">anf-convert</code>  Converts to ANF: RHS are atoms or small ops over atoms; side-effects sequenced via <code class="language-plaintext highlighter-rouge">let ([_ (vector-set! …)]) …</code> and <code class="language-plaintext highlighter-rouge">let ([_ (while …)]) …</code>; <code class="language-plaintext highlighter-rouge">if</code> guards are atomic.
+Input: <code class="language-plaintext highlighter-rouge">assignment-converted-program?</code> → Output: <code class="language-plaintext highlighter-rouge">anf-program?</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">explicate-control</code> Lowers ANF to C2: a map from labels to tails with <code class="language-plaintext highlighter-rouge">seq (assign x rhs) …</code>, <code class="language-plaintext highlighter-rouge">if (cmp a0 a1) (goto lt) (goto lf)</code>, <code class="language-plaintext highlighter-rouge">goto</code>, <code class="language-plaintext highlighter-rouge">return a</code>, and standalone <code class="language-plaintext highlighter-rouge">vector-set!</code>. <code class="language-plaintext highlighter-rouge">while</code> becomes <code class="language-plaintext highlighter-rouge">header</code>/<code class="language-plaintext highlighter-rouge">body</code>/<code class="language-plaintext highlighter-rouge">rest</code> labeled blocks.  Input: <code class="language-plaintext highlighter-rouge">anf-program?</code> → Output: <code class="language-plaintext highlighter-rouge">c2-program?</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">uncover-locals</code>  Computes the set of locals (variables assigned or used as vector operands) for stack layout; carries it as the program’s <code class="language-plaintext highlighter-rouge">info</code> set.
+ Input: <code class="language-plaintext highlighter-rouge">c2-program?</code> → Output: <code class="language-plaintext highlighter-rouge">locals-program?</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">select-instructions</code> Selects pseudo-x86 instructions still using <code class="language-plaintext highlighter-rouge">(var x)</code> operands. Uses <code class="language-plaintext highlighter-rouge">cmpq</code> + <code class="language-plaintext highlighter-rouge">set{e,l}</code> + <code class="language-plaintext highlighter-rouge">movzbq</code> for comparisons, calls <code class="language-plaintext highlighter-rouge">read_int64</code>/<code class="language-plaintext highlighter-rouge">make_vector</code>, and on <code class="language-plaintext highlighter-rouge">return</code> jumps to a special <code class="language-plaintext highlighter-rouge">conclusion</code> label (no early <code class="language-plaintext highlighter-rouge">ret</code>).
+Input: <code class="language-plaintext highlighter-rouge">locals-program?</code> → Output: <code class="language-plaintext highlighter-rouge">instr-program?</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">assign-homes</code> Replaces <code class="language-plaintext highlighter-rouge">(var x)</code> with stack slots <code class="language-plaintext highlighter-rouge">(deref (reg rbp) n)</code> using the locals set; negative 8-byte offsets.
+Input: <code class="language-plaintext highlighter-rouge">instr-program?</code> → Output: <code class="language-plaintext highlighter-rouge">homes-assigned-program?</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">patch-instructions</code>  Fixes illegal instructions (e.g., <code class="language-plaintext highlighter-rouge">movq (deref …) (deref …)</code>, certain <code class="language-plaintext highlighter-rouge">cmpq</code> forms) by shuttling through a temp register.
+Input: <code class="language-plaintext highlighter-rouge">homes-assigned-program?</code> → Output: <code class="language-plaintext highlighter-rouge">patched-program?</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">prelude-and-conclusion</code> Inserts function prologue/epilogue and the <code class="language-plaintext highlighter-rouge">conclusion</code> block that prints <code class="language-plaintext highlighter-rouge">%rax</code>, sets <code class="language-plaintext highlighter-rouge">%rax := 0</code>, and returns. Ensures 16-byte stack alignment before <code class="language-plaintext highlighter-rouge">callq</code> and reserves aligned space for locals.
+Input: <code class="language-plaintext highlighter-rouge">patched-program?</code> → Output: <code class="language-plaintext highlighter-rouge">x86-64?</code></p>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">dump-x86-64</code> Renders GAS assembly text. Emits a global for the entry symbol (<code class="language-plaintext highlighter-rouge">rt-sym</code>), includes <code class="language-plaintext highlighter-rouge">runtime-function-externs</code>, and prints operands as <code class="language-plaintext highlighter-rouge">$imm</code>, <code class="language-plaintext highlighter-rouge">%reg</code>, <code class="language-plaintext highlighter-rouge">disp(%reg)</code>.
+Input: <code class="language-plaintext highlighter-rouge">x86-64?</code> → Output: <code class="language-plaintext highlighter-rouge">string?</code></li>
+</ol>
+
+<p>Your task: implement these passes so each output satisfies its predicate in <code class="language-plaintext highlighter-rouge">irs.rkt</code> and preserves semantics (the harness checks using interpreters where applicable).</p>
+
+<h2 id="boxing-and-assignment-conversion">“Boxing” and assignment-conversion</h2>
+
+<p>In this project we embrace mutability by enabling <code class="language-plaintext highlighter-rouge">set!</code>, which allows
+us to make mutable updates to variables:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(program
+ (let* ([x (read)]
+        [y (read)]
+        [tmp 0])
+   (begin
+     (set! tmp x)
+     (set! x y)
+     (set! y tmp)
+     y)))
+</code></pre></div></div>
+
+<p>Notice that we can use <code class="language-plaintext highlighter-rouge">set!</code>, which mutably updates a variable; this
+is not possible in “pure” functional programs, and mutation is simply
+not provided in those languages (at least as a builtin). The question
+is how to implement <code class="language-plaintext highlighter-rouge">set!</code>. It may seem like an obvious choice: each
+variable becomes a single register-sized (8-byte) value on the
+stack. However, this approach starts to fall apart when variables
+outlive their stack frames (which will happen when we add functions /
+procedures). Instead, we use this as an opportunity to discuss another
+necessary challenge to work towards a general-purpose programming
+language: heap-allocated data. You likely know about the heap from
+programming in C with <code class="language-plaintext highlighter-rouge">malloc</code> (or C++ with <code class="language-plaintext highlighter-rouge">new</code>). These procedures
+allow us to allocate memory from a large block of available memory
+(the heap), with the obligation that we later release (“free”) it back
+to the operating system.</p>
+
+<p>To enable mutability and <code class="language-plaintext highlighter-rouge">set!</code>, we will employ a technique called
+“boxing.” In short, we assume that <em>all</em> data is put in a vector
+(“box”) on the heap. In our case, we will use a very simple
+representation of vectors:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>typedef struct {
+    int64_t len;
+    int64_t data[];
+} TinyVecPacked;
+</code></pre></div></div>
+
+<p>In terms of memory representation, a <code class="language-plaintext highlighter-rouge">TinyVecPacked</code> struct has a very
+simple layout: a single 64-bit value representing the length, followed
+by a data array of 8-byte values. For example, the vector containing
+the sequence <code class="language-plaintext highlighter-rouge">5</code> followed by <code class="language-plaintext highlighter-rouge">20</code> (starting at the address <code class="language-plaintext highlighter-rouge">0xAAAA00</code>)
+would be represented as:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   lower addresses →                                       higher addresses →
+   ┌───────────────────────┬───────────────────────┬───────────────────────┐
+   │  len (int64)          │  data[0] (int64)      │  data[1] (int64)      │ 
+   │  8 bytes              │  8 bytes              │  8 bytes              │
+   ├───────── ─ 0xAAAA00 ──┼────────── 0xAAAA08  ──┼──────── 0xAAAA10  ────┤
+   │ e.g., 2               │ e.g., 5               │ e.g., 20              │
+   └───────────────────────┴───────────────────────┴───────────────────────┘
+</code></pre></div></div>
+
+<p>The length can be used to avoid accesses outside of the buffer: we
+don’t want to be able to write outside of the bounds of a buffer
+because it could contain junk data, we want to be able to write
+outside of the bounds of a buffer because we could mess up <em>other</em>
+data, unrelated to this vector (but still within our same address
+space, assuming the OS provides virtual memory). To handle this, we
+could take one of three positions:</p>
+
+<p>(a) don’t worry about it–just be unsafe, and let the program crash.</p>
+
+<p>(b) check the bound before each access, if a bad access would occur,
+jump to an exception handler.</p>
+
+<p>(c) use a static type system to ensure this could never happen.</p>
+
+<p>Each of these approaches has different trade offs: C, C++, and similar
+languages opt for (a), which is fast but risky–the program might
+crash in a subtle or even exploitable way. Managed languages like
+Java, C#, etc. often opt for (b), but can sometimes optimize to avoid
+checks if certain conditions are met (e.g., using profiling data and
+just-in time compilation). The issue with (b) is that it is slow:
+every single access necessitates a branch, compared with (a) which
+might just be as simple as <code class="language-plaintext highlighter-rouge">movq</code>. Languages like Rust use (c), which
+enables the benefits of (b) as a zero-cost abstraction, often matching
+(or even exceeding) the performance of (a).</p>
+
+<p>In this project we will do (a): we assume the program is type
+correct. This means that as you generate code, you assume that
+operations for various builtins are also type correct. You will <em>not</em>
+be given any programs to test which contain type errrors.</p>
+
+<p>In short:</p>
+
+<ul>
+  <li>To implement <code class="language-plaintext highlighter-rouge">make-vector</code>, you will ultimately emit a call to
+<code class="language-plaintext highlighter-rouge">make_vector</code> in <code class="language-plaintext highlighter-rouge">runtime.c</code>.</li>
+  <li>To impelment <code class="language-plaintext highlighter-rouge">(vector-ref v i)</code>, you will emit code that uses <code class="language-plaintext highlighter-rouge">movq</code>
+to dereference the vector <code class="language-plaintext highlighter-rouge">v</code>. You want to movq the value at
+8<em>(i+1), the +1 is due to the fact that the first 8 bytes of every
+vector holds its length. You could also consider emitting a *safe</em>
+vector reference, checking the bounds each time (but it is not
+necessary in this specific case, because we don’t test any offensive
+programs).</li>
+  <li>To implement <code class="language-plaintext highlighter-rouge">vector-set!</code>, you will <em>also</em> emit a <code class="language-plaintext highlighter-rouge">movq</code> instruction.</li>
+</ul>
+
+<h2 id="translating-loops">Translating Loops</h2>
+
+<p>A <code class="language-plaintext highlighter-rouge">while e-g e-b</code> lowers to three blocks:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">header</code>: evaluate guard, then if (eq? a-g #f) (goto rest) (goto body).</li>
+  <li><code class="language-plaintext highlighter-rouge">body</code>: code for e-b, then goto header.</li>
+  <li><code class="language-plaintext highlighter-rouge">rest</code>: continuation after the loop.</li>
+</ul>
+
+<p>In ANF/C2 we sequence any side-effects (e.g., vector-set!) via seq and
+keep the tail forms restricted to return, goto, or a single if.</p>
+
+<h2 id="ir-predicates-and-interpreters">IR Predicates and Interpreters</h2>
+
+<ul>
+  <li>
+    <p><strong>Predicates</strong> (<code class="language-plaintext highlighter-rouge">irs.rkt</code>): Each pass has a precise predicate (e.g.,
+<code class="language-plaintext highlighter-rouge">anf-program?</code>, <code class="language-plaintext highlighter-rouge">c1-program?</code>, etc.). Tests check both input and
+output predicates at every step to catch malformed IR early. You
+should read and understand each predicate.</p>
+  </li>
+  <li>
+    <p><strong>Interpreters</strong> (<code class="language-plaintext highlighter-rouge">interpreters.rkt</code>): For many stages we run the
+interpreter over your IR to check semantic consistency—different IRs
+must compute the same result on the same input stream. The harness
+reports whether outputs match and whether stdout across passes is
+consistent. Please do not modify this file.</p>
+  </li>
+</ul>
+
+<h2 id="how-to-compile-and-run">How to Compile and Run</h2>
+
+<p>To directly compile a single file using <code class="language-plaintext highlighter-rouge">main.rkt</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket main.rkt test-programs/&lt;prog&gt;.scm
+</code></pre></div></div>
+
+<p>The compiler dumps a long summary of the work done at each pass, and
+ultimately yields a program <code class="language-plaintext highlighter-rouge">./output</code> which it compiles using
+system-specific infrastructure (works on Linux/Mac).</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ racket main.rkt test-programs/example.scm
+Compiling IR (using *your* compile.rkt) …
+'(pushq (reg rbp))
+...
+🏗️ Now building a binary... 🏗️
+-&gt; Host: macosx/x86_64  Target: x86_64-apple-darwin  Entry: main
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./output.s -o ./output.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./runtime.c -o ./runtime.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 ./output.o ./runtime.o -o ./output
+Success! Executable produced at: ./output
+Done!
+$ ./output
+42
+</code></pre></div></div>
+
+<p>Programs that <code class="language-plaintext highlighter-rouge">(read)</code> input will prompt or consume stdin. You can use
+input redirection:<br />
+<code class="language-plaintext highlighter-rouge">./output &lt; input-files/1.in</code></p>
+
+<h2 id="debugging-guide">Debugging Guide</h2>
+
+<p>This is a tricky project, and it is really important that you lean
+into a debugging methodology that works for you. Let me share with you
+some advice I used when I was writing the compiler myself.</p>
+
+<ul>
+  <li>First, I started by writing a single manual test in the top-level of
+<code class="language-plaintext highlighter-rouge">compile.rkt</code>, so that I could easily just sit at the command line
+(or Dr. Racket) and run <code class="language-plaintext highlighter-rouge">compile.rkt</code> (with no command-line
+arguments) and see if the test would pass. At the early stages of
+debugging, this is an excellent strategy, since it means
+fully-pushbutton test. For example, I had (appended to
+<code class="language-plaintext highlighter-rouge">compile.rkt</code>) something like:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(displayln ;; or pretty-print 
+ (dump-x86-64
+  (prelude-and-conclusion
+   (patch-instructions
+      ...))))
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>I started with a fairly large test in my case–since I was merely
+adding forms not present in my previous implementation. In this
+case, I would often be hitting match failures–this is a <em>good</em>
+thing, it allows me to trace down exactly where I need to add match
+cases and handle new behavior. Of course, the issue is that I also
+need to mix that with thinking holistically about the specs of each
+IR.</p>
+  </li>
+  <li>
+    <p>After I thought I had each pass of the compiler working, I started
+switching over to <code class="language-plaintext highlighter-rouge">main.rkt</code>, which will run all passes of the
+compiler and will report their outputs. I also needed to write the
+interpreters (you do not), and so I debugged some of those using
+<code class="language-plaintext highlighter-rouge">main.rkt</code>.</p>
+  </li>
+  <li>
+    <p>Last, once things are acutally working, I used <code class="language-plaintext highlighter-rouge">test.rkt</code>, which I
+adjusted to account for the possibility of expected type errors in
+malformed inputs.</p>
+  </li>
+  <li>
+    <p>My advice to you is similar: start with something where you can
+press “Run” (or continually reinvoke <code class="language-plaintext highlighter-rouge">racket compile.rkt</code>). It will
+facilitate rapid testing, and it is really important to build some
+skill and intuition for how to accomplish that exercise.</p>
+  </li>
+  <li>
+    <p>Remember, debugging is a key concept that you are practicing in this
+class. The worst possible thing you can do is “guess and check”
+debugging (running the tests and hoping they pass)–the issue is
+that doing this gives you very little observability into why the
+code is broken. To fix this, you need to have some way of
+interacting with the code. Experts debug their code using an
+iterative, hypothesis-driven methodology, where they (a) articulate
+a falsifiable hypothesis (“this match pattern never matches
+anything”), (b) change their code to observe the bug (“add a
+displayln at every match handler”), and (c)</p>
+  </li>
+</ul>
+
+<h2 id="tricky-parts-of-this-project">Tricky Parts of this Project</h2>
+
+<p><strong>BE CAREFUL</strong> of the following:</p>
+
+<ul>
+  <li>
+    <p>There is <em>no</em> type checking.</p>
+  </li>
+  <li>
+    <p>In this case, <code class="language-plaintext highlighter-rouge">explicate-control</code> needs to be updated, because when
+generating loops, you need to “take hold” of the return value from
+the translated block and use it for some purpose (e.g., branch on
+it, or ignore it and jump back to the header). I have generalized
+<code class="language-plaintext highlighter-rouge">expr-&gt;blocks</code> to accept a third argument, <code class="language-plaintext highlighter-rouge">k</code>, which is a
+<em>continuation</em> that gets applied to the eventual return value.</p>
+  </li>
+  <li>
+    <p>Non-loop conclusion flow: select-instructions must end “returns” by
+jumping to conclusion; don’t emit ret in the middle of blocks.</p>
+  </li>
+  <li>
+    <p>Indices must be static: <code class="language-plaintext highlighter-rouge">vector-ref</code> / <code class="language-plaintext highlighter-rouge">vector-set!</code> indices are
+fixnum literals at compile time in this project.</p>
+  </li>
+  <li>
+    <p>On Mac OSX, you need to prefix labels for functions, meaning <code class="language-plaintext highlighter-rouge">_main</code>
+instead of <code class="language-plaintext highlighter-rouge">main</code>. To facilitate this, I provide a function <code class="language-plaintext highlighter-rouge">(rt-sym
+s)</code>, which converts a symbol to a system-specific variant (based on
+the OS). However, you only need to worry about this for labels that
+correspond to exported <em>function</em> entrypoints, not other labels that
+are internal to the program (e.g., the target of a jump, or even
+<code class="language-plaintext highlighter-rouge">conclusion</code>). This is important, because you don’t want to call
+<code class="language-plaintext highlighter-rouge">(rt-sym ...)</code> until the <em>very last pass</em> (it is ugly to make the
+previous passes OSX/Linux-specific). The issue is this: if you
+naively rename every label from <code class="language-plaintext highlighter-rouge">foo</code> to <code class="language-plaintext highlighter-rouge">_foo</code>, then you also need
+to ensure that you clean up jumps so that instead of jumping to
+<code class="language-plaintext highlighter-rouge">foo</code>, they go to <code class="language-plaintext highlighter-rouge">_foo</code>. In my implementation, I handled this as
+follows: I simply used <code class="language-plaintext highlighter-rouge">(rt-sym ...)</code> on the <code class="language-plaintext highlighter-rouge">(entry-symbol)</code> (i.e.,
+<code class="language-plaintext highlighter-rouge">main</code>), which is the <em>only</em> function in this project.</p>
+  </li>
+  <li>
+    <p>Ensure 16-byte stack alignment before <code class="language-plaintext highlighter-rouge">callq</code></p>
+  </li>
+</ul>
+
+<h2 id="testing-infrastructure">Testing Infrastructure</h2>
+
+<p>The file <code class="language-plaintext highlighter-rouge">test.rkt</code> runs a set of formal tests, as in the last
+project.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">frontend</code> – runs <code class="language-plaintext highlighter-rouge">typecheck</code> → <code class="language-plaintext highlighter-rouge">anf-convert</code>, checks ANF via interpreter</li>
+  <li><code class="language-plaintext highlighter-rouge">middleend</code> – runs <code class="language-plaintext highlighter-rouge">explicate-control</code> → <code class="language-plaintext highlighter-rouge">uncover-locals</code>, checks via <code class="language-plaintext highlighter-rouge">interpret-c1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">backend</code> – runs <code class="language-plaintext highlighter-rouge">select-instructions</code> → <code class="language-plaintext highlighter-rouge">patch-instructions</code>, checks via <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">native</code> – full compile → build binary → run with stdin → compare stdout to golden</li>
+</ul>
+
+<p>Usage:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket test.rkt -m &lt;mode&gt; -i &lt;comma-separated input files&gt; -g &lt;comma-separated goldens&gt; &lt;program.scm&gt;
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket test.rkt -m native -i ./input-files/1.in -g goldens/example_1_uniqueify.stdout test-programs/example.scm
+</code></pre></div></div>
+
+<h2 id="goldens-what-they-are">Goldens: What They Are</h2>
+
+<p>We use goldens to verify correctness:</p>
+
+<ol>
+  <li><strong>Isolation goldens</strong> – for non-native modes:
+    <ul>
+      <li>Compare serialized ASTs and interpreter stdout</li>
+    </ul>
+  </li>
+  <li><strong>Native goldens</strong> – for full pipeline:
+    <ul>
+      <li>Run your compiled binary, compare stdout</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Layout:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.in-ast</code></li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.out-ast</code></li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.interp</code></li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.stdout</code></li>
+</ul>
+
+<p>Instructor-only <code class="language-plaintext highlighter-rouge">gengoldens</code> mode regenerates these.</p>
+
+<h2 id="autograder-tests">Autograder Tests</h2>
+
+<p>The autograder invokes <code class="language-plaintext highlighter-rouge">test.rkt</code> in JSON mode. Your job is to make
+each pass satisfy its predicates and produce semantically equivalent
+IRs until final native code passes all tests.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">CIS531</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>CIS531</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>CIS531 -- Compilers at Syracuse (Fall '25)</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src=https://kmicinski.com//cis531-f25/bower_components/jquery/dist/jquery.min.js></script>
+<script src=https://kmicinski.com//cis531-f25/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js></script>
+
+
+  </body>
+
+</html>
