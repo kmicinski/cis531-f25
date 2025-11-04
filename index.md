@@ -532,6 +532,16 @@ layout: mainpage
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
           Finish Data-Flow Analysis, begin Functions
         </div>
+		<ul class="resources-list">
+			<li>
+				<i class="fa-solid fa-file-lines notes-icon"></i>
+				<a href="https://kmicinski.com/cis531-f25/assets/slides/functions.pdf">Lecture Slides</a>
+			</li>
+          <!-- <li> -->
+          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
+          <!--   <a href="https://www.youtube.com/watch?v=ApIXt_Exf7g">Tic-Tac-Toe Video</a> -->
+          <!-- </li> -->
+        </ul>
     <li class="session-item">
       <div class="date-col">10/28</div>
       <div class="session-col">
@@ -539,16 +549,6 @@ layout: mainpage
           <i class="fa-solid fa-code project-icon"></i> 
           HW4: Assignment Conversion and Procedures -- Released 10/28, <i>due 11/13</i>
         </div>
-        <ul class="resources-list">
-          <li>
-            <i class="fa-solid fa-file-lines notes-icon"></i>
-            <a href="https://kmicinski.com/cis531-f25/assets/slides/functions.pdf">Lecture Slides</a>
-          </li>
-          <!-- <li> -->
-          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
-          <!--   <a href="https://www.youtube.com/watch?v=ApIXt_Exf7g">Tic-Tac-Toe Video</a> -->
-          <!-- </li> -->
-        </ul>
       </div>
     </li>
 
@@ -587,18 +587,26 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Register Allocation: Interference Graph, Graph Coloring
+		  Short Lesson: Implementing Pattern Matching
         </div>
-        <!-- <ul class="resources-list"> -->
-        <!--   <li> -->
-        <!--     <i class="fa-brands fa-youtube youtube-icon"></i> -->
-        <!--     <a href="https://www.youtube.com/watch?v=Paxvaq0Q-S0&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=21">Lecture Video</a> -->
-        <!--   </li> -->
-        <!--   <li> -->
-        <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
-        <!--   </li> -->
-        <!-- </ul> -->
+        <ul class="resources-list">
+          <li>
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/pattern-matching.pdf">Lecture Slides</a>
+          </li>
+        </ul>
+        <div class="session-title">
+          <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
+          Register Allocation: Interference Graph, Graph Coloring, and D-SATUR
+        </div>
+        <ul class="resources-list">
+          <li>
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/register-allocation.pdf">Lecture Slides</a>
+          </li>
+        </ul>
       </div>
     </li>
     <!-- <li class="session-item"> -->
@@ -621,7 +629,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Register Allocation: D-SATUR Algorithm (Greedy allocation)
+          Objects / Classes versus Closures
         </div>
         <!-- <ul class="resources-list"> -->
         <!--   <li> -->
@@ -640,7 +648,7 @@ layout: mainpage
 
 <!-- WEEK 11 -->
 <div class="week-header">
-  <h2><i class="fa-solid fa-calendar-week"></i>Week 12: Closures and Objects</h2>
+  <h2><i class="fa-solid fa-calendar-week"></i>Week 12: Type Systems and Whole-Program Optimization</h2>
 </div>
 
 <div class="week-schedule">
@@ -651,7 +659,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Lambdas and Closures, Closures vs. Procedures
+          Type Systems and Type-Directed Optimization
         </div>
         <!-- <ul class="resources-list"> -->
         <!--   <li> -->
@@ -685,7 +693,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Objects and VTables, Implementing Closure Conversion
+          Control-Flow Analysis, Inlining, and Whole-Program Optimization
         </div>
         <!-- <ul class="resources-list"> -->
         <!--   <li> -->
@@ -838,7 +846,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-pie"></i>
-          Thanksgiving Part 1
+          Thanksgiving Part 1 (No Class)
         </div>
         <!-- <ul class="resources-list"> -->
         <!--   <li> -->
@@ -935,7 +943,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Declarative Languages, Declarative Analysis
+          Equality Saturation, Datalog, and Egglog
         </div>
         <!-- <ul class="resources-list"> -->
         <!--   <li> -->
