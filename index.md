@@ -591,7 +591,6 @@ layout: mainpage
         </div>
         <ul class="resources-list">
           <li>
-          <li>
             <i class="fa-solid fa-file-lines notes-icon"></i>
             <a href="https://kmicinski.com/cis531-f25/assets/slides/pattern-matching.pdf">Lecture Slides</a>
           </li>
@@ -601,7 +600,6 @@ layout: mainpage
           Register Allocation: Interference Graph, Graph Coloring, and D-SATUR
         </div>
         <ul class="resources-list">
-          <li>
           <li>
             <i class="fa-solid fa-file-lines notes-icon"></i>
             <a href="https://kmicinski.com/cis531-f25/assets/slides/register-allocation.pdf">Lecture Slides</a>
