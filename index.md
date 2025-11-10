@@ -530,7 +530,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Finish Data-Flow Analysis, begin Functions
+          Procedures and Lambdas
         </div>
     <li class="session-item">
       <div class="date-col">10/28</div>
@@ -569,10 +569,20 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Implementing Procedure Calls
+		  Scaling Static Analysis via Logic Programming
         </div>
       </div>
     </li>
+	    <li class="session-item">
+      <div class="date-col">Project 4</div>
+      <div class="session-col">
+        <div class="session-title">
+          <i class="fa-solid fa-book-open reading-icon"></i> 
+          <a href="https://kmicinski.com/cis531-f25/projects/4">Project 4 (assigned 10/30, due 11/12)</a>
+        </div>
+      </div>
+    </li>    
+
   </ul>
 
 <!-- WEEK  11 -->
