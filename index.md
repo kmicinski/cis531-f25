@@ -530,7 +530,7 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Finish Data-Flow Analysis, begin Functions
+          Procedures and Lambdas
         </div>
 		<ul class="resources-list">
 			<li>
@@ -569,10 +569,20 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Implementing Procedure Calls
+		  Scaling Static Analysis via Logic Programming
         </div>
       </div>
     </li>
+	    <li class="session-item">
+      <div class="date-col">Project 4</div>
+      <div class="session-col">
+        <div class="session-title">
+          <i class="fa-solid fa-book-open reading-icon"></i> 
+          <a href="https://kmicinski.com/cis531-f25/projects/4">Project 4 (assigned 10/30, due 11/12)</a>
+        </div>
+      </div>
+    </li>    
+
   </ul>
 
 <!-- WEEK  11 -->
@@ -627,18 +637,14 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Objects / Classes versus Closures
+          Objects Oriented Programming and Objects vs. Closures
         </div>
-        <!-- <ul class="resources-list"> -->
-        <!--   <li> -->
-        <!--     <i class="fa-brands fa-youtube youtube-icon"></i> -->
-        <!--     <a href="https://www.youtube.com/watch?v=GNkQrqAGB-o&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=22">Lecture Video</a> -->
-        <!--   </li> -->
-        <!--   <li> -->
-        <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
-        <!--   </li> -->
-        <!-- </ul> -->
+        <ul class="resources-list">
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/objects.pdf">Lecture Slides</a>
+          </li>
+        </ul>
       </div>
     </li>
   </ul>
@@ -657,18 +663,14 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Type Systems and Type-Directed Optimization
+          Type Systems: Runtime Support and Mathematical Foundations
         </div>
-        <!-- <ul class="resources-list"> -->
-        <!--   <li> -->
-        <!--     <i class="fa-brands fa-youtube youtube-icon"></i> -->
-        <!--     <a href="https://www.youtube.com/watch?v=Paxvaq0Q-S0&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=21">Lecture Video</a> -->
-        <!--   </li> -->
-        <!--   <li> -->
-        <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
-        <!--   </li> -->
-        <!-- </ul> -->
+        <ul class="resources-list">
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/types.pdf">Lecture Slides</a>
+          </li>
+        </ul>
       </div>
     </li>
     <!-- <li class="session-item"> -->
