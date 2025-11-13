@@ -1,8 +1,8 @@
 ---
 layout: project
 title: "Final Project"
-due: 2025-12-5
-duedate: 2025-12-5
+due: 2025-12-12
+duedate: 2025-12-12
 permalink: /projects/final
 categories: assignment project
 ---
@@ -26,8 +26,8 @@ we learned in this class.
 
 You should submit a **proposal** via email (kkmicins@syr.edu), which
 is due to me by 11/21 (the day after the second midterm). Your
-proposal should consists of a few paragraphs, and should answering the
-following question:
+proposal should consists of a few paragraphs, and should answer the
+following questions:
 
 - What is your final project topic?
 
@@ -43,8 +43,8 @@ following question:
   will not cut it: you need to make an argument for how you will
   systematically test and evaluate the correctness of your solution. 
 
-- What codebase will you be extending? If it is the class
-  compiler--are you done with project 5 so far (or will you be soon)?
+- What codebase will you be extending? If it is the class compiler,
+  can you wait to finish p5 (perhaps with a bit of help)?
 
 
 A few example topics include the following:
@@ -124,7 +124,7 @@ Project proposals DUE November 21, 2025
 
 One-page slide DUE before last day of class
 
-Full projects DUE after the end of class (exact end date TBD)
+Full projects DUE after the end of class (asking for Dec 12)
 
 -- Kris Micinski (kkmicins@syr.edu)
 
