@@ -693,32 +693,13 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Control-Flow Analysis, Inlining, and Whole-Program Optimization
-        </div>
-        <!-- <ul class="resources-list"> -->
-        <!--   <li> -->
-        <!--     <i class="fa-brands fa-youtube youtube-icon"></i> -->
-        <!--     <a href="https://www.youtube.com/watch?v=GNkQrqAGB-o&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=22">Lecture Video</a> -->
-        <!--   </li> -->
-        <!--   <li> -->
-        <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/reduction-strategies.pdf">Lecture Slides</a> -->
-        <!--   </li> -->
-        <!-- </ul> -->
-      </div>
-    </li>
-    <li class="session-item">
-      <div class="date-col">11/13</div>
-      <div class="session-col">
-        <div class="session-title">
-          <i class="fa-solid fa-code project-icon"></i> 
-          Final Project: Proposal Due
+          Optimization
         </div>
         <ul class="resources-list">
-          <!-- <li> -->
-          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
-          <!--   <a href="https://www.youtube.com/watch?v=ApIXt_Exf7g">Tic-Tac-Toe Video</a> -->
-          <!-- </li> -->
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/optimization.pdf">Lecture Slides</a>
+          </li>
         </ul>
       </div>
     </li>
@@ -831,7 +812,24 @@ layout: mainpage
         <!-- </ul> -->
       </div>
     </li>
+    <li class="session-item">
+      <div class="date-col">11/21</div>
+      <div class="session-col">
+        <div class="session-title">
+          <i class="fa-solid fa-code project-icon"></i> 
+          <a href="https://kmicinski.com/cis531-f25/projects/final">Final Project: Proposal Due</a>
+        </div>
+        <ul class="resources-list">
+          <!-- <li> -->
+          <!--   <i class="fa-brands fa-youtube youtube-icon"></i> -->
+          <!--   <a href="https://www.youtube.com/watch?v=ApIXt_Exf7g">Tic-Tac-Toe Video</a> -->
+          <!-- </li> -->
+        </ul>
+      </div>
+    </li>
+
   </ul>
+  
 </div>
 
 <!-- WEEK 14 -->

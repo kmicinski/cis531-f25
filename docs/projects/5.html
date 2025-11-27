@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Project 5: Functions, Lambdas, and Closures ↦ x86-64</title>
+  <meta name="description" content="Download the starter files here">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://kmicinski.com/cis531-f25/css/main.css">
+  <link rel="canonical" href="https://kmicinski.com/cis531-f25/projects/5">
+  <link rel="alternate" type="application/rss+xml" title="CIS531" href="https://kmicinski.com/cis531-f25/feed.xml">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+</head>
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href=https://kmicinski.com//cis531-f25/>CIS531</a>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis531-f25/#schedule>Schedule</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis531-f25/learning-objectives>Objectives</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=https://kmicinski.com//cis531-f25/syllabus>Syllabus</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://autograde.org">Autograde</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+    <!-- <nav class="site-nav"> -->
+    <!--   <a href="#" class="menu-icon"> -->
+    <!--     <svg viewBox="0 0 18 15"> -->
+    <!--       <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/> -->
+    <!--       <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/> -->
+    <!--       <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/> -->
+    <!--     </svg> -->
+    <!--   </a> -->
+
+    <!--   <div class="trigger"> -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--       <a class="page-link" href="https://kmicinski.com//cis531-f25/schedule/">Schedule</a> -->
+    <!--        -->
+    <!--      -->
+    <!--        -->
+    <!--       <a class="page-link" href="https://kmicinski.com//cis531-f25/syllabus/">Syllabus</a> -->
+    <!--        -->
+    <!--      -->
+    <!--   </div> -->
+    <!-- </nav> -->
+
+  </div>
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Project 5: Functions, Lambdas, and Closures ↦ x86-64</h1>
+    <h3><b>Project due date: <time datetime="2025-12-12T00:00:00-05:00">Dec 12,
+    2025 (11:59PM Eastern)</time></b></h3>
+  </header>
+
+  <div class="post-content writeup-content" itemprop="articleBody">
+    <p><a href="/assets/p5-starter.tar.gz">Download the starter files here</a></p>
+
+<p>This is the final language that everyone in the class will
+implement. We’ll implement a language, R4, which includes functions
+<code class="language-plaintext highlighter-rouge">(define (f ...) ...)</code> and application of user-defined functions <code class="language-plaintext highlighter-rouge">(f
+...)</code>. As an extension, the language R5 will also add <em>lambdas</em>, and
+closures, via closure conversion covered in <a href="https://www.youtube.com/watch?v=zMtaXO_xHYU">this class YouTube
+video</a>. The R5 extension
+is extra credit, but the R4 baseline is a seriously impressive
+language, with an impressive degree of expressivity.</p>
+
+<p>Still, however, there are some painfully obvious things this language
+omits, which represent extensions I encourage you to implement on your
+own (as part of your final project, if you are in CIS531):</p>
+
+<ul>
+  <li>
+    <p>On the easier end, we don’t even have things like multiplication
+<code class="language-plaintext highlighter-rouge">*</code>, modulo <code class="language-plaintext highlighter-rouge">/</code>, etc. built into the language. Adding these would be
+trivial but a bit of work.</p>
+  </li>
+  <li>
+    <p>Our program can <em>still</em> display only a single value: generalizing
+this would require either (a) adding strings (which has its own set
+of runtime choices, if we allow ourselves to dynamically allocate
+strings) or (b) adding some primitives like <code class="language-plaintext highlighter-rouge">(print_int ...)</code> and
+<code class="language-plaintext highlighter-rouge">(print_char ...)</code>. Adding just these two could allow us to print
+whole lines. To get format strings, the easiest way is to write a
+runtime function in <code class="language-plaintext highlighter-rouge">runtime.c</code></p>
+  </li>
+  <li>
+    <p>On the more concerning end, we have no real type/memory safety in
+this language, even still–making it a very poor choice for 2025. In
+the last language, typechecking was easy because we didn’t have
+functions. For this language, the obvious “safe” choice is to do
+runtime type tagging and dynamic types, which would be the subject
+of the next mandatory project (if we had time). You could also
+imagine using a typechecker, but it starts to get complicated once
+we mix functions, vectors, etc. unless we are okay doing type
+annotations and skipping polymorphism, which is a practical
+limitation as we must monomorphize.</p>
+  </li>
+</ul>
+
+<p>Congrats on making it to this point, by the end of this project you’ll
+have completed the whole (core) language!</p>
+
+<h2 id="input-language-r45">Input Language (R4/5)</h2>
+
+<p>All students must implement the language R4, which extends our
+language to include top-level (but not nested) <code class="language-plaintext highlighter-rouge">define</code>s. Compared to
+R3 and the previous languages–where our program was a single
+expression–our program now consists of a list of functions, followed
+by a single “main” expression. When our program is compiled, we handle
+this “main” expression a bit differently (we describe more below):</p>
+
+<div class="language-racket highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">defn</span> <span class="nv">::=</span> <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">f</span> <span class="nv">x</span> <span class="o">...</span><span class="p">)</span> <span class="nv">e</span><span class="p">)</span> <span class="c1">;; Fixed-arity top-level definitions</span>
+<span class="nv">program</span> <span class="nv">::=</span> <span class="p">(</span><span class="nf">program</span> <span class="nv">defn*</span> <span class="nv">e</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>As an example of an R4 program…</p>
+
+<div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="nf">program</span> 
+ <span class="p">(</span><span class="k">define</span> <span class="p">(</span><span class="nf">fib</span> <span class="nv">x</span><span class="p">)</span>
+   <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq?</span> <span class="nv">x</span> <span class="mi">0</span><span class="p">)</span>
+       <span class="mi">1</span>
+       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">eq?</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">)</span>
+	   <span class="mi">1</span>
+	   <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nf">fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">))</span> <span class="p">(</span><span class="nf">fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">x</span> <span class="mi">2</span><span class="p">))))))</span>
+ <span class="p">(</span><span class="k">let</span> <span class="p">([</span><span class="nf">x</span> <span class="p">(</span><span class="nb">read</span><span class="p">)])</span>
+   <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">x</span> <span class="mi">8</span><span class="p">)</span> <span class="p">(</span><span class="nf">fib</span> <span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nf">fib</span> <span class="mi">8</span><span class="p">))))</span>
+</code></pre></div></div>
+
+<p>The major extensions are these:</p>
+
+<p>(1) Definitions: to handle top-level functions, we need to extend all
+    passes of the compiler to work on a per-definition basis. This is
+    a pervasive change, but the amount of intellectual work is rather
+    small: compilation happens on a per-function basis, and so it’s as
+    simple as ensuring we map a per-function handler across each
+    definition (more details about this below).</p>
+
+<p>(2) Function calls: the syntax of expressions is extended to include
+    calls to functions. In the simplest case, this is something like
+    <code class="language-plaintext highlighter-rouge">(f x)</code>, but in general the function could be computed like <code class="language-plaintext highlighter-rouge">((f g) x)</code>.</p>
+
+<p>(3) Lambdas (R5): We support these via closure conversion, on which I
+    have a video lecture. The testcases that include lambdas are
+    bonus: if you’re not attempting the bonus, you can just make this
+    pass the identity function.</p>
+
+<h2 id="repository-layout">Repository Layout</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">compile.rkt</code> – Your pass implementations. You will edit functions provided here.
+-&gt; This is the <em>only</em> file you will edit! The rest are read-only</li>
+  <li><code class="language-plaintext highlighter-rouge">irs.rkt</code> – IR definitions and predicates like <code class="language-plaintext highlighter-rouge">anf-program?</code>, <code class="language-plaintext highlighter-rouge">c1-program?</code>, etc. (see also typed/shrunk variants)</li>
+  <li><code class="language-plaintext highlighter-rouge">interpreters.rkt</code> – Reference interpreters for several IRs (used by tests and for your own debugging).</li>
+  <li><code class="language-plaintext highlighter-rouge">system.rkt</code> – System/ABI configuration, pass names, runtime filenames, output paths, etc.</li>
+  <li><code class="language-plaintext highlighter-rouge">main.rkt</code> – Driver that runs all passes, can build a binary, and can launch a debug server.</li>
+  <li><code class="language-plaintext highlighter-rouge">test.rkt</code> – Test harness. Runs isolation tests or end-to-end native tests depending on <code class="language-plaintext highlighter-rouge">-m</code> mode.</li>
+  <li><code class="language-plaintext highlighter-rouge">runtime.c</code> – Minimal runtime (<code class="language-plaintext highlighter-rouge">read_int64</code>, <code class="language-plaintext highlighter-rouge">print_int64</code>, etc.).</li>
+  <li><code class="language-plaintext highlighter-rouge">test-programs/</code> – Example programs (<code class="language-plaintext highlighter-rouge">.scm</code>).</li>
+  <li><code class="language-plaintext highlighter-rouge">input-files/</code> – Input streams for programs (lines of integers).</li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/</code> – Instructor goldens (IR snapshots, interpreter outputs, and stdout baselines).</li>
+</ul>
+
+<p>Please do not rename files or directories (grading infra depends on them).</p>
+
+<h2 id="the-compiler-pipeline-passes">The Compiler Pipeline (passes)</h2>
+
+<p>The compiler is designed in passes, which go:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> --&gt; R4/R5? -- Source program (R5 is extra credit)                                         &lt;INPUT&gt;
+ |
+ +-&gt; shrunk-R5? -- Core R4/5 (removes syntactic sugar / extra forms)                       [shrink]
+ |
+ +-&gt; unique-source-tree? -- Every bound identifier is written exactly once                 [uniqueify]
+ |
+ +-&gt; revealed-functions-program? -- Makes all calls explicit via fun-ref and app           [reveal-functions]
+ |
+ +-&gt; assignment-converted-program? -- Eliminates set!; variables become 1-slot vectors     [assignment-convert]
+ |
+ +-&gt; closure-converted-program? -- Lift lambdas to top-level defines, allocate closures    [lift-lambdas]
+ |
+ +-&gt; limited-arity-program? -- Rewrites &gt;6-arg functions to pass the rest in a vector      [limit-functions]
+ |
+ +-&gt; anf-program? -- A-Normal form (flattening nested expressions)                         [anf-convert]
+ |
+ +-&gt; blocks-program? -- (Formerly C2) blocks of sequences of commands, if, gotos, calls    [explicate-control]
+ |
+ +-&gt; locals-program? -- Uncovering local variables for each function                       [uncover-locals]
+ |
+ +-&gt; instr-program? -- Pseudo-x86, flattened blocks of instructions over pseudo-vars       [select-instructions]
+ |
+ +-&gt; homes-assigned-program? -- Assigns variables to stack locations (rbp-relative homes)  [assign-homes]
+ |
+ +-&gt; patched-program? -- Patches illegal x86 forms (e.g., mem-mem moves, bad leaq forms)   [patch-instructions]
+ |
+ +-&gt; x86-64? -- Final x86-64 IR with prologue/epilogue and printing logic                  [prelude-and-conclusion]
+ |
+ +-&gt; string? -- Rendered as GAS assembly text suitable for writing to a .s file            [dump-x86-64]
+</code></pre></div></div>
+
+<p>The following passes are <em>NEW</em>:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">reveal-functions</code>, which exposes calls to functions like <code class="language-plaintext highlighter-rouge">(f ...)</code>,
+differentiating it from built-in functions like <code class="language-plaintext highlighter-rouge">+</code> by rewriting it
+to <code class="language-plaintext highlighter-rouge">(app (fun-ref f) ...)</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">lift-lambdas</code> – this is an extra credit (required for PhD
+students) pass which performs closure conversion, enabling us to use
+lambdas anywhere we could otherwise call a function, and even return
+lambdas from other functions.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">limit-functions</code> – this pass limits functions to six arguments,
+which avoids having to look in the callee for the rest of the
+variables. We do this by taking functions with greater than six
+arguments and putting the rest in a vector, which is constructed at
+each callsite and deconstructed upon function entry.</p>
+  </li>
+</ul>
+
+<p>The rest of the passes are <em>updated</em> in a <em>very systematic manner</em>:
+generally speaking, you need to map your previously-single-function
+logic across multiple functions.</p>
+
+<h2 id="implementing-defines-and-applications">Implementing <code class="language-plaintext highlighter-rouge">define</code>s and applications</h2>
+
+<p>The major innovation of this project is to enable
+functions at the top level and (optionally) to perform lambda
+lifting. The most common change that our compiler will face is this:
+in our previous IR, we had an IR like `(program ,info ,code), where
+info and code got filled in throughout the compilation to be
+increasingly lower-level–but at each pass, we always matched with
+this pattern. But now, we can’t do that anymore–we need to generalize
+every pass. This sounds like a lot of work, but generally it ends up
+amounting to changing our code from something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(match p
+  [`(program ,info ,e)
+   `(program ,info ,(process e))))
+</code></pre></div></div>
+
+<p>to something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define (per-defn defn)
+  (match-defne defn `(define ,info (,f ,formals ...) ,code))
+  `(define ,info (,f ,@formals) ,(process code)))
+(match p
+  [`(program ,info ,defns ...)
+   `(program ,info ,(map per-defn defns))])
+</code></pre></div></div>
+
+<p>See what we did? We wrote a per-definition handler, <code class="language-plaintext highlighter-rouge">(per-defn ...)</code>,
+which does the bulk of the processing that we did before–then, we
+mapped over that per-definition function for each of the
+definitions. This trick is very common, and basically I suggest you
+use this idea for every single pass. It seems like a lot of work, but
+it’s not so bad once you get used to it, and almost all of the logic
+from the previous project is isolated to the per-function
+translation. That makes sense, because in general compilation happens
+on a per-function basis.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">shrink</code> pass assumes that the program has the structure <code class="language-plaintext highlighter-rouge">(program
+(define (f ...) ...) ... e-main)</code>, and transforms it so that <code class="language-plaintext highlighter-rouge">e-main</code>
+is wrapped in a special top-level <code class="language-plaintext highlighter-rouge">main</code> block (you should use
+<code class="language-plaintext highlighter-rouge">(entry-symbol)</code>, as before). <code class="language-plaintext highlighter-rouge">e</code> may then call the functions being
+defined, and its result is finally printed to the screen. <code class="language-plaintext highlighter-rouge">uniqueify</code>
+works in mostly the expected way, adapted to map a <code class="language-plaintext highlighter-rouge">per-defn</code> function
+across each. The new stuff is the following three passes:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">reveal-functions</code> – Syntactically distinguishes calls to
+user-defined functions like <code class="language-plaintext highlighter-rouge">(f x ...)</code> from builtin functions like
+<code class="language-plaintext highlighter-rouge">(+ ...)</code>. We often want to handle these different ways, so
+<code class="language-plaintext highlighter-rouge">reveal-functions</code> collects up all of the function names, forms a
+big set, and walks over the program to replace any call to <code class="language-plaintext highlighter-rouge">f</code> with
+an <code class="language-plaintext highlighter-rouge">(app (fun-ref f) ...)</code>. Later on, <code class="language-plaintext highlighter-rouge">(fun-ref f)</code> will be
+translated into a <code class="language-plaintext highlighter-rouge">lea</code> instruction to get the function pointer
+(which has to be determined once the program is loaded)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">lift-lambdas</code> (EXTRA CREDIT) – Does closure conversion. Closure
+conversion is a topic we have covered a lot in class, there is also
+a course video, so I will skip the explanation here: closure
+conversion eliminates lambdas by lifting them to top-level defines,
+but it also allocates / unpacks closures: syntactic lambdas in the
+input language get translated into closure (vector) allocations in
+the output.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">limit-functions</code> – Converts functions with greater than six
+arguments into functions of exactly six arguments, by passing the
+rest of the arguments through a vector. This is easier than the
+typical calling convention, which locates the rest of the arguments
+on the stack</p>
+  </li>
+</ul>
+
+<p>Assignment conversion performs boxing and unboxing, eliminating <code class="language-plaintext highlighter-rouge">set!</code>
+as usual. It sits between <code class="language-plaintext highlighter-rouge">reveal-functions</code> and <code class="language-plaintext highlighter-rouge">lift-lambdas</code>. There
+are some concerns in <code class="language-plaintext highlighter-rouge">assignment-convert</code> to be mindful of, in this
+project: we need to make sure that arguments to functions (and
+lambdas) <em>also</em> get copied into a box.</p>
+
+<p>ANF conversion is mostly the same, now dealing with only top-level
+definitions (no need to handle lambdas). Explicate-control does not
+significantly change: we handle calls to functions just as we handled
+calls to things like <code class="language-plaintext highlighter-rouge">read</code> before. In emitting code at the lower
+passes, we generally only need to handle new instructions. The main
+significant intellectual change happens in <code class="language-plaintext highlighter-rouge">select-instructions</code>,
+which needs to move all of the function’s arguments into the
+appropriate registers. Arguments (at most six, due to
+<code class="language-plaintext highlighter-rouge">limit-functions</code>) are passed <em>in order</em> in the registers
+<code class="language-plaintext highlighter-rouge">(argument-registers-list)</code> (defined in <code class="language-plaintext highlighter-rouge">system.rkt</code>). You should use
+that function, rather than hardcoding a list of registers (but they
+are rdi, rsi, rdx, rcx, r8, and r9). At the <code class="language-plaintext highlighter-rouge">select-instructions</code>
+phase, I instruct you to emit a function named <code class="language-plaintext highlighter-rouge">conclusion</code> in every
+function of the form <code class="language-plaintext highlighter-rouge">'((retq))</code> (i.e., a single return
+instruction). In the pass <code class="language-plaintext highlighter-rouge">prelude-and-conclusion</code>, we fix this up by
+calculating the requisite stack space to allocate, allocating it and
+uniqueifying the block name from <code class="language-plaintext highlighter-rouge">conclusion</code> to <code class="language-plaintext highlighter-rouge">conclusion183...</code>
+(i.e., a gensym).</p>
+
+<p>One last point: check out the new <code class="language-plaintext highlighter-rouge">irs.rkt</code>. Notice how there is no
+top-level metadata in the program anymore: no <code class="language-plaintext highlighter-rouge">(program ,info
+...)</code>. That’s because in this project, all information is either (a)
+function-specific or (b) can easily be figured out by looking at the
+definitions (e.g., collecting up all function names, since you know
+they’re all of the form <code class="language-plaintext highlighter-rouge">(define (,f ...) ...)</code>). So in general, the
+IRs will look like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>'(program (define (f x0 x1 ...) e-b0) (define (g y0 ...) e-b1) ...)
+</code></pre></div></div>
+
+<p>As mentioned above (this is such a key point I feel I have to repeat
+it), the general idea is to either map / fold over this list of
+definitions.</p>
+
+<h2 id="pass-by-pass-implementation-guide">Pass-by-Pass Implementation Guide</h2>
+
+<p>Looking at my reference implementation, compared to my solution for
+the previous project, I will call out the major things that I see as
+relevant to know on a pass-by-pass basis.</p>
+
+<h4 id="shrink"><code class="language-plaintext highlighter-rouge">shrink</code></h4>
+
+<p>First, shrink needs to support both function calls and (R5 only)
+lambdas. Second, this pass expects an input like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(program (define (f x ...) e) ... e-main)
+</code></pre></div></div>
+
+<p>I.e., the final item in the list is the <em>main expression</em> in the
+program. Every program in R4 is a list of definitions (possibly empty)
+followed by a final “main” expression. The shrink pass needs to wrap
+this in a <code class="language-plaintext highlighter-rouge">main</code> function:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(program (define (f x ...) e) ... (define (main) e-main))
+</code></pre></div></div>
+
+<h4 id="uniqueify"><code class="language-plaintext highlighter-rouge">uniqueify</code></h4>
+
+<p>This pass needs to change in two ways: it needs to map the <code class="language-plaintext highlighter-rouge">rename</code>
+function across each definition, taking the variable names into
+account. Second, it needs to accomodate function calls (simple: just
+map <code class="language-plaintext highlighter-rouge">rename</code> across each argument / the function expression) and
+lambdas: be sure to be mindful that lambdas establish bindings and
+thus need to be handled similarly to <code class="language-plaintext highlighter-rouge">let</code>.</p>
+
+<h4 id="reveal-functions"><code class="language-plaintext highlighter-rouge">reveal-functions</code></h4>
+
+<p>This is a new pass: the purpose of this pass is to change function
+applications like <code class="language-plaintext highlighter-rouge">(f x y z)</code> into <code class="language-plaintext highlighter-rouge">(app (fun-ref f) x y z)</code>. The
+reason this is important is basically this: we will sometimes want to
+compile <em>user-written</em> functions in a specific manner (specifically:
+tacking on an extra closure parameter, in the case of closure
+conversion), and so we need to have some way to look at every function
+call site and determine: is this a call to a <em>user</em> function, or a
+<em>builtin</em> function? Also, at runtime, we represent functions using
+function pointers, and we look up their values using the load
+effective address (<code class="language-plaintext highlighter-rouge">lea</code>) instruction: we add <code class="language-plaintext highlighter-rouge">(fun-ref ,f)</code> as a new
+kind of atom at this IR level.</p>
+
+<p>This pass is pretty straightforward to write, it has two basic steps:</p>
+
+<ul>
+  <li>Collect all of the top-level function names into a big set. You can
+do this by pattern matching:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  (match p
+    [`(program (define (,names ,params ...) ,bodies) ...)
+      ;; names is a list of function names
+      (define all-names (list-&gt;set names))
+</code></pre></div></div>
+
+<ul>
+  <li>Walk over every expression (in every body) and rewrite every plain
+variable to <code class="language-plaintext highlighter-rouge">(fun-ref ...)</code> when it is in this set: re-usages of the
+same name will already have been uniquified, so this is not too hard
+to write as a recursive function.</li>
+</ul>
+
+<h4 id="assignment-convert"><code class="language-plaintext highlighter-rouge">assignment-convert</code></h4>
+
+<ul>
+  <li>
+    <p>Supporting <code class="language-plaintext highlighter-rouge">app</code> is easy: we map <code class="language-plaintext highlighter-rouge">a-c</code> across all the things being applied.</p>
+  </li>
+  <li>
+    <p>Supporting <code class="language-plaintext highlighter-rouge">lambda</code> is a bit harder, because you need to ensure that
+we box all formal arguments passed into the function. I do this using a helper function</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ;; box-formals: helper function (use for defines and lambdas)
+  ;; transform (lambda (x y z) ...) =&gt; (lambda (x123 y235 z523) (let ([x (vector x12)]) ...)
+  ;; genformals and realformals are lists of symbols
+  ;; e-body is an expression which will be used when no vars left
+  (define (box-formals genformals realformals e-body)
+    (match genformals
+      ['() e-body]
+      [`(,x . ,rst)
+       `(let ([,(first realformals) (make-vector 1)])
+          (let ([_ (vector-set! ,(first realformals) 0 ,x)])
+            ,(box-formals rst (rest realformals) e-body)))]))
+</code></pre></div></div>
+
+<h4 id="lift-lambdas"><code class="language-plaintext highlighter-rouge">lift-lambdas</code></h4>
+
+<p>This is the closure conversion pass. The closure conversion pass is
+explained in this video: https://www.youtube.com/watch?v=zMtaXO_xHYU
+Additionally, the course slides give some detailed coverage of the
+ideas. The basic idea is this: every function in your program is
+annotated with an extra <code class="language-plaintext highlighter-rouge">clo</code> argument. We will implement flat
+closures, where a closure is a vector of (a) a function pointer
+followed by (b) the closure’s free variables in some canonical
+order. I recommend implementing bottom-up closure conversion, you walk
+over each expression (in each definition, don’t forget that) to emit a
+set of “lifted” lambdas (top-level <code class="language-plaintext highlighter-rouge">define</code>s which accept a <code class="language-plaintext highlighter-rouge">clo</code>
+argument along with the rest of the lambda’s arguments) which are then
+spliced on to the program. Additionally, lambda lifting ensures that
+each syntactic lambda in the program is compiled into an allocation of
+a vector and then population of it with the function pointer and free
+variables (properly allocating / building the closure).</p>
+
+<h4 id="limit-functions"><code class="language-plaintext highlighter-rouge">limit-functions</code></h4>
+
+<p>This pass is relatively small as well, it has a very simple purpose:</p>
+
+<ul>
+  <li>
+    <p>Every function that accepts &gt;6 arguments should be rewritten so that
+its last argument is a vector, and the function’s body should be
+rewritten so that the first thing it does is unpack the variables
+via this vector.</p>
+  </li>
+  <li>
+    <p>Every function call that uses &gt;6 arguments should be rewritten to
+allocate a vector, populate it, and pass it as the last argument.</p>
+  </li>
+</ul>
+
+<h4 id="anf-convert"><code class="language-plaintext highlighter-rouge">anf-convert</code></h4>
+
+<ul>
+  <li>ANF conversion needs to be extended to support application: <code class="language-plaintext highlighter-rouge">(app
+,e0 ,e-rest ...)</code> needs to first convert <code class="language-plaintext highlighter-rouge">e0</code> to an atom, then
+convert each one of <code class="language-plaintext highlighter-rouge">e-rest</code> to a list of atoms <code class="language-plaintext highlighter-rouge">e-vs</code>. Finally, you
+<code class="language-plaintext highlighter-rouge">gensym</code> a new symbol <code class="language-plaintext highlighter-rouge">x</code> and return <code class="language-plaintext highlighter-rouge">(let ([,x (app ,a0 ,@a-vs)])
+,(k x))</code>. To walk over the expressions, I used a helper function
+that looks like:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       (define (handle-rest e-rest as)
+         (match e-rest
+           ['()
+             ;; base case: gensym x and generate an app 
+           [`(,hd . ,rest)
+            (convert-expr
+             hd
+             (lambda (a) (handle-rest rest (cons a as))))]))
+</code></pre></div></div>
+
+<h4 id="explicate-control"><code class="language-plaintext highlighter-rouge">explicate-control</code></h4>
+
+<p>This pass has almost no changes:</p>
+
+<ul>
+  <li>
+    <p>Map over each top-level definition using a <code class="language-plaintext highlighter-rouge">(per-defn ...)</code>, that
+applies <code class="language-plaintext highlighter-rouge">expr-&gt;blocks</code> to each function body.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">expr-&gt;blocks</code> simply turns the <code class="language-plaintext highlighter-rouge">(let ([x (app ...)]) ...)</code> into
+<code class="language-plaintext highlighter-rouge">(assign ,x (app ,a-f ,@a-args))</code></p>
+  </li>
+</ul>
+
+<h4 id="uncover-locals"><code class="language-plaintext highlighter-rouge">uncover-locals</code></h4>
+
+<ul>
+  <li>I gave this pass to you again, it is fairly simply, I have updated
+it in the expected manner.</li>
+</ul>
+
+<h4 id="select-instructions"><code class="language-plaintext highlighter-rouge">select-instructions</code></h4>
+
+<ul>
+  <li>
+    <p>This pass needs to be updated to support <code class="language-plaintext highlighter-rouge">(seq (assign ,lhs (app
+,a-f ,args ...)) ,next)</code>. This should:</p>
+
+    <ul>
+      <li>Copy all arguments into registers. Use the list
+<code class="language-plaintext highlighter-rouge">(argument-registers-list)</code> in <code class="language-plaintext highlighter-rouge">system.rkt</code>, which gives the
+list of registers&lt;-&gt;arguments in order.</li>
+      <li>Make an <code class="language-plaintext highlighter-rouge">(indirect-callq ...)</code> to the function atom</li>
+      <li>Move the result register <code class="language-plaintext highlighter-rouge">%rax</code> into <code class="language-plaintext highlighter-rouge">lhs</code></li>
+    </ul>
+  </li>
+  <li>
+    <p>This pass also needs to be updated to support <code class="language-plaintext highlighter-rouge">fun-ref</code>, which will
+only over occur in the form <code class="language-plaintext highlighter-rouge">(seq (assign ,x (fun-ref ,f)) ,rest)</code>:</p>
+
+    <ul>
+      <li>This should be translated to a <code class="language-plaintext highlighter-rouge">leaq</code> instruction using the <code class="language-plaintext highlighter-rouge">fun-ref</code> as an argument</li>
+    </ul>
+  </li>
+  <li>
+    <p>In this pass, we also generate a <code class="language-plaintext highlighter-rouge">conclusion</code> block. In our last
+project, we just left this empty. In this project, you should set it
+to just <code class="language-plaintext highlighter-rouge">((retq))</code> (i.e., a list with a single instruction,
+<code class="language-plaintext highlighter-rouge">(retq)</code>). In the <code class="language-plaintext highlighter-rouge">prelude-and-conclusion</code> pass we will generate the
+prelude / conclusion.</p>
+  </li>
+</ul>
+
+<h4 id="assign-homes"><code class="language-plaintext highlighter-rouge">assign-homes</code></h4>
+
+<ul>
+  <li>This pass needs to be updated to support <code class="language-plaintext highlighter-rouge">leaq</code> (which will always
+have a fun-ref as its argument) and <code class="language-plaintext highlighter-rouge">indirect-callq</code></li>
+</ul>
+
+<h4 id="patch-instructions"><code class="language-plaintext highlighter-rouge">patch-instructions</code></h4>
+
+<ul>
+  <li>Also needs to be updated to handle <code class="language-plaintext highlighter-rouge">leaq</code>, which requires its
+destination is a register.</li>
+</ul>
+
+<h4 id="prelude-and-conclusion"><code class="language-plaintext highlighter-rouge">prelude-and-conclusion</code></h4>
+
+<p>This pass needs a bit more work, due to the following reason: in our
+previous pass, we used a block name <code class="language-plaintext highlighter-rouge">conclusion</code>. We rename the block
+from <code class="language-plaintext highlighter-rouge">conclusion</code> to a globally-unique name. Perhaps it is exemplary
+of bad design that we need to do it this way: it might be something we
+change in future semesters, but for now I did something like this:</p>
+
+<ul>
+  <li>I implemented a function, <code class="language-plaintext highlighter-rouge">rename-conclusion</code>:</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(define (rename-conclusion blocks name)
+    (define (h instr)
+      (match instr
+        [`(jmp ,blk) #:when (equal? blk (conclusion-block-name))
+         `(jmp ,name)]
+        [i i]))
+    (foldl (lambda (k acc) (hash-set acc k (map h (hash-ref blocks k))))
+           (hash)
+           (hash-keys blocks)))
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>For each definition, I do one of two things:</p>
+
+    <ul>
+      <li>If the function is the special function <code class="language-plaintext highlighter-rouge">(entry-symbol)</code>, then I
+make the conclusion block move the result into <code class="language-plaintext highlighter-rouge">%rdi</code> and
+<code class="language-plaintext highlighter-rouge">print_int64</code> it, finally returning from main. In a future
+language, I might consider saying that main doesn’t print its
+final value unless the user chooses to do it: but I wanted to be
+maximally consistent with the previous projects, this time.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>So, I have code that looks something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>       (define start-block (hash-ref blocks f))
+       (define new-start-block
+         `((pushq (reg rbp))
+           (movq (reg rsp) (reg rbp))
+           (addq (imm ,space-needed) (reg rsp))
+           ,@start-block))
+       (define conclusion-block
+         (if (equal? f (entry-symbol))
+             `(;; move result into %rdi and print_int64 it
+               (movq (reg rax) (reg rdi))
+               (callq print_int64 0)
+               ;; 0 return value (to the terminal/system) into %rax
+               (movq (imm 0) (reg rax))
+               ;; reinstate stored %rbp
+               (movq (reg rbp) (reg rsp))
+               (popq (reg rbp))
+               ;; transfer back to caller
+               (retq))
+             ;; else, just return...
+             `((movq (reg rbp) (reg rsp))
+               (popq (reg rbp))
+               (retq))))
+       (define my-conclusion-block (gensym 'conclusion))
+       (define blocks+ ;; build the blocks here...)
+	   ;; now, return updated function
+       `(define ,locals (,f ,@args) ,blocks+)
+</code></pre></div></div>
+
+<h4 id="dump-x86-64"><code class="language-plaintext highlighter-rouge">dump-x86-64</code></h4>
+
+<ul>
+  <li>
+    <p>As all other passes do, this needs to map across all
+definitions. But in this case, all of the blocks in every definition
+are all globally unique, so all we do is run the <code class="language-plaintext highlighter-rouge">render-block</code>
+function for each block in every function. There is <em>no</em> requirement
+that the blocks that get generated sit next to each other in the
+emitted source code (though it may make debugging easier).</p>
+  </li>
+  <li>
+    <p>We need to physically render two new assembly instructions: <code class="language-plaintext highlighter-rouge">leaq</code> and
+<code class="language-plaintext highlighter-rouge">indirect-callq</code>. Both of these are fairly easy, for <code class="language-plaintext highlighter-rouge">leaq</code> you want to use 
+<code class="language-plaintext highlighter-rouge">(format "leaq ~a(%rip), ~a" (rt-sym f) ...)</code>.</p>
+  </li>
+  <li>
+    <p>Here you need to be especially careful about how you call <code class="language-plaintext highlighter-rouge">rt-sym</code>:
+in short, everything that is a function name needs to be rendered by
+calling <code class="language-plaintext highlighter-rouge">rt-sym</code>, because functions on OSX need a <code class="language-plaintext highlighter-rouge">_</code> prepended. I
+do this in the following manner: in <code class="language-plaintext highlighter-rouge">render-block</code>, I check if the
+block name I’m spitting out is known to be a function name: if so, I
+call <code class="language-plaintext highlighter-rouge">rt-sym</code> on it, if not I don’t:</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    (define txt-label (if (set-member? functions name) (format "~a:\n" (rt-sym name)) (format "~a:\n" name)))
+</code></pre></div></div>
+
+<ul>
+  <li>In the <code class="language-plaintext highlighter-rouge">leaq</code> instruction, I call <code class="language-plaintext highlighter-rouge">rt-sym</code> as well (as I do in the
+regular <code class="language-plaintext highlighter-rouge">call</code> instruction for things from <code class="language-plaintext highlighter-rouge">runtime.c</code>).</li>
+</ul>
+
+<h2 id="ir-predicates-and-interpreters">IR Predicates and Interpreters</h2>
+
+<ul>
+  <li>
+    <p><strong>Predicates</strong> (<code class="language-plaintext highlighter-rouge">irs.rkt</code>): Each pass has a precise predicate (e.g.,
+<code class="language-plaintext highlighter-rouge">anf-program?</code>, <code class="language-plaintext highlighter-rouge">c1-program?</code>, etc.). Tests check both input and
+output predicates at every step to catch malformed IR early. You
+should read and understand each predicate.</p>
+  </li>
+  <li>
+    <p><strong>Interpreters</strong> (<code class="language-plaintext highlighter-rouge">interpreters.rkt</code>): For many stages we run the
+interpreter over your IR to check semantic consistency—different IRs
+must compute the same result on the same input stream. The harness
+reports whether outputs match and whether stdout across passes is
+consistent. Please do not modify this file.</p>
+  </li>
+</ul>
+
+<h2 id="how-to-compile-and-run">How to Compile and Run</h2>
+
+<p>To directly compile a single file using <code class="language-plaintext highlighter-rouge">main.rkt</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket main.rkt test-programs/&lt;prog&gt;.scm
+</code></pre></div></div>
+
+<p>The compiler dumps a long summary of the work done at each pass, and
+ultimately yields a program <code class="language-plaintext highlighter-rouge">./output</code> which it compiles using
+system-specific infrastructure (works on Linux/Mac).</p>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ racket main.rkt test-programs/example.scm
+Compiling IR (using *your* compile.rkt) …
+'(pushq (reg rbp))
+...
+🏗️ Now building a binary... 🏗️
+-&gt; Host: macosx/x86_64  Target: x86_64-apple-darwin  Entry: main
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./output.s -o ./output.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 -c ./runtime.c -o ./runtime.o
+/usr/bin/clang -target x86_64-apple-darwin -Wall -O2 ./output.o ./runtime.o -o ./output
+Success! Executable produced at: ./output
+Done!
+$ ./output
+42
+</code></pre></div></div>
+
+<p>Programs that <code class="language-plaintext highlighter-rouge">(read)</code> input will prompt or consume stdin. You can use
+input redirection:<br />
+<code class="language-plaintext highlighter-rouge">./output &lt; input-files/1.in</code></p>
+
+<h2 id="testing-infrastructure">Testing Infrastructure</h2>
+
+<p>I’ve cut out the <code class="language-plaintext highlighter-rouge">middleend</code> option in this project.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">frontend</code> – runs <code class="language-plaintext highlighter-rouge">shrink</code> → <code class="language-plaintext highlighter-rouge">anf-convert</code>, runs the frontend</li>
+  <li><code class="language-plaintext highlighter-rouge">backend</code> – runs <code class="language-plaintext highlighter-rouge">explicate-control</code> → <code class="language-plaintext highlighter-rouge">patch-instructions</code>, checks via <code class="language-plaintext highlighter-rouge">interpret-instr</code></li>
+  <li><code class="language-plaintext highlighter-rouge">native</code> – full compile → build binary → run with stdin → compare stdout to golden</li>
+</ul>
+
+<p>Usage:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket test.rkt -m &lt;mode&gt; -i &lt;comma-separated input files&gt; -g &lt;comma-separated goldens&gt; &lt;program.scm&gt;
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>racket test.rkt -m native -i ./input-files/1.in -g goldens/example_1_uniqueify.stdout test-programs/example.scm
+</code></pre></div></div>
+
+<h2 id="goldens-what-they-are">Goldens: What They Are</h2>
+
+<p>We use goldens to verify correctness:</p>
+
+<ol>
+  <li><strong>Isolation goldens</strong> – for non-native modes:
+    <ul>
+      <li>Compare serialized ASTs and interpreter stdout</li>
+    </ul>
+  </li>
+  <li><strong>Native goldens</strong> – for full pipeline:
+    <ul>
+      <li>Run your compiled binary, compare stdout</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Layout:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.in-ast</code></li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.out-ast</code></li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.interp</code></li>
+  <li><code class="language-plaintext highlighter-rouge">goldens/&lt;prog&gt;_&lt;n&gt;_&lt;pass&gt;.stdout</code></li>
+</ul>
+
+<p>Instructor-only <code class="language-plaintext highlighter-rouge">gengoldens</code> mode regenerates these.</p>
+
+<h2 id="autograder-tests">Autograder Tests</h2>
+
+<p>The autograder invokes <code class="language-plaintext highlighter-rouge">test.rkt</code> in JSON mode. Your job is to make
+each pass satisfy its predicates and produce semantically equivalent
+IRs until final native code passes all tests. Autograder tests can be
+tough to debug, so if one is failing, you should use tools like
+<code class="language-plaintext highlighter-rouge">main.rkt</code> or even <code class="language-plaintext highlighter-rouge">debug-server</code>.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">CIS531</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>CIS531</li>
+          <li><a href="mailto:"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>CIS531 -- Compilers at Syracuse (Fall '25)</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src=https://kmicinski.com//cis531-f25/bower_components/jquery/dist/jquery.min.js></script>
+<script src=https://kmicinski.com//cis531-f25/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js></script>
+
+
+  </body>
+
+</html>
