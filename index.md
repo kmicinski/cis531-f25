@@ -907,18 +907,14 @@ layout: mainpage
       <div class="session-col">
         <div class="session-title">
           <i class="fa-solid fa-chalkboard-user lecture-icon"></i>
-          Multi-Level Intermediate Representation (MLIR) and Extensible Codegen
+          Garbage Collection (Mini Lecture) and LLVM (mini lecture)
         </div>
-        <!-- <ul class="resources-list"> -->
-        <!--   <li> -->
-        <!--     <i class="fa-brands fa-youtube youtube-icon"></i> -->
-        <!--     <a href="https://www.youtube.com/watch?v=Paxvaq0Q-S0&amp;list=PLXaqTeMx01E-l20YhTNwN4xncM-1jweqG&amp;index=21">Lecture Video</a> -->
-        <!--   </li> -->
-        <!--   <li> -->
-        <!--     <i class="fa-solid fa-file-lines notes-icon"></i> -->
-        <!--     <a href="https://kmicinski.com/cis531-f25/assets/slides/lambda-reductions.pdf">Lecture Slides</a> -->
-        <!--   </li> -->
-        <!-- </ul> -->
+        <ul class="resources-list">
+          <li>
+            <i class="fa-solid fa-file-lines notes-icon"></i>
+            <a href="https://kmicinski.com/cis531-f25/assets/slides/gc.pdf">Lecture Slides</a>
+          </li>
+        </ul>
       </div>
     </li>
     <!-- <li class="session-item"> -->
